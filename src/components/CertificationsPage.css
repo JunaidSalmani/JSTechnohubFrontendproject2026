@@ -1,0 +1,166 @@
+/* --- STYLES FOR THE CERTIFICATION DETAIL PAGE --- */
+
+.cert-detail-container {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero Banner Section */
+.cert-detail-hero {
+  background: linear-gradient(
+    to right,
+    var(--heading-color),
+    var(--primary-color)
+  );
+  color: var(--ink);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.cert-detail-hero h1 {
+  font-size: 2.8rem;
+  margin: 0 0 0.5rem;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+}
+
+.cert-detail-hero p {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Main Two-Column Layout */
+.cert-detail-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+/* Left Column: Content */
+.cert-detail-content h2 {
+  font-size: 2rem;
+  color: var(--heading-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+}
+
+.cert-detail-content h3 {
+  font-size: 1.5rem;
+  color: var(--heading-color);
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+
+  margin-top: 2rem;
+}
+
+.cert-detail-content p,
+.cert-detail-content li {
+  line-height: 1.8;
+  color: #555;
+}
+
+.cert-detail-content ul {
+  list-style: "✓  ";
+  padding-left: 1.2rem;
+}
+
+/* Right Column: Sidebar Enquiry Form */
+.cert-detail-sidebar {
+  /* This will make the form stick when scrolling on desktop */
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.enquiry-form-wrapper-detail {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.enquiry-form-wrapper-detail h3 {
+  text-align: center;
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+  color: var(--heading-color);
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+}
+
+.enquiry-form-detail input,
+.enquiry-form-detail textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.enquiry-form-detail input:focus,
+.enquiry-form-detail textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+}
+
+.btn-submit-detail {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  background: linear-gradient(135deg, #00c2ff 0%, #0093cc 100%);
+  color: var(--midnight);
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  text-decoration: none;
+  transition:
+    background 0.3s,
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s ease;
+}
+
+.btn-submit-detail:hover {
+  background: linear-gradient(135deg, #00c2ff 0%, #0093cc 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 194, 255, 0.38);
+}
+
+/* Responsive Adjustments for Mobile */
+@media (max-width: 992px) {
+  .cert-detail-main {
+    grid-template-columns: 1fr;
+  }
+
+  .cert-detail-sidebar {
+    position: static; /* Un-stick the form on mobile */
+    margin-top: 2rem;
+  }
+
+  .cert-detail-hero h1 {
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+  }
+}

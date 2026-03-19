@@ -1,0 +1,198 @@
+/* --- FINAL, CONSOLIDATED STYLES FOR RESUME SAMPLES --- */
+
+/* Section Container */
+.samples-container {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Section Header */
+.section-title-samples {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title-samples h2 {
+  font-size: 2.5rem;
+  color: var(--heading-color);
+  margin: 0 0 0.5rem;
+  font-family: "Syne", sans-serif;
+}
+
+.section-title-samples p {
+  font-size: 1.15rem;
+  color: var(--text-color);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* The Grid Layout */
+.samples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+/* Individual Sample Card */
+.sample-card {
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+.sample-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Wrapper and Effect */
+.sample-image-wrapper {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.sample-image {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1 / 1.41;
+  object-fit: cover;
+  object-position: top;
+  border-bottom: 3px solid var(--primary-color);
+  transition: transform 0.4s ease;
+}
+
+.sample-card:hover .sample-image {
+  transform: scale(1.05);
+}
+
+/* Hover Overlay */
+.sample-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 86, 179, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sample-card:hover .sample-overlay {
+  opacity: 1;
+}
+
+/* Button on the Overlay */
+.btn-view-sample {
+  background-color: white;
+  color: var(--primary-color);
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sample-card:hover .btn-view-sample {
+  transform: scale(1);
+}
+
+/* Text Info Below Image */
+.sample-info {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.sample-info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  color: var(--heading-color);
+}
+
+.sample-info p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* --- UPDATED FULLSCREEN MODAL STYLES --- */
+.fullscreen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  /* --- FIX 1: Align content to the top --- */
+  align-items: flex-start;
+  padding: 2rem;
+  box-sizing: border-box;
+  animation: fadeInModal 0.3s ease;
+  /* --- FIX 2: Add vertical scrolling if needed --- */
+  overflow-y: auto;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fullscreen-content {
+  /* --- FIX 3: Remove max-height to allow content to be its full height --- */
+  max-width: 90%;
+  /* max-height: 90%; <-- This line is removed */
+  margin-top: 2rem; /* Add some space at the top */
+  margin-bottom: 2rem; /* Add some space at the bottom */
+}
+
+.fullscreen-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  /* max-height is no longer needed here as the container will scroll */
+  object-fit: contain;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: block; /* Helps with margin behavior */
+}
+
+.btn-close-fullscreen {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 3rem;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+  transition:
+    color 0.3s,
+    transform 0.3s;
+}
+
+.btn-close-fullscreen:hover {
+  color: #ffc107;
+  transform: scale(1.1);
+}

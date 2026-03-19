@@ -1,0 +1,577 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css";
+
+.home-fullcontent-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 35px auto;
+  padding: 10px 30px 60px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #1e293b;
+  line-height: 1.7;
+  background-color: #f9fafb;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+}
+
+/* Hero Section */
+
+.hero-section {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 80px;
+  animation-fill-mode: forwards;
+}
+
+.hero-title {
+  font-size: 3.8rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #0f172a;
+}
+
+.hero-subtitle {
+  font-weight: 500;
+  font-size: 1.35rem;
+  color: #475569;
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 16px 44px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #1e40af;
+}
+
+/* Section Titles */
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #1e293b;
+  text-align: center;
+}
+
+/* Paragraphs & Lists */
+
+.about-coaching p,
+.ats-resume-section p,
+.courses-overview p,
+.certificates-section p {
+  font-size: 1.15rem;
+  max-width: 850px;
+  margin: 0 auto 22px;
+  color: #475569;
+}
+
+.about-coaching ul,
+.ats-resume-section ul,
+.courses-overview ul {
+  max-width: 850px;
+  margin: 0 auto 40px;
+  list-style-type: disc;
+  padding-left: 25px;
+  color: #64748b;
+  font-size: 1.05rem;
+}
+
+.about-coaching ul li,
+.ats-resume-section ul li,
+.courses-overview ul li {
+  margin-bottom: 12px;
+}
+
+/* Carousel Container */
+
+.certificates-section,
+.testimonials-section {
+  max-width: 900px;
+  margin: 0 auto 70px;
+}
+
+/* Carousel Slide */
+
+.carousel-slide {
+  background: #dbeafe;
+  padding: 26px 20px 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 30px rgba(59, 130, 246, 0.22);
+  text-align: center;
+}
+
+.certificate-image {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.carousel-slide h3 {
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+.carousel-slide p {
+  font-size: 1rem;
+  color: #334155;
+}
+
+/* Testimonial Slide */
+.testimonials-carousel .carousel-slide {
+  background: #e0f2fe;
+}
+.testimonial-slide blockquote {
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #0c4a6e;
+  margin-bottom: 20px;
+  font-weight: 500;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+.testimonial-slide cite {
+  font-weight: 600;
+  color: #075985;
+  font-style: normal;
+}
+
+/* Call to Action */
+
+.call-to-action {
+  background-color: #2563eb;
+  color: white;
+  padding: 48px 20px;
+  text-align: center;
+  border-radius: 14px;
+  max-width: 780px;
+  margin: 0 auto 50px;
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.55);
+}
+
+.call-to-action h2 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.call-to-action p {
+  font-size: 1.3rem;
+  max-width: 580px;
+  margin: 0 auto 28px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  background-color: #bfdbfe;
+  color: #1e40af;
+  padding: 14px 34px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(191, 219, 254, 0.7);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  cursor: pointer;
+  min-width: 150px;
+  text-align: center;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #93c5fd;
+  color: #0c3c91;
+  outline: none;
+}
+
+/* Animation Helpers */
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+.fade-in.delay-1 {
+  animation-delay: 0.35s;
+}
+
+.fade-in.delay-2 {
+  animation-delay: 0.75s;
+}
+
+.fade-in.delay-3 {
+  animation-delay: 1.1s;
+}
+
+.fade-in.delay-4 {
+  animation-delay: 1.45s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slick overrides for dots */
+
+.slick-dots {
+  bottom: -38px;
+}
+
+.slick-dots li button:before {
+  font-size: 14px;
+  color: #2563eb;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #1e40af;
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 3.2rem;
+  }
+  h2 {
+    font-size: 2.1rem;
+  }
+
+  .call-to-action h2 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-fullcontent-container {
+    width: 95%;
+    padding: 8px 15px 40px;
+  }
+
+  .hero-title {
+    font-size: 2.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .about-coaching ul,
+  .ats-resume-section ul,
+  .courses-overview ul {
+    padding-left: 18px;
+  }
+
+  /* Center CTA buttons vertically stacked on mobile */
+  .cta-buttons {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .btn-secondary {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Grid helpers */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.card,
+.testimonial-card {
+  background: #f1f5f9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.testimonial-card blockquote {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 12px;
+  color: #0f172a;
+}
+
+/* Responsive overrides */
+@media (max-width: 992px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-3,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* General Page Layout */
+.homepage {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  line-height: 1.7;
+  max-width: 1200px; /* Wider on desktop */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Key Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animate Sections on Load */
+.homepage section {
+  margin-bottom: 3rem;
+  animation: fadeUp 1s ease forwards;
+  opacity: 0;
+}
+
+.homepage section:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.homepage section:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.homepage section:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.homepage section:nth-child(4) {
+  animation-delay: 0.8s;
+}
+.homepage section:nth-child(5) {
+  animation-delay: 1s;
+}
+.homepage section:nth-child(6) {
+  animation-delay: 1.2s;
+}
+.homepage section:nth-child(7) {
+  animation-delay: 1.4s;
+}
+.homepage section:nth-child(8) {
+  animation-delay: 1.6s;
+}
+
+/* Headings */
+.homepage h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1a2a4f;
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.homepage h1::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #2a66f0;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+  animation: expandBar 1.5s ease-in-out;
+}
+
+@keyframes expandBar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 80px;
+  }
+}
+
+.homepage h2 {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #1f3b73;
+  margin: 1.5rem 0 0.8rem;
+  transition: color 0.3s ease;
+}
+
+.homepage h2:hover {
+  color: #2a66f0;
+}
+
+/* Paragraphs */
+.homepage p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  color: #444;
+  transition: transform 0.2s ease;
+}
+
+.homepage p:hover {
+  transform: scale(1.01);
+}
+
+/* Lists */
+.homepage ul,
+.homepage ol {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.homepage ul li,
+.homepage ol li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.homepage ul li:hover,
+.homepage ol li:hover {
+  transform: translateX(5px);
+  color: #2a66f0;
+}
+
+/* Blockquotes */
+.homepage blockquote {
+  background: #f7faff;
+  border-left: 4px solid #2a66f0;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #333;
+  transition: background 0.3s ease;
+}
+
+.homepage blockquote:hover {
+  background: #e8f0ff;
+}
+
+/* Links */
+.homepage a {
+  color: #2a66f0;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: all 0.2s ease-in-out;
+}
+
+.homepage a:hover {
+  color: #fff;
+  background: #2a66f0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* CTA Buttons */
+.homepage .text-center a {
+  margin: 0 0.8rem;
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #2a66f0;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 1rem;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.homepage .text-center a:hover {
+  background: #2a66f0;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 1.5rem 1rem;
+  }
+
+  .homepage h1 {
+    font-size: 2.2rem;
+  }
+
+  .homepage h2 {
+    font-size: 1.4rem;
+  }
+
+  .homepage p,
+  .homepage ul li {
+    font-size: 0.95rem;
+  }
+}

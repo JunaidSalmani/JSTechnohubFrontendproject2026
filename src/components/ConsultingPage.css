@@ -1,0 +1,66 @@
+/* src/components/ConsultingPage.css */
+
+.consulting-section {
+  padding: 60px 20px;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+
+.consulting-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.consulting-hero h2 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.consulting-hero p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.cta-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.cta-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Consulting Features Grid */
+.consulting-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.consulting-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.consulting-box img {
+  width: 50px;
+  margin-bottom: 15px;
+}
+
+.consulting-box h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.consulting-box p {
+  color: #777;
+}

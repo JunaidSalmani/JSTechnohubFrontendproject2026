@@ -1,0 +1,169 @@
+/* --- Course Detail Page --- */
+.course-detail-page {
+  padding: 2rem 5%;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Hero Section */
+.course-detail-hero {
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  padding: 3rem 1.5rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow);
+}
+
+.course-detail-hero h1 {
+  font-size: 2.4rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Main content layout */
+.course-detail-main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Course Info Box */
+.course-detail-info {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.course-detail-info h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.5rem;
+}
+
+.course-detail-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.2rem 0 0;
+}
+
+.course-detail-info li {
+  margin-bottom: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Sidebar Form */
+.course-detail-sidebar {
+  background: var(--card-bg);
+  padding: 1.8rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+}
+
+.enquiry-form-container h3 {
+  margin-top: 0;
+  color: var(--heading-color);
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.enquiry-form-container .form-group {
+  margin-bottom: 1rem;
+}
+
+.enquiry-form-container input,
+.enquiry-form-container textarea {
+  width: 100%;
+  padding: 0.85rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.enquiry-form-container input:focus,
+.enquiry-form-container textarea:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Button */
+.btn-submit-enquiry {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--secondary-color);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-submit-enquiry:hover:not(:disabled) {
+  background: var(--primary-color);
+}
+
+.btn-submit-enquiry:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Success Message */
+.form-success-message {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #e6f9f0;
+  border: 1px solid #a6e6c7;
+  border-radius: var(--border-radius);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.form-success-message h3 {
+  color: #28a745;
+  margin-bottom: 0.8rem;
+}
+
+/* Error Message */
+.error-message-form {
+  margin-top: 0.8rem;
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Submitting Message */
+.submitting-message {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .course-detail-main-content {
+    grid-template-columns: 1fr;
+  }
+
+  .course-detail-sidebar {
+    position: static;
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,264 @@
+/* resumepage.css  */
+
+.pricing-container {
+  width: 100%;
+  padding: 3rem 1.5rem;
+  transition: background-color 0.4s ease;
+}
+
+.pricing-container.plans-active {
+  background-color: #f8f9fa;
+}
+.pricing-container.combo-active {
+  background-color: #f9f6ff;
+}
+
+/* Experience Selector Styles */
+.experience-selector-container {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.experience-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, #0056b3, #007bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Syne", sans-serif;
+}
+
+.experience-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.exp-button {
+  background-color: white;
+  color: #0056b3;
+  border: 2px solid #0056b3;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.exp-button:hover {
+  background-color: #eaf5ff;
+  transform: translateY(-2px);
+}
+
+.exp-button.active {
+  background-color: #ffc107;
+  color: #333;
+  border-color: #ffc107;
+  transform: scale(1.05);
+}
+
+/* Plan/Combo Tabs */
+.tabs {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tab-button {
+  border: 1px solid #0056b3;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0 8px;
+  background-color: white;
+  color: #0056b3;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.tab-button.active {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Pricing Cards Wrapper */
+.plans-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  animation: fadeInCards 0.6s ease-in-out;
+}
+
+@keyframes fadeInCards {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card Structure */
+.plan {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 320px;
+  text-align: center;
+  position: relative;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.plan:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.plan-top {
+  background-color: #003366;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 180px;
+  padding-bottom: 2rem; /* Add some padding for safety */
+  box-sizing: border-box; /* Ensures padding is included in the height */
+}
+
+/* --- FIX: REVISED .plan-header TO USE FLEXBOX --- */
+.plan-header {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  /* Use the full height of the parent .plan-top */
+  height: 100%;
+  /* Flexbox properties to perfectly center content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2; /* Tighter line spacing for multi-line titles */
+  font-family: "Syne", sans-serif;
+}
+
+/* --- FIX: REVISED .subtitle STYLES --- */
+.plan-header .subtitle {
+  font-size: 0.9rem; /* Slightly smaller */
+  font-weight: 400;
+  opacity: 0.8;
+  margin-top: 0.5rem; /* Replaces padding for cleaner spacing */
+}
+
+.price-circle {
+  background-color: white;
+  border: 6px solid #003366;
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: -70px auto 0;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.price-circle .original-price {
+  font-size: 1rem;
+  color: #999;
+  font-weight: 400;
+  margin-top: 5px;
+}
+
+.plan-body {
+  padding: 25px 25px 45px 25px;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.plan-features li {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.buy-button {
+  border: none;
+  border-radius: 25px;
+  color: white;
+  padding: 15px 45px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 30px;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.buy-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* Combo Card Specific Styles */
+.plan.combo .plan-top {
+  background-color: #4a148c;
+} /* This is the purple from your image */
+.plan.combo .price-circle {
+  border-color: #4a148c;
+}
+.plan.combo .buy-button {
+  background: linear-gradient(90deg, #8e24aa, #d81b60);
+  box-shadow: 0 4px 15px rgba(142, 36, 170, 0.4);
+}
+/* This specifically targets the combo header to make the main title slightly smaller to fit better */
+.plan.combo .plan-header {
+  font-size: 1.6rem;
+}
+
+/* Featured Plan Styles */
+.plan.featured {
+  border: 3px solid #ffc107;
+}
+.featured-banner {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background-color: #ffc107;
+  color: #333;
+  padding: 5px 30px;
+  font-weight: bold;
+  font-size: 14px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}

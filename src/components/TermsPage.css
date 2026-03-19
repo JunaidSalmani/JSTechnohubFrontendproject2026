@@ -1,0 +1,63 @@
+.terms-container {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+}
+
+.terms-content {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.terms-content h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #1a202c;
+}
+
+.terms-content em {
+  display: block;
+  text-align: center;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.legal-disclaimer {
+  background-color: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.terms-content h3 {
+  font-size: 1.5rem;
+  color: #1a202c;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.terms-content p,
+.terms-content li {
+  line-height: 1.7;
+  margin-bottom: 15px;
+  color: #4a5568;
+}
+
+.terms-content ul {
+  padding-left: 20px;
+}
+
+.terms-content strong {
+  color: #1a202c;
+}

@@ -1,0 +1,65 @@
+/* src/components/CertificationsListPage.css */
+
+.cert-list-container {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0rem 2rem;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cert-list-container h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    color: var(--heading-color);
+    margin-bottom: 4rem;
+    border-bottom: 3px solid var(--primary-color);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    /* Centering the heading block itself */
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cert-list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    /* Create a responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.cert-list-container li {
+   
+    display: flex;
+}
+
+.cert-list-container li a {
+    display: block;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    border-left: 4px solid var(--secondary-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cert-list-container li a:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
