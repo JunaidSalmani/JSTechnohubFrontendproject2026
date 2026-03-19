@@ -1,0 +1,53 @@
+# 📦 Dependencies
+/node_modules
+/.pnp
+.pnp.js
+yarn-error.log
+yarn-debug.log*
+npm-debug.log*
+pnpm-debug.log*
+
+# 🏗️ Production/Build
+/build
+/dist
+/out
+.next/
+.docusaurus/
+
+# 🧪 Testing & Coverage
+/coverage
+*.lcov
+.nyc_output
+
+# 🔐 Environment Variables & Secrets
+# NEVER commit these to GitHub. They contain your private keys!
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# 🖥️ IDE & Editor Settings
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 🍎 OS Specific Files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+
+# 🚀 Deployment & Tools
+.vercel
+.netlify
+.turbo
+.eslintcache
+.stylelintcache
