@@ -23,7 +23,8 @@
 import axios from "axios";
 
 // const API_URL = "https://jstechnohub-backend.onrender.com";
-const API_URL = "https://coachingwebsite-production.up.railway.app";
+// const API_URL = "https://jstechnohubbackend-production.up.railway.app";
+const API_URL = "https://api.jstechnohub.com";
 const api = axios.create({
   baseURL: API_URL,
   headers: {
