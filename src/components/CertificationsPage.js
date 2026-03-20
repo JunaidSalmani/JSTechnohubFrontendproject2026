@@ -6,91 +6,140 @@ import { submitCertificationEnquiry } from "../services/api";
 function CertificationsPage() {
   const { certId } = useParams();
 
- 
   const certificationTitle = certId
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  // Local state for form fields & status
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
-  const [status, setStatus] = useState(null); // success / error
-  const [isSubmitting, setIsSubmitting] = useState(false); // 🚀 new
+  const [status, setStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // 🚀 block button
+    setIsSubmitting(true);
 
     const enquiryPayload = {
       ...formData,
-      certificationName: certificationTitle, 
+      certificationName: certificationTitle,
     };
 
     try {
-      await submitCertificationEnquiry(enquiryPayload); 
+      await submitCertificationEnquiry(enquiryPayload);
       setStatus("success");
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
       console.error("Error submitting enquiry:", err);
       setStatus("error");
     } finally {
-      setIsSubmitting(false); // 🚀 re-enable button
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="cert-detail-container">
       <header className="cert-detail-hero">
-        <h1>{certificationTitle} Certification Training</h1>
-        <p>Master the skills needed to become a certified professional.</p>
+        <div className="hero-content">
+          <span className="badge">Professional Certification</span>
+          <h1>{certificationTitle} Training Program</h1>
+          <p>
+            Bridge the gap between certification and expertise. Gain the
+            technical confidence to lead enterprise-level projects with
+            JSTechnoHub.
+          </p>
+        </div>
       </header>
 
       <div className="cert-detail-main">
         <div className="cert-detail-content">
-          <h2>About This Certification</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+          <section>
+            <h2>About This Certification</h2>
+            <p>
+              The <strong>{certificationTitle}</strong> is a globally recognized
+              credential designed to validate your advanced technical skills and
+              strategic thinking. At JSTechnoHub, our training program bridges
+              the gap between theoretical knowledge and real-world application,
+              ensuring you are prepared for both the certification exam and the
+              challenges of the modern workplace.
+            </p>
+          </section>
 
-          <h3>Course Outline</h3>
-          <ul>
-            <li>Module 1: Introduction to {certificationTitle}</li>
-            <li>Module 2: Core Concepts and Architecture</li>
-            <li>Module 3: Advanced Implementation Techniques</li>
-            <li>Module 4: Security & Compliance Best Practices</li>
-            <li>Module 5: Exam Preparation & Mock Tests</li>
-          </ul>
+          <section>
+            <h3>What You Will Learn</h3>
+            <ul className="learning-list">
+              <li>
+                <strong>Fundamentals & Core Architecture:</strong> Comprehensive
+                deep-dive into the {certificationTitle} framework.
+              </li>
+              <li>
+                <strong>Industry Best Practices:</strong> Learning standard
+                workflows used by top Fortune 500 companies.
+              </li>
+              <li>
+                <strong>Advanced Implementation:</strong> Hands-on labs focusing
+                on configuration, troubleshooting, and optimization.
+              </li>
+              <li>
+                <strong>Strategic Problem Solving:</strong> Analyzing complex
+                scenarios to provide efficient, scalable solutions.
+              </li>
+              <li>
+                <strong>Exam Success Strategy:</strong> Intensive mock exams and
+                focus sessions on high-weightage topics.
+              </li>
+            </ul>
+          </section>
 
-          <h3>Who Should Attend?</h3>
-          <p>
-            This course is designed for professionals seeking to validate their
-            expertise and advance their career. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </p>
+          <section>
+            <h3>Who Should Enroll?</h3>
+            <p>
+              This program is ideal for IT Professionals, System Administrators,
+              Project Managers, and aspiring specialists who want to formalize
+              their skills. Whether you are aiming for a salary hike or
+              transitioning into a specialized role, this course provides the
+              roadmap to your success.
+            </p>
+          </section>
+
+          <section className="features-grid">
+            <div className="feature-item">
+              <h4>Expert-Led</h4>
+              <p>
+                Train under certified instructors with years of industry
+                experience.
+              </p>
+            </div>
+            <div className="feature-item">
+              <h4>Flexible Learning</h4>
+              <p>
+                Interactive sessions designed to fit your professional schedule.
+              </p>
+            </div>
+          </section>
         </div>
 
         <aside className="cert-detail-sidebar">
           <div className="enquiry-form-wrapper-detail">
-            <h3>Request More Info</h3>
+            <h3>Start Your Journey</h3>
+            <p className="form-sub">
+              Enter your details to receive the full syllabus and batch
+              schedule.
+            </p>
 
             <form className="enquiry-form-detail" onSubmit={handleSubmit}>
               <input
                 type="text"
                 name="name"
-                placeholder="Your Name*"
+                placeholder="Full Name*"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -98,7 +147,7 @@ function CertificationsPage() {
               <input
                 type="email"
                 name="email"
-                placeholder="Your Email*"
+                placeholder="Work Email*"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -106,18 +155,17 @@ function CertificationsPage() {
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone Number*"
+                placeholder="Phone Number (WhatsApp)*"
                 value={formData.phone}
                 onChange={handleChange}
                 required
               />
               <textarea
                 name="message"
-                placeholder="Your Message..."
-                rows="5"
+                placeholder="Tell us about your learning goals..."
+                rows="4"
                 value={formData.message}
                 onChange={handleChange}
-                required
               ></textarea>
 
               <button
@@ -125,16 +173,22 @@ function CertificationsPage() {
                 className="btn-submit-detail"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Submitting..." : "Submit"}
+                {isSubmitting
+                  ? "Processing Request..."
+                  : "Request Course Details"}
               </button>
             </form>
 
             {status === "success" && (
-              <p className="success-msg">Enquiry submitted successfully!</p>
+              <div className="status-msg success">
+                ✅ Request received! A{" "}
+                <strong>Technical Program Advisor</strong> will reach out within
+                24 hours.
+              </div>
             )}
             {status === "error" && (
               <p className="error-msg">
-                ❌ Failed to submit enquiry. Please try again.
+                ❌ Error connecting to server. Please call us directly.
               </p>
             )}
           </div>

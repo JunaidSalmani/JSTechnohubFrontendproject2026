@@ -4,6 +4,9 @@
   animation: fadeIn 0.8s ease-in-out;
 }
 
+.cert-detail-container h1 {
+  color: var(--ink);
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
