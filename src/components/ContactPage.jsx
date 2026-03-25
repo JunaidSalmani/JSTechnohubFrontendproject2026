@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import styles from "./ContactPage.module.css";
 
-
-
-import { submitCertificationEnquiry } from "../services/api"; 
-
-
-
+import { submitCertificationEnquiry } from "../services/api";
 
 const ContactHero = () => (
   <div className={styles.contactHeader}>
-   
     <h1>Ready to Start Your Transformation?</h1>
     <p>
       I'm excited to connect. Whether you have a question or are ready to book
@@ -19,7 +13,6 @@ const ContactHero = () => (
     </p>
   </div>
 );
-
 
 const BookingCTA = () => (
   <div className={styles.ctaSection}>
@@ -39,7 +32,6 @@ const BookingCTA = () => (
   </div>
 );
 
-
 const ContactForm = ({ certificationName }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -47,7 +39,7 @@ const ContactForm = ({ certificationName }) => {
     phone: "",
     message: "",
   });
-  const [status, setStatus] = useState(null); 
+  const [status, setStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
@@ -150,7 +142,6 @@ const ContactForm = ({ certificationName }) => {
   );
 };
 
-
 const FAQ = () => (
   <div className={styles.faqSection}>
     <h2>Common Questions</h2>
@@ -174,7 +165,6 @@ const FAQ = () => (
   </div>
 );
 
-
 const ContactPage = () => {
   return (
     <div className={styles.contactPage}>
@@ -186,7 +176,7 @@ const ContactPage = () => {
           <h3>Other Ways to Connect</h3>
           <p>
             <strong>Email:</strong>{" "}
-            <a href="mailto:Juned.salmani835@gmail.com">Email us</a>
+            <a href="mailto:support@jstechnohub.com">support@jstechnohub.com</a>
           </p>
           <p>
             <strong>Follow Me:</strong>
