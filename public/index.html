@@ -5,9 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
 
+    <!-- OpenAI Ads Conversion Pixel -->
+    <script>
+      (function (w, d, s, u) {
+        if (w.oaiq) return;
+
+        var q = function () {
+          q.q.push(arguments);
+        };
+
+        q.q = [];
+        w.oaiq = q;
+
+        var js = d.createElement(s);
+        js.async = true;
+        js.src = u;
+
+        var f = d.getElementsByTagName(s)[0];
+        f.parentNode.insertBefore(js, f);
+      })(
+        window,
+        document,
+        "script",
+        "https://bzrcdn.openai.com/sdk/oaiq.min.js"
+      );
+
+      oaiq("init", {
+        pixelId: "SxEhB5krPASS7ZTBEXptND",
+        debug: true
+      });
+    </script>
+    <!-- End OpenAI Ads Conversion Pixel -->
+
     <title>
       JSTechnoHub | Expert Coaching for Competitive Exams & Skill Development
     </title>
+
     <meta
       name="title"
       content="JSTechnoHub | Expert Coaching for Competitive Exams & Skill Development"
@@ -46,6 +79,7 @@
 
     <link rel="preconnect" href="https://checkout.razorpay.com" />
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run JSTechnoHub.</noscript>
 
