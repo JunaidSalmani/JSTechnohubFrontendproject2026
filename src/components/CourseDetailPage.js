@@ -51,6 +51,23 @@ function CourseDetailPage() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        if (!formData.name.trim() || formData.name.trim().length < 2) {
+            setFormError("Please enter your name (at least 2 characters).");
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email.trim())) {
+            setFormError("Please enter a valid email address.");
+            return;
+        }
+        if (formData.phoneNumber) {
+            const phoneCleaned = formData.phoneNumber.replace(/[^0-9]/g, "");
+            if (phoneCleaned.length > 0 && (phoneCleaned.length < 10 || phoneCleaned.length > 15)) {
+                setFormError("Please enter a valid 10-digit phone number.");
+                return;
+            }
+        }
+
         setFormError(null);
         setSubmitting(true);
 
@@ -177,42 +194,46 @@ function CourseDetailPage() {
                                     <input
                                         type="text"
                                         name="name"
-                                        placeholder="Your Name*"
+                                        placeholder=" "
                                         value={formData.name}
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    <label>Your Name *</label>
                                 </div>
 
                                 <div className="form-group">
                                     <input
                                         type="email"
                                         name="email"
-                                        placeholder="Your Email*"
+                                        placeholder=" "
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    <label>Your Email *</label>
                                 </div>
 
                                 <div className="form-group">
                                     <input
                                         type="tel"
                                         name="phoneNumber"
-                                        placeholder="Phone Number"
+                                        placeholder=" "
                                         value={formData.phoneNumber}
                                         onChange={handleInputChange}
                                     />
+                                    <label>Phone Number</label>
                                 </div>
 
                                 <div className="form-group">
                                     <textarea
                                         name="message"
-                                        placeholder="Your Message"
+                                        placeholder=" "
                                         rows="4"
                                         value={formData.message}
                                         onChange={handleInputChange}
                                     ></textarea>
+                                    <label>Your Message</label>
                                 </div>
 
                                 <button

@@ -17,6 +17,7 @@ import ServicesPage from "./components/ServicesPage";
 import AboutUsPage from "./components/AboutUsPage";
 import CertificationsListPage from "./components/CertificationsListPage";
 import CertificationsPage from "./components/CertificationsPage";
+import PmpBatchesSection from "./components/PmpBatchesSection";
 import AdminAuth from "./components/AdminAuth";
 import AdminPage from "./components/AdminPage";
 import ContactPage from "./components/ContactPage";
@@ -27,6 +28,13 @@ import CancellationPolicyPage from "./components/CancellationPolicyPage";
 import PaymentSuccessPage from "./components/PaymentSuccessPage";
 import InterviewQuestionsPage from "./components/InterveiwQuestionPage";
 import ConsultingServicesPage from "./components/ConsultingServicesPage";
+import PmpServicePage from "./components/PmpServicePage";
+import SapTrainingPage from "./components/SapTrainingPage";
+import AwsTrainingPage from "./components/AwsTrainingPage";
+import DevOpsTrainingPage from "./components/DevOpsTrainingPage";
+import CertificationSupportPage from "./components/CertificationSupportPage";
+import ResumeCareerPage from "./components/ResumeCareerPage";
+import ElasticOverscroll from "./components/ElasticOverscroll";
 import "./App.css";
 
 // ── Cert link data ──────────────────────────────────────────────
@@ -448,6 +456,8 @@ function AppLogic() {
           <Route path="/consulting" element={<ConsultingServicesPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/course/:id" element={<CourseDetail />} />
+          <Route path="/pmp" element={<PmpBatchesSection />} />
+          <Route path="/pmp-certification" element={<PmpBatchesSection />} />
           <Route path="/certifications" element={<CertificationsListPage />} />
           <Route
             path="/certifications/:certId"
@@ -455,6 +465,12 @@ function AppLogic() {
           />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/pmp" element={<PmpServicePage />} />
+          <Route path="/services/sap" element={<SapTrainingPage />} />
+          <Route path="/services/aws" element={<AwsTrainingPage />} />
+          <Route path="/services/devops" element={<DevOpsTrainingPage />} />
+          <Route path="/services/certification-support" element={<CertificationSupportPage />} />
+          <Route path="/services/resume-career" element={<ResumeCareerPage />} />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -492,6 +508,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <ElasticOverscroll />
       <AppLogic />
     </Router>
   );

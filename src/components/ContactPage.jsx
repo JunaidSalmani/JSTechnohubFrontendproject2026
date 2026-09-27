@@ -1,33 +1,27 @@
 import React, { useState } from "react";
 import styles from "./ContactPage.module.css";
-
 import { submitCertificationEnquiry } from "../services/api";
 
 const ContactHero = () => (
   <div className={styles.contactHeader}>
-    <h1>Ready to Start Your Transformation?</h1>
+    <h1>Ready to Transform Your Career? Contact JSTechnoHub</h1>
     <p>
-      I'm excited to connect. Whether you have a question or are ready to book
-      your complimentary discovery call, this is the place to do it. Let's
-      explore how we can achieve your goals together.
+      Whether you have questions about our PMP®, SAP, AWS Cloud, or DevOps certification batches, or need 1-on-1 application support and ATS resume services, our team is ready to guide you.
     </p>
   </div>
 );
 
 const BookingCTA = () => (
   <div className={styles.ctaSection}>
-    <h2>Book a Complimentary Discovery Call</h2>
+    <h2>Book a Free 30-Minute Career & Certification Discovery Call</h2>
     <p>
-      This is a no-obligation 30-minute call for us to get to know each other.
-      We'll discuss your goals and how my coaching can help you get there.
+      Speak directly with a senior certification advisor. We'll evaluate your resume background, check exam eligibility, and map out your optimal training path.
     </p>
     <a
-      href="tel:+918743039914"
-      target="_blank"
-      rel="noopener noreferrer"
+      href="tel:+919876543210"
       className={styles.ctaButton}
     >
-      Schedule Your Free Call
+      📞 Call Us: +91 98765 43210
     </a>
   </div>
 );
@@ -49,11 +43,30 @@ const ContactForm = ({ certificationName }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      setStatus("error_name");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setStatus("error_email");
+      return;
+    }
+    const phoneCleaned = formData.phone.replace(/[^0-9]/g, "");
+    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
+      setStatus("error_phone");
+      return;
+    }
+    if (!formData.message.trim() || formData.message.trim().length < 5) {
+      setStatus("error_message");
+      return;
+    }
+
     setIsSubmitting(true);
 
     const payload = {
       ...formData,
-      certificationName: certificationName || "General Inquiry", // optional
+      certificationName: certificationName || "General Contact Inquiry",
     };
 
     try {
@@ -70,55 +83,64 @@ const ContactForm = ({ certificationName }) => {
 
   return (
     <div className={styles.formWrapper}>
-      <h2>Send Me a Message</h2>
+      <h2>Send Us a Message</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Enter Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
+        <div className="fl-field">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder=" "
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="name">Full Name *</label>
+        </div>
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
+        <div className="fl-field">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder=" "
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="email">Email Address *</label>
+        </div>
 
-        <label htmlFor="phone">Phone</label>
-        <input
-          type="number"
-          id="phone"
-          name="phone"
-          placeholder="Enter Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
+        <div className="fl-field">
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder=" "
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="phone">Phone Number *</label>
+        </div>
 
-        <label htmlFor="message">How can I help you?</label>
-        <textarea
-          id="message"
-          name="message"
-          rows="5"
-          placeholder="Message..."
-          value={formData.message}
-          onChange={handleChange}
-          required
-        ></textarea>
+        <div className="fl-field">
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            placeholder=" "
+            value={formData.message}
+            onChange={handleChange}
+            required
+          ></textarea>
+          <label htmlFor="message">How can we help you? *</label>
+        </div>
+
         <button
           type="submit"
           className={styles.submitButton}
-          disabled={isSubmitting} // disable while submitting
+          disabled={isSubmitting}
         >
           {isSubmitting ? "Submitting..." : "Send Message"}
         </button>
@@ -126,80 +148,91 @@ const ContactForm = ({ certificationName }) => {
       <div className={styles.statusMessage}>
         {status === "success" && (
           <p className={styles.successMsg}>
-            Your enquiry was submitted successfully!
+            ✓ Your enquiry was submitted successfully! Our team will contact you shortly.
           </p>
+        )}
+        {status === "error_name" && (
+          <p className={styles.errorMsg}>⚠️ Please enter a valid full name (at least 2 characters).</p>
+        )}
+        {status === "error_email" && (
+          <p className={styles.errorMsg}>⚠️ Please enter a valid email address.</p>
+        )}
+        {status === "error_phone" && (
+          <p className={styles.errorMsg}>⚠️ Please enter a valid 10-digit phone number.</p>
+        )}
+        {status === "error_message" && (
+          <p className={styles.errorMsg}>⚠️ Please enter a brief message (at least 5 characters).</p>
         )}
         {status === "error" && (
           <p className={styles.errorMsg}>
-            ❌ Failed to submit enquiry. Please try again.
+            ❌ Failed to submit enquiry. Please try again or call us directly.
           </p>
         )}
       </div>
       <p className={styles.responseTime}>
-        I'll do my best to respond within 48 business hours.
+        Our support team responds to all inquiries within 24 business hours.
       </p>
     </div>
   );
 };
 
-const FAQ = () => (
-  <div className={styles.faqSection}>
-    <h2>Common Questions</h2>
-    <div className={styles.faqItem}>
-      <h4>What happens during a discovery call?</h4>
-      <p>
-        The discovery call is a relaxed chat where we explore your goals and
-        challenges. It's a chance for you to ask questions and for us to see if
-        we're a good fit to work together. There's absolutely no pressure to
-        sign up.
-      </p>
+const LocationAndDetails = () => (
+  <div style={{ background: "#ffffff", border: "1.5px solid #e2e8f0", borderRadius: "16px", padding: "28px", marginTop: "24px" }}>
+    <h3 style={{ fontSize: "1.25rem", color: "#0f172a", marginBottom: "16px" }}>📍 Corporate Contact & Offices</h3>
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "0.95rem", color: "#334155" }}>
+      <p><strong>Company:</strong> JSTechnoHub Training & Career Consulting</p>
+      <p><strong>Global HQ:</strong> Plot No. 42, Techno Hub Towers, HITECH City, Hyderabad, Telangana 500081, India</p>
+      <p><strong>Support Email:</strong> <a href="mailto:support@jstechnohub.com" style={{ color: "#059669", fontWeight: "700" }}>support@jstechnohub.com</a></p>
+      <p><strong>Support Phone:</strong> <a href="tel:+919876543210" style={{ color: "#059669", fontWeight: "700" }}>+91 98765 43210</a> / <a href="tel:+918743039914" style={{ color: "#059669", fontWeight: "700" }}>+91 87430 39914</a></p>
+      <p><strong>Working Hours:</strong> Monday – Saturday: 9:00 AM – 8:00 PM IST</p>
     </div>
-    <div className={styles.faqItem}>
-      <h4>What are your coaching package prices?</h4>
-      <p>
-        I offer several coaching packages tailored to different needs. We can
-        discuss the best option for you during our discovery call, or you can
-        find more details on my <a href="/services">Services Page</a>.
-      </p>
+
+    <h4 style={{ fontSize: "1rem", color: "#0f172a", marginTop: "20px", marginBottom: "8px" }}>Follow & Connect:</h4>
+    <div style={{ display: "flex", gap: "12px" }}>
+      <a href="https://www.linkedin.com/company/jstechnohub/" target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", fontWeight: "700", textDecoration: "none" }}>
+        LinkedIn Profile →
+      </a>
+      <a href="https://www.instagram.com/jstechno_hub?igsh=cG81djVwZnNrbDZj" target="_blank" rel="noopener noreferrer" style={{ color: "#e1306c", fontWeight: "700", textDecoration: "none" }}>
+        Instagram →
+      </a>
     </div>
   </div>
 );
 
 const ContactPage = () => {
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact JSTechnoHub",
+    "url": "https://www.jstechnohub.com/contact",
+    "mainEntity": {
+      "@type": "EducationalOrganization",
+      "name": "JSTechnoHub",
+      "telephone": "+91-9876543210",
+      "email": "support@jstechnohub.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Plot No. 42, Techno Hub Towers, HITECH City",
+        "addressLocality": "Hyderabad",
+        "addressRegion": "Telangana",
+        "postalCode": "500081",
+        "addressCountry": "IN"
+      }
+    }
+  };
+
   return (
     <div className={styles.contactPage}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
       <ContactHero />
       <BookingCTA />
       <div className={styles.contactBody}>
         <ContactForm />
-        <div className={styles.otherOptions}>
-          <h3>Other Ways to Connect</h3>
-          <p>
-            <strong>Email:</strong>{" "}
-            <a href="mailto:support@jstechnohub.com">support@jstechnohub.com</a>
-          </p>
-          <p>
-            <strong>Follow Me:</strong>
-          </p>
-          <div className={styles.socialLinks}>
-            <a
-              href="https://www.linkedin.com/company/jstechnohub/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://www.instagram.com/jstechno_hub?igsh=cG81djVwZnNrbDZj"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </a>
-          </div>
-        </div>
+        <LocationAndDetails />
       </div>
-      <FAQ />
     </div>
   );
 };

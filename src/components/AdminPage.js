@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import {
   getAllCourses,
   createCourse,
@@ -8,6 +9,10 @@ import {
   toggleEnquiryClarified,
   getAllReviews,
   toggleReviewApproval,
+  getAllBatches,
+  createBatch,
+  updateBatch,
+  deleteBatch,
 } from "../services/api";
 import "./AdminPage.css";
 import InterviewQuestionForm from "./InterviewQuestionForm";
@@ -22,6 +27,14 @@ const Icon = ({ name, size = 16 }) => {
       <>
         <rect x="2" y="3" width="20" height="14" rx="2" />
         <path d="M8 21h8M12 17v4" />
+      </>
+    ),
+    calendar: (
+      <>
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
       </>
     ),
     add: (
@@ -138,9 +151,23 @@ const EMPTY_COURSE = {
   timings: "",
 };
 
+const EMPTY_BATCH = {
+  dates: "",
+  monthName: "",
+  timing: "",
+  timingType: "Morning Batch",
+  dayType: "Weekend Batch | 8 Sessions",
+  trainer: "JSTechnoHub Senior PMP® Trainer",
+  venue: "Live Virtual Class",
+  price: 9999,
+  mrp: 19999,
+  discount: "50% OFF",
+};
+
 const TABS = [
   { id: "dashboard", label: "Overview", icon: "dashboard" },
   { id: "enquiries", label: "Enquiries", icon: "enquiries" },
+  { id: "batches", label: "Training Batches", icon: "calendar" },
   { id: "existing", label: "Courses", icon: "courses" },
   { id: "manage", label: "Add / Edit", icon: "add" },
   { id: "interviewQuestions", label: "IQ Bank", icon: "questions" },
@@ -204,84 +231,82 @@ const CourseForm = ({ initialCourse, isEditing, onSave, onCancel }) => {
         }}
       >
         <div className="cf-group">
-          <label className="cf-label">
-            Course Title <span className="cf-req">*</span>
-          </label>
           <input
             className="cf-input"
             type="text"
             name="title"
             value={course.title || ""}
             onChange={handleChange}
-            placeholder="e.g. Advanced Salesforce CRM"
+            placeholder=" "
             required
           />
+          <label className="cf-label">
+            Course Title <span className="cf-req">*</span>
+          </label>
         </div>
         <div className="cf-group">
-          <label className="cf-label">
-            Description <span className="cf-req">*</span>
-          </label>
           <textarea
             className="cf-input cf-textarea"
             name="description"
             value={course.description || ""}
             onChange={handleChange}
-            placeholder="What will students learn?"
+            placeholder=" "
             rows={4}
             required
           />
+          <label className="cf-label">
+            Description <span className="cf-req">*</span>
+          </label>
         </div>
         <div className="cf-row">
           <div className="cf-group">
+            <input
+              className="cf-input"
+              type="number"
+              name="price"
+              value={course.price || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
             <label className="cf-label">
-              Price (INR) <span className="cf-req">*</span>
+              Price (INR ₹) <span className="cf-req">*</span>
             </label>
-            <div className="cf-prefix-wrap">
-              <span className="cf-prefix">₹</span>
-              <input
-                className="cf-input cf-prefix-input"
-                type="number"
-                name="price"
-                value={course.price || ""}
-                onChange={handleChange}
-                placeholder="4999"
-                required
-              />
-            </div>
           </div>
           <div className="cf-group">
-            <label className="cf-label">Duration</label>
             <input
               className="cf-input"
               type="text"
               name="duration"
               value={course.duration || ""}
               onChange={handleChange}
-              placeholder="e.g. 8 Weeks"
+              placeholder=" "
             />
+            <label className="cf-label">Duration</label>
           </div>
         </div>
         <div className="cf-row">
           <div className="cf-group">
-            <label className="cf-label">Start Date</label>
             <input
               className="cf-input"
               type="date"
               name="startDate"
               value={course.startDate || ""}
               onChange={handleChange}
+              placeholder=" "
             />
+            <label className="cf-label">Start Date</label>
           </div>
           <div className="cf-group">
-            <label className="cf-label">Timings</label>
             <input
               className="cf-input"
               type="text"
               name="timings"
               value={course.timings || ""}
               onChange={handleChange}
-              placeholder="e.g. 7–9 PM IST"
+              placeholder=" "
             />
+            <label className="cf-label">Timings</label>
           </div>
         </div>
         <div className="cf-actions">
@@ -298,25 +323,222 @@ const CourseForm = ({ initialCourse, isEditing, onSave, onCancel }) => {
   );
 };
 
-/* ─── Main AdminPage ─────────────────────────────────────────── */
-function AdminPage() {
-  const [activeTab, setActiveTab] = useState("dashboard");
+/* ─── Batch form ────────────────────────────────────────────── */
+const BatchForm = ({ initialBatch, isEditing, onSave, onCancel }) => {
+  const [batch, setBatch] = useState({ ...EMPTY_BATCH, ...initialBatch });
+
+  useEffect(
+    () => setBatch({ ...EMPTY_BATCH, ...initialBatch }),
+    [initialBatch]
+  );
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setBatch((p) => ({ ...p, [name]: value }));
+  };
+
+  return (
+    <div className="panel animate-in">
+      <div className="panel-head">
+        <div className="panel-head-left">
+          <div className="panel-icon" style={{ "--accent": "#10b981" }}>
+            <Icon name={isEditing ? "edit" : "add"} size={18} />
+          </div>
+          <div>
+            <h2 className="panel-title">
+              {isEditing ? "Edit Training Batch" : "Create New Training Batch"}
+            </h2>
+            <p className="panel-sub">
+              {isEditing
+                ? "Update batch dates, timings and schedule"
+                : "Fill in schedule details to publish a new training batch"}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <form
+        className="course-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSave(batch);
+        }}
+      >
+        <div className="cf-row">
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="text"
+              name="dates"
+              value={batch.dates || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">
+              Batch Dates (e.g. Oct 10 - Nov 01) <span className="cf-req">*</span>
+            </label>
+          </div>
+
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="text"
+              name="monthName"
+              value={batch.monthName || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">
+              Month & Year (e.g. Oct 2026) <span className="cf-req">*</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="cf-row">
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="text"
+              name="timing"
+              value={batch.timing || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">
+              Class Timing (e.g. 07:00 PM - 11:30 PM IST) <span className="cf-req">*</span>
+            </label>
+          </div>
+
+          <div className="cf-group">
+            <select
+              className="cf-input"
+              name="timingType"
+              value={batch.timingType || "Morning Batch"}
+              onChange={handleChange}
+              required
+            >
+              <option value="Morning Batch">Morning Batch</option>
+              <option value="Evening Batch">Evening Batch</option>
+            </select>
+            <label className="cf-label">Batch Slot Type</label>
+          </div>
+        </div>
+
+        <div className="cf-row">
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="text"
+              name="dayType"
+              value={batch.dayType || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">Schedule Type (e.g. Weekend Batch | 8 Sessions)</label>
+          </div>
+
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="text"
+              name="trainer"
+              value={batch.trainer || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">Trainer / Instructor Name</label>
+          </div>
+        </div>
+
+        <div className="cf-row">
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="number"
+              name="price"
+              value={batch.price || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">Offer Price (₹)</label>
+          </div>
+
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="number"
+              name="mrp"
+              value={batch.mrp || ""}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label className="cf-label">Original MRP (₹)</label>
+          </div>
+
+          <div className="cf-group">
+            <input
+              className="cf-input"
+              type="text"
+              name="discount"
+              value={batch.discount || ""}
+              onChange={handleChange}
+              placeholder=" "
+            />
+            <label className="cf-label">Discount Badge (e.g. 50% OFF)</label>
+          </div>
+        </div>
+
+        <div className="cf-actions">
+          <button type="button" className="btn-ghost" onClick={onCancel}>
+            Cancel
+          </button>
+          <button type="submit" className="btn-primary">
+            <Icon name={isEditing ? "check" : "plus"} size={15} />
+            {isEditing ? "Update Batch" : "Publish Batch"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const AdminPage = ({ onLogout }) => {
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem("adminActiveTab") || "dashboard";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("adminActiveTab", activeTab);
+  }, [activeTab]);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [batches, setBatches] = useState([]);
   const [enquiries, setEnquiries] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentCourse, setCurrentCourse] = useState(EMPTY_COURSE);
   const [isEditing, setIsEditing] = useState(false);
+  const [currentBatch, setCurrentBatch] = useState(EMPTY_BATCH);
+  const [isEditingBatch, setIsEditingBatch] = useState(false);
+  const [isAddingBatch, setIsAddingBatch] = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
 
   const fetchAllData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const [c, e, r] = await Promise.allSettled([
+      const [c, e, r, b] = await Promise.allSettled([
         getAllCourses(),
         getAllEnquiries(),
         getAllReviews(),
+        getAllBatches(),
       ]);
       if (c.status === "fulfilled") setCourses(c.value.data || []);
       if (e.status === "fulfilled") {
@@ -327,6 +549,7 @@ function AdminPage() {
         setEnquiries(sorted);
       }
       if (r.status === "fulfilled") setReviews(r.value.data || []);
+      if (b.status === "fulfilled") setBatches(b.value.data || []);
     } catch (err) {
       console.error("fetchAllData error:", err);
     } finally {
@@ -365,9 +588,23 @@ function AdminPage() {
   };
 
   const handleSaveCourse = async (courseData) => {
+    if (!courseData.title || courseData.title.trim().length < 3) {
+      alert("Validation Error: Please enter a course title (at least 3 characters).");
+      return;
+    }
+    if (!courseData.description || courseData.description.trim().length < 10) {
+      alert("Validation Error: Please enter a course description (at least 10 characters).");
+      return;
+    }
+    const numPrice = parseFloat(courseData.price);
+    if (isNaN(numPrice) || numPrice <= 0) {
+      alert("Validation Error: Please enter a valid positive course price.");
+      return;
+    }
+
     const finalData = {
       ...courseData,
-      price: parseFloat(courseData.price) || 0,
+      price: numPrice,
     };
     try {
       if (isEditing) await updateCourse(finalData.id, finalData);
@@ -386,6 +623,48 @@ function AdminPage() {
         setCourses((p) => p.filter((c) => c.id !== id));
       } catch {
         alert("Error: Could not delete course.");
+      }
+    }
+  };
+
+  const handleSaveBatch = async (batchData) => {
+    if (!batchData.dates || batchData.dates.trim().length < 2) {
+      alert("Validation Error: Please enter batch dates.");
+      return;
+    }
+    if (!batchData.monthName || batchData.monthName.trim().length < 2) {
+      alert("Validation Error: Please enter month & year.");
+      return;
+    }
+    if (!batchData.timing || batchData.timing.trim().length < 2) {
+      alert("Validation Error: Please enter class timing.");
+      return;
+    }
+
+    try {
+      if (isEditingBatch) {
+        await updateBatch(batchData.id, batchData);
+      } else {
+        await createBatch(batchData);
+      }
+      setIsEditingBatch(false);
+      setIsAddingBatch(false);
+      setCurrentBatch(EMPTY_BATCH);
+      fetchAllData();
+    } catch (err) {
+      console.error("Error saving batch:", err);
+      alert("Error: Could not save training batch.");
+    }
+  };
+
+  const handleDeleteBatch = async (id) => {
+    if (window.confirm("Permanently delete this training batch schedule?")) {
+      try {
+        await deleteBatch(id);
+        setBatches((prev) => prev.filter((b) => b.id !== id));
+      } catch (err) {
+        console.error("Error deleting batch:", err);
+        alert("Error: Could not delete training batch.");
       }
     }
   };
@@ -423,13 +702,16 @@ function AdminPage() {
     <div className={`adm ${sidebarOpen ? "adm--sidebar-open" : ""}`}>
       {/* ── Sidebar ── */}
       <aside className="adm-sidebar">
-        <div className="adm-sidebar-logo">
-          <span className="adm-logo-js">JS</span>
-          <span className="adm-logo-t">T</span>
-          <span className="adm-logo-rest">echno</span>
-          <span className="adm-logo-h">H</span>
-          <span className="adm-logo-rest">ub</span>
-        </div>
+        <Link to="/" className="adm-sidebar-logo" title="Return to JSTechnoHub Homepage">
+          <img src="/JSlogo.png" alt="JSTechnoHub" className="adm-sidebar-logo-img" />
+          <span className="adm-logo-text">
+            <span className="adm-logo-js">JS</span>
+            <span className="adm-logo-t">T</span>
+            <span className="adm-logo-rest">echno</span>
+            <span className="adm-logo-h">H</span>
+            <span className="adm-logo-rest">ub</span>
+          </span>
+        </Link>
 
         <div className="adm-sidebar-section">
           <p className="adm-sidebar-section-label">Main Menu</p>
@@ -804,7 +1086,7 @@ function AdminPage() {
                   ) : (
                     <div className="course-grid">
                       {courses.map((c) => (
-                        <div key={c.id} className="course-card">
+                        <div key={c.id} className="adm-course-card">
                           <div className="cc-top">
                             <div className="cc-avatar">
                               {(c.title || "C")[0]}
@@ -851,6 +1133,105 @@ function AdminPage() {
                 </div>
               )}
 
+              {/* ── TRAINING BATCHES MANAGEMENT ── */}
+              {activeTab === "batches" && (
+                <div>
+                  {isAddingBatch || isEditingBatch ? (
+                    <BatchForm
+                      initialBatch={currentBatch}
+                      isEditing={isEditingBatch}
+                      onSave={handleSaveBatch}
+                      onCancel={() => {
+                        setIsAddingBatch(false);
+                        setIsEditingBatch(false);
+                        setCurrentBatch(EMPTY_BATCH);
+                      }}
+                    />
+                  ) : (
+                    <div className="panel animate-in">
+                      <div className="panel-head" style={{ justifyContent: "space-between", alignItems: "center" }}>
+                        <div className="panel-head-left">
+                          <div className="panel-icon" style={{ "--accent": "#10b981" }}>
+                            <Icon name="calendar" size={18} />
+                          </div>
+                          <div>
+                            <h2 className="panel-title">Training Batches Management</h2>
+                            <p className="panel-sub">
+                              {batches.length} total scheduled batches live in the database
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          className="btn-primary"
+                          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                          onClick={() => {
+                            setCurrentBatch(EMPTY_BATCH);
+                            setIsEditingBatch(false);
+                            setIsAddingBatch(true);
+                          }}
+                        >
+                          <Icon name="plus" size={15} /> Add New Batch
+                        </button>
+                      </div>
+
+                      {batches.length === 0 ? (
+                        <p className="empty-msg">No training batches found. Click "Add New Batch" to create one.</p>
+                      ) : (
+                        <div className="courses-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "1.25rem", marginTop: "1rem" }}>
+                          {batches.map((b) => (
+                            <div key={b.id} className="course-card" style={{ borderTop: "4px solid #10b981" }}>
+                              <div className="cc-header">
+                                <div>
+                                  <span className="badge badge-resolved" style={{ marginBottom: "0.4rem", display: "inline-block" }}>
+                                    {b.monthName || "Upcoming Batch"}
+                                  </span>
+                                  <h3 className="cc-title" style={{ fontSize: "1.1rem", fontWeight: "700" }}>
+                                    {b.dates}
+                                  </h3>
+                                </div>
+                                {b.discount && (
+                                  <span className="badge badge-converted" style={{ backgroundColor: "#ecfdf5", color: "#059669" }}>
+                                    {b.discount}
+                                  </span>
+                                )}
+                              </div>
+                              <div style={{ fontSize: "0.85rem", color: "#4b5563", margin: "0.75rem 0", display: "flex", flexDirection: "column", gap: "4px" }}>
+                                <p><strong>Timing:</strong> {b.timing}</p>
+                                <p><strong>Slot:</strong> {b.timingType} ({b.dayType})</p>
+                                <p><strong>Trainer:</strong> {b.trainer}</p>
+                                <p><strong>Venue:</strong> {b.venue}</p>
+                                <p style={{ marginTop: "4px" }}>
+                                  <strong>Price:</strong> <span style={{ color: "#059669", fontWeight: "700" }}>₹{b.price?.toLocaleString()}</span>{" "}
+                                  {b.mrp && <span style={{ textDecoration: "line-through", color: "#9ca3af", fontSize: "0.8rem" }}>₹{b.mrp?.toLocaleString()}</span>}
+                                </p>
+                              </div>
+                              <div className="cc-actions">
+                                <button
+                                  className="btn-edit"
+                                  onClick={() => {
+                                    setCurrentBatch(b);
+                                    setIsEditingBatch(true);
+                                    setIsAddingBatch(false);
+                                  }}
+                                >
+                                  <Icon name="edit" size={13} /> Edit
+                                </button>
+                                <button
+                                  className="btn-delete"
+                                  onClick={() => handleDeleteBatch(b.id)}
+                                >
+                                  <Icon name="trash" size={13} /> Delete
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* ── ADD / EDIT COURSE ── */}
               {activeTab === "manage" && (
                 <CourseForm
@@ -862,27 +1243,7 @@ function AdminPage() {
               )}
 
               {/* ── INTERVIEW QUESTIONS ── */}
-              {activeTab === "interviewQuestions" && (
-                <div className="panel animate-in">
-                  <div className="panel-head">
-                    <div className="panel-head-left">
-                      <div
-                        className="panel-icon"
-                        style={{ "--accent": "#34D399" }}
-                      >
-                        <Icon name="questions" size={18} />
-                      </div>
-                      <div>
-                        <h2 className="panel-title">Interview Question Bank</h2>
-                        <p className="panel-sub">
-                          Manage questions shown to candidates
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <InterviewQuestionForm />
-                </div>
-              )}
+              {activeTab === "interviewQuestions" && <InterviewQuestionForm />}
 
               {/* ── REVIEWS ── */}
               {activeTab === "reviews" && (

@@ -47,14 +47,16 @@ function BlogPage() {
                 {/* Sidebar */}
                 <aside className="blog-sidebar">
                     <div className="sidebar-widget">
-                        <h3 className="sidebar-title">Search Articles</h3>
-                        <input 
-                            type="text" 
-                            placeholder="Type to search..." 
-                            className="search-input"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                        <div className="fl-field">
+                            <input 
+                                type="text" 
+                                placeholder=" " 
+                                className="search-input"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <label>Search Articles...</label>
+                        </div>
                     </div>
                     <div className="sidebar-widget">
                         <h3 className="sidebar-title">Categories</h3>

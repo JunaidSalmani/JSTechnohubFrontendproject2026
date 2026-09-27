@@ -104,8 +104,7 @@ const PricingCard = ({ plan, isCombo, handlePayment }) => (
                     <li key={index}>{feature}</li>
                 ))}
             </ul>
-            {/* <button className="buy-button" onClick={() => handlePayment(plan)}>BUY NOW</button> */}
-                <button className="buy-button" onClick={() => window.location.href = 'tel:+918743039914'}>BUY NOW</button>
+            <button className="buy-button" onClick={() => handlePayment(plan)}>BUY NOW</button>
 
         </div>
     </div>
@@ -132,7 +131,8 @@ function ResumePage() {
     const handleRazorpayPayment = (plan, userId, name, email, mobile) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const orderRes = await createOrder({ userId, amount: plan.price });
+                const numericAmount = parseFloat(String(plan.price).replace(/,/g, "")) || 0;
+                const orderRes = await createOrder({ userId, amount: numericAmount });
                 const order = orderRes.data;
 
                 const options = {

@@ -92,21 +92,25 @@ function InterviewQuestionsPage() {
                 {/* --- SIDEBAR FOR FILTERS --- */}
                 <aside className="iq-sidebar">
                     <div className="sidebar-widget">
-                        <h3 className="sidebar-title">Search</h3>
-                        <input 
-                            type="text" 
-                            placeholder="Search questions..." 
-                            className="iq-search"
-                            value={searchTerm}
-                            onChange={e => {
-                                setSearchTerm(e.target.value);
-                                setCurrentPage(1); // Reset page on new search
-                            }}
-                        />
+                        <div className="fl-field">
+                            <input 
+                                type="text" 
+                                placeholder=" " 
+                                className="iq-search"
+                                value={searchTerm}
+                                onChange={e => {
+                                    setSearchTerm(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                            />
+                            <label>Search questions...</label>
+                        </div>
                     </div>
                     <div className="sidebar-widget">
                         <h3 className="sidebar-title">Categories</h3>
-                        <div className="category-buttons">
+                        
+                        {/* Desktop category list */}
+                        <div className="category-buttons desktop-only">
                             {categories.map(cat => (
                                 <button 
                                     key={cat} 
@@ -116,6 +120,23 @@ function InterviewQuestionsPage() {
                                     {cat}
                                 </button>
                             ))}
+                        </div>
+
+                        {/* Mobile category select dropdown */}
+                        <div className="category-select-wrapper mobile-only">
+                            <select
+                                className="category-select"
+                                value={selectedCategory}
+                                onChange={(e) => handleCategoryChange(e.target.value)}
+                                aria-label="Filter by category"
+                            >
+                                {categories.map(cat => (
+                                    <option key={cat} value={cat}>
+                                        {cat === 'All' ? 'All Categories' : cat}
+                                    </option>
+                                ))}
+                            </select>
+                            <span className="select-chevron">&#9660;</span>
                         </div>
                     </div>
                 </aside>

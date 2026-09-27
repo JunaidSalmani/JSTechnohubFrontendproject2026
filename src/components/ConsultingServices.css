@@ -161,10 +161,10 @@
 .cs-hero-desc {
   font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.72;
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.88);
   max-width: 460px;
   margin-bottom: 40px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .cs-hero-actions {
@@ -899,8 +899,8 @@
 
 .cs-cta-slots {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.38);
-  font-weight: 300;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 400;
   text-align: right;
   max-width: 220px;
   line-height: 1.4;

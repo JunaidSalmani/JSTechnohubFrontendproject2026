@@ -1,12 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./HomePage.css"; 
+import "./HomePage.css";
 import { addReview, getPublicReviews } from "../services/api";
 
+// SVG Icons
+const StarIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" strokeWidth="1">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const ArrowRightIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
+const AwardIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="8" r="7" />
+    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+  </svg>
+);
+
+const UsersIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const ZapIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
 const StarRating = ({ rating }) => (
-  <div className="star-rating">
+  <div className="hp-star-rating">
     {[...Array(5)].map((_, i) => (
-      <span key={i} className={i < rating ? "filled" : ""}>
+      <span key={i} className={i < rating ? "filled" : "empty"}>
         ★
       </span>
     ))}
@@ -20,6 +62,7 @@ const ReviewFormModal = ({ onSubmit, onClose }) => {
     message: "",
     rating: 5,
   });
+  const [err, setErr] = useState("");
 
   const handleChange = (e) => {
     setNewReview({ ...newReview, [e.target.name]: e.target.value });
@@ -27,55 +70,82 @@ const ReviewFormModal = ({ onSubmit, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErr("");
+    if (!newReview.name.trim() || newReview.name.trim().length < 2) {
+      setErr("Please enter your full name (at least 2 characters).");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newReview.email.trim())) {
+      setErr("Please enter a valid email address.");
+      return;
+    }
+    if (!newReview.message.trim() || newReview.message.trim().length < 5) {
+      setErr("Please write a brief feedback message (at least 5 characters).");
+      return;
+    }
     onSubmit(newReview);
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>
+    <div className="hp-modal-overlay" onClick={onClose}>
+      <div className="hp-modal-box" onClick={(e) => e.stopPropagation()}>
+        <button className="hp-modal-close" onClick={onClose}>
           &times;
         </button>
         <h3>Write a Review</h3>
-        <p>Share your experience to help others on their career journey.</p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Full Name"
-            value={newReview.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            value={newReview.email}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="message"
-            placeholder="Your feedback..."
-            value={newReview.message}
-            rows="4"
-            onChange={handleChange} // important!
-            required
-          />
-          <select
-            name="rating"
-            value={newReview.rating}
-            onChange={handleChange}
-          >
-            {[5, 4, 3, 2, 1].map((r) => (
-              <option key={r} value={r}>
-                {r} Stars
-              </option>
-            ))}
-          </select>
-          <button type="submit" className="btn btn-primary">
-            Submit Review
+        <p>Share your experience to guide fellow professionals on their learning journey.</p>
+        {err && <div className="hp-err-alert">⚠️ {err}</div>}
+        <form onSubmit={handleSubmit} className="hp-modal-form">
+          <div className="fl-field">
+            <input
+              type="text"
+              name="name"
+              placeholder=" "
+              value={newReview.name}
+              onChange={handleChange}
+              required
+            />
+            <label>Full Name *</label>
+          </div>
+          <div className="fl-field">
+            <input
+              type="email"
+              name="email"
+              placeholder=" "
+              value={newReview.email}
+              onChange={handleChange}
+              required
+            />
+            <label>Work Email *</label>
+          </div>
+          <div className="fl-field">
+            <textarea
+              name="message"
+              placeholder=" "
+              value={newReview.message}
+              rows="4"
+              onChange={handleChange}
+              required
+            />
+            <label>Your Review & Feedback *</label>
+          </div>
+          <div className="fl-field">
+            <select
+              name="rating"
+              value={newReview.rating}
+              onChange={handleChange}
+            >
+              <option value="5">5 / 5 - Excellent</option>
+              <option value="4">4 / 5 - Very Good</option>
+              <option value="3">3 / 5 - Good</option>
+              <option value="2">2 / 5 - Average</option>
+              <option value="1">1 / 5 - Poor</option>
+            </select>
+            <label>Rating Score</label>
+          </div>
+          <button type="submit" className="hp-btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+            Submit Review for Approval
           </button>
         </form>
       </div>
@@ -89,29 +159,29 @@ function HomePage() {
 
   useEffect(() => {
     getPublicReviews()
-      .then((res) => setReviews(res.data))
-      .catch((err) => console.error("Failed to fetch reviews:", err));
+      .then((res) => setReviews(res.data || []))
+      .catch((err) => console.error("Failed to fetch public reviews:", err));
 
-    const sections = document.querySelectorAll(".homepage section");
+    const sections = document.querySelectorAll(".hp-section, .hp-hero-section");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            entry.target.classList.add("hp-visible");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
-    sections.forEach((section) => observer.observe(section));
-    return () => sections.forEach((section) => observer.unobserve(section));
+    sections.forEach((sec) => observer.observe(sec));
+    return () => sections.forEach((sec) => observer.unobserve(sec));
   }, []);
 
   const handleAddReview = (reviewData) => {
     addReview(reviewData)
       .then(() => {
-        alert("Thank you! Your review has been submitted for approval.");
+        alert("Thank you! Your review has been submitted successfully for approval.");
         setIsReviewModalOpen(false);
       })
       .catch((err) => {
@@ -120,285 +190,319 @@ function HomePage() {
       });
   };
 
-  useEffect(() => {
-    const sections = document.querySelectorAll(".homepage section");
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@type": ["EducationalOrganization", "LocalBusiness"],
+    "name": "JSTechnoHub",
+    "url": "https://www.jstechnohub.com",
+    "description": "Global professional training institute and career accelerator specializing in PMP, SAP, AWS Cloud, DevOps, Certification Application Support, and ATS Resume Writing.",
+    "telephone": "+91-9876543210",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Plot No. 42, Techno Hub Towers, HITECH City",
+      "addressLocality": "Hyderabad",
+      "addressRegion": "Telangana",
+      "postalCode": "500081",
+      "addressCountry": "IN"
+    }
+  };
 
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.15,
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target); // Stop observing once animated
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => {
-      sections.forEach((section) => {
-        observer.unobserve(section);
-      });
-    };
-  }, []);
+  const SPECIALIZATIONS = [
+    {
+      id: "pmp",
+      title: "PMP® Certification Training",
+      tag: "PMI® Authorized 35 Hours",
+      desc: "Comprehensive PMP® Exam prep aligned with PMI® ECO 2026, 1,500+ situational questions, and Gen AI prompt engineering.",
+      link: "/services/pmp",
+      badge: "35 Contact Hours"
+    },
+    {
+      id: "sap",
+      title: "SAP ERP Modules & S/4HANA",
+      tag: "Enterprise ERP",
+      desc: "Hands-on SAP FICO, MM, SD, and S/4HANA migration training with 24/7 remote SAP GUI server access.",
+      link: "/services/sap",
+      badge: "Live Server Access"
+    },
+    {
+      id: "aws",
+      title: "AWS Cloud Architecture",
+      tag: "Cloud Engineering",
+      desc: "Master AWS VPC subnets, IAM security, EC2, S3, RDS, and serverless Lambda in real AWS sandbox accounts.",
+      link: "/services/aws",
+      badge: "100% Console Labs"
+    },
+    {
+      id: "devops",
+      title: "DevOps & CI/CD Automation",
+      tag: "Infrastructure as Code",
+      desc: "Build automated deployment pipelines using Docker, Kubernetes, Jenkins, Terraform, and Prometheus.",
+      link: "/services/devops",
+      badge: "Real Production Pipelines"
+    },
+    {
+      id: "support",
+      title: "1-on-1 Certification Support",
+      tag: "Audit Clearance Guarantee",
+      desc: "Step-by-step guidance for experience mapping, application submission, audit package clearance, and voucher savings.",
+      link: "/services/certification-support",
+      badge: "48-Hr Audit Clearance"
+    },
+    {
+      id: "resume",
+      title: "ATS Resume & LinkedIn Optimization",
+      tag: "Career Transformation",
+      desc: "Transform your resume into a 100% ATS-compliant job asset and rank high in recruiter LinkedIn searches.",
+      link: "/services/resume-career",
+      badge: "3x Callbacks Guaranteed"
+    }
+  ];
 
   return (
-    <div className="homepage">
-      {" "}
-      <section className="mb-12">
-        {" "}
-        <h1 className="text-4xl font-bold mb-4">
-          {" "}
-          Unlock Your Career Potential with Expert Coaching & Certifications
-        </h1>
-        <p>
-          Welcome to our professional training and career development platform.
-          Whether you are a fresher just starting your journey, a working
-          professional looking to upskill, or a leader preparing for senior
-          management roles, we are here to support you every step of the way.
-        </p>
-        <p className="mt-4">
-          Our institute combines industry-recognized certifications, modern
-          technology training, and career-focused services like Resume Writing,
-          Cover Letter Drafting, and LinkedIn Profile Optimization. We ensure
-          you stand out in competitive job markets with globally accepted
-          credentials and a powerful professional brand.
-        </p>
+    <div className="hp-wrapper">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
+      />
+
+      {/* ════════════════════ 1. HERO SECTION ════════════════════ */}
+      <section className="hp-hero-section hp-visible">
+        <div className="hp-container">
+          <div className="hp-hero-content">
+            <div className="hp-hero-badge">
+              <ZapIcon /> PMI® Authorized Partner & Global Career Accelerator
+            </div>
+
+            <h1 className="hp-hero-title">
+              Unlock Professional Success with <span className="hp-gradient-text">JSTechnoHub Certifications</span> & Hands-On Training
+            </h1>
+
+            <p className="hp-hero-sub">
+              <strong>JSTechnoHub</strong> is a global professional training institute and career accelerator specializing in PMI® PMP®, SAP S/4HANA, AWS Cloud, DevOps CI/CD, 1-on-1 Certification Audit Support, and ATS Resume Optimization.
+            </p>
+
+            {/* Stat Counters Row */}
+            <div className="hp-stats-row">
+              <div className="hp-stat-chip">
+                <UsersIcon /> <span>1,200+ Students Certified</span>
+              </div>
+              <div className="hp-stat-chip">
+                <AwardIcon /> <span>98.4% Exam Pass Rate</span>
+              </div>
+              <div className="hp-stat-chip">
+                <StarIcon /> <span>4.9/5 Average Rating</span>
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="hp-hero-ctas">
+              <Link to="/services" className="hp-btn-primary">
+                Explore All 6 Specialized Services <ArrowRightIcon />
+              </Link>
+              <Link to="/courses" className="hp-btn-secondary">
+                View Training Schedule
+              </Link>
+              <Link to="/services/resume-career" className="hp-btn-outline">
+                ATS Resume Services
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
-      {/* About Section */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">Who We Are</h2>
-        <p>
-          We are a team of certified trainers, industry professionals, and
-          career consultants with years of experience across IT, Management,
-          Finance, and Business domains. Our mission is simple: empower
-          individuals with the right skills, the right certifications, and the
-          right presentation of their achievements.
-        </p>
-        <p className="mt-3">
-          From technical training in <strong>SQL, Java, VMware, CCNA</strong>
-          to business-focused certifications like{" "}
-          <strong>CBAP, CAPM, and CIA</strong>, we offer a wide variety of
-          programs tailored to different career paths.
-        </p>
-        <p className="mt-3">
-          Additionally, our career-building services such as professional
-          resumes, ATS-friendly cover letters, and search-engine-optimized
-          LinkedIn profiles have helped thousands secure global opportunities.
-        </p>
+
+      {/* ════════════════════ 2. HIGHLIGHTS RIBBON ════════════════════ */}
+      <div className="hp-ribbon-bar">
+        <div className="hp-container hp-ribbon-grid">
+          <div className="hp-ribbon-item"><CheckIcon /> 35 Contact Hours Certificate (PMI® Mandatory)</div>
+          <div className="hp-ribbon-item"><CheckIcon /> 24/7 Dedicated SAP GUI & AWS Console Access</div>
+          <div className="hp-ribbon-item"><CheckIcon /> 100% Guaranteed Application Audit Clearance</div>
+          <div className="hp-ribbon-item"><CheckIcon /> 100% ATS Resume Parsing Guarantee</div>
+        </div>
+      </div>
+
+      {/* ════════════════════ 3. CLEAR HOMEPAGE POSITIONING SECTION ════════════════════ */}
+      <section className="hp-section hp-bg-light hp-visible">
+        <div className="hp-container">
+          <div className="hp-sec-head">
+            <span className="hp-pill-tag">What is JSTechnoHub?</span>
+            <h2>Our Core Specialized Services</h2>
+            <p>
+              JSTechnoHub is your trusted partner for career advancement. We specialize in 6 core service areas designed to take you from foundational knowledge to international certification and job offer clearance.
+            </p>
+          </div>
+
+          <div className="hp-programs-grid">
+            {SPECIALIZATIONS.map((item) => (
+              <div key={item.id} className="hp-program-card">
+                <div className="hp-card-top">
+                  <span className="hp-tag-chip">{item.tag}</span>
+                  <span className="hp-badge-chip">{item.badge}</span>
+                </div>
+
+                <h3 className="hp-card-title">{item.title}</h3>
+                <p className="hp-card-desc">{item.desc}</p>
+
+                <div className="hp-card-footer" style={{ marginTop: "16px" }}>
+                  <Link to={item.link} className="hp-btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "0.92rem", padding: "10px 16px" }}>
+                    Explore Dedicated Service Page <ArrowRightIcon />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
-      {/* Services Overview */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">Our Core Services</h2>
-        <ul className="list-disc ml-6 space-y-2">
-          {" "}
-          {/* Custom list styling in CSS */}
-          <li>
-            <strong>Professional Resume Writing:</strong> Industry-tailored
-            resumes designed for ATS and international acceptance.{" "}
-            <Link to="/resume">Explore Resume Services</Link>
-          </li>
-          <li>
-            <strong>Cover Letters:</strong> Role-specific, compelling cover
-            letters to strengthen your applications.
-          </li>
-          <li>
-            <strong>LinkedIn Profile Optimization:</strong> SEO-focused LinkedIn
-            profiles that attract recruiters worldwide.
-          </li>
-          <li>
-            <strong>Certification Training:</strong> Globally recognized
-            programs including Salesforce, Palo Alto, CCNA, VMware, CAMS, CIA,
-            and more. <Link to="/certifications">View All Certifications</Link>
-          </li>
-          <li>
-            <strong>Programming Courses:</strong> SQL, Java, and emerging
-            technologies designed for practical, hands-on learning.
-          </li>
-          <li>
-            <strong>Career Guidance:</strong> One-on-one mentorship, job market
-            insights, and interview preparation support.
-          </li>
-        </ul>
+
+      {/* ════════════════════ 4. WHY CHOOSE US ════════════════════ */}
+      <section className="hp-section hp-visible">
+        <div className="hp-container">
+          <div className="hp-sec-head">
+            <h2>Why Professionals Choose JSTechnoHub</h2>
+            <p>We combine official exam curriculum, practical labs, and career support under one roof.</p>
+          </div>
+
+          <div className="hp-features-grid">
+            <div className="hp-feat-card">
+              <div className="hp-feat-icon"><AwardIcon /></div>
+              <h3>Authorized Exam ECO Alignment</h3>
+              <p>100% aligned with official Examination Content Outlines for PMP®, AWS, SAP, and Salesforce.</p>
+            </div>
+
+            <div className="hp-feat-card">
+              <div className="hp-feat-icon"><ZapIcon /></div>
+              <h3>Gen AI Modules Included</h3>
+              <p>Learn ChatGPT and Claude prompt engineering for automated documentation, WBS, and risk planning.</p>
+            </div>
+
+            <div className="hp-feat-card">
+              <div className="hp-feat-icon"><UsersIcon /></div>
+              <h3>1-on-1 Mentor Guidance</h3>
+              <p>Personalized assistance with exam application submission, audit clearance, and mock feedback.</p>
+            </div>
+
+            <div className="hp-feat-card">
+              <div className="hp-feat-icon"><CheckIcon /></div>
+              <h3>ATS Resume & LinkedIn SEO</h3>
+              <p>Transform your resume into an ATS-compliant document that attracts global recruiters.</p>
+            </div>
+          </div>
+        </div>
       </section>
-      {/* Why Choose Us */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">Why Choose Us?</h2>
-        <p>
-          Choosing the right training partner can define your career trajectory.
-          Here’s why learners around the world trust us:
-        </p>
-        <ol className="list-decimal ml-6 space-y-2 mt-3">
-          {" "}
-          {/* Custom ordered list styling in CSS */}
-          <li>Experienced trainers with global certifications.</li>
-          <li>Courses designed around real-world applications.</li>
-          <li>
-            Flexible learning paths for freshers, mid-level, and senior
-            professionals.
-          </li>
-          <li>Affordable pricing with international acceptance.</li>
-          <li>Personalized career services beyond training.</li>
-        </ol>
+
+      {/* ════════════════════ 5. RESUME & CAREER SERVICES BANNER ════════════════════ */}
+      <section className="hp-section hp-visible">
+        <div className="hp-container">
+          <div className="hp-career-banner">
+            <div className="hp-cb-content">
+              <span className="hp-cb-tag">Career Acceleration Services</span>
+              <h2>Stand Out to Global Recruiters with ATS Resume Services</h2>
+              <p>
+                A great certification deserves a powerful resume. Get professionally written ATS-friendly resumes, job-specific cover letters, and optimized LinkedIn profiles tailored for international job markets.
+              </p>
+
+              <div className="hp-cb-list">
+                <div><CheckIcon /> 100% ATS Compatibility Guarantee</div>
+                <div><CheckIcon /> Industry-Specific Keyword Optimization</div>
+                <div><CheckIcon /> LinkedIn Recruiter Profile Audit</div>
+              </div>
+
+              <Link to="/services/resume-career" className="hp-btn-primary" style={{ display: "inline-flex", marginTop: "16px" }}>
+                Explore Resume & LinkedIn Packages <ArrowRightIcon />
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
-      {/* Certification Highlight */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">Popular Certifications</h2>
-        <p>
-          Our certification portfolio spans IT, Business, Finance, and Security
-          domains. Here are some of the most in-demand certifications we
-          provide:
-        </p>
-        <ul className="list-disc ml-6 space-y-1 mt-3">
-          <li>Salesforce Administrator & Developer Certification</li>
-          <li>Cisco Certified Network Associate (CCNA)</li>
-          <li>Palo Alto Networks Security Certification</li>
-          <li>VMware Professional Certification</li>
-          <li>Certified Business Analysis Professional (CBAP)</li>
-          <li>Certified Anti-Money Laundering Specialist (CAMS)</li>
-          <li>Certified Internal Auditor (CIA)</li>
-          <li>Certified Associate Project Management (CAPM)</li>
-        </ul>
-        <p className="mt-4">
-          <Link to="/certifications">See Full Certification List</Link>
-        </p>
-      </section>
-      {/* Programming Courses */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">Programming Training</h2>
-        <p>
-          In addition to certifications, we provide hands-on programming courses
-          that prepare you for technical interviews and industry projects:
-        </p>
-        <ul className="list-disc ml-6 space-y-1 mt-3">
-          <li>
-            <strong>SQL Training:</strong> From basics to advanced queries,
-            optimization, and database design.
-          </li>
-          <li>
-            <strong>Java Development:</strong> Core Java, OOP principles, JDBC,
-            and frameworks for real-world use.
-          </li>
-        </ul>
-      </section>
-      {/* Career Services */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">Career Services</h2>
-        <p>
-          Training alone is not enough. That’s why we go beyond certifications
-          with a complete set of career services to boost your professional
-          brand:
-        </p>
-        <ul className="list-disc ml-6 space-y-1 mt-3">
-          <li>Resume Writing – ATS Compatible, Globally Accepted</li>
-          <li>Cover Letters – Job-Specific & Professionally Drafted</li>
-          <li>
-            LinkedIn Profile Optimization – SEO Friendly & Recruiter Ready
-          </li>
-          <li>Interview Preparation – Mock Interviews & Feedback</li>
-          <li>Career Mentorship – Personalized Roadmaps & Guidance</li>
-        </ul>
-      </section>
-      {/* Testimonials */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-3">What Our Learners Say</h2>
-        <p>
-          Thousands of professionals have trusted us to shape their careers.
-          Here’s what they have to say:
-        </p>
-        <blockquote className="border-l-4 pl-4 italic mt-3">
-          <p>
-            “The resume and LinkedIn services gave me confidence in my job
-            applications. Within weeks, I was getting more interview calls than
-            ever.”
-          </p>
-        </blockquote>
-        <blockquote className="border-l-4 pl-4 italic mt-3">
-          <p>
-            “The SQL and Java training helped me clear my technical interview.
-            The trainers focus on practical learning, which made a huge
-            difference.”
-          </p>
-        </blockquote>
-      </section>
-      <section className="reviews-section">
-        <h2>What Our Learners Say</h2>
-        <div className="reviews-list">
-          {reviews.length > 0 ? (
-            reviews
-              .filter(
-                (review) => review.approved && review.message?.trim() !== "",
-              ) // show only approved reviews
-              .map((review) => (
-                <div key={review.id} className="review-card">
-                  <StarRating rating={review.rating} />
-                  <blockquote className="review-comment">
-                    {review.message}
-                  </blockquote>
-                  <cite className="review-author">— {review.name}</cite>
-                  <span className="review-date">
-                    {review.createdAt
-                      ? new Date(review.createdAt).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })
-                      : ""}
-                  </span>
+
+      {/* ════════════════════ 6. REVIEWS & TESTIMONIALS ════════════════════ */}
+      <section className="hp-section hp-bg-light hp-visible">
+        <div className="hp-container">
+          <div className="hp-sec-head">
+            <h2>What Our Learners Say</h2>
+            <p>Read real experiences from candidates who accelerated their careers with JSTechnoHub.</p>
+          </div>
+
+          <div className="hp-reviews-grid">
+            {reviews.length > 0 ? (
+              reviews
+                .filter((r) => r.approved && r.message?.trim() !== "")
+                .map((rev) => (
+                  <div key={rev.id} className="hp-rev-card">
+                    <StarRating rating={rev.rating || 5} />
+                    <p className="hp-rev-msg">&quot;{rev.message}&quot;</p>
+                    <div className="hp-rev-author">
+                      <strong>— {rev.name}</strong>
+                      <span>Verified Learner</span>
+                    </div>
+                  </div>
+                ))
+            ) : (
+              [
+                {
+                  msg: "The PMP 35 Contact Hours training and situational question prep were amazing. Passed on my first attempt with Above Target!",
+                  author: "Rahul Sharma",
+                  role: "Senior Project Lead",
+                },
+                {
+                  msg: "The Gen AI modules for project documentation saved me hours at work. Highly recommend JSTechnoHub!",
+                  author: "Priya Nair",
+                  role: "Scrum Master",
+                },
+                {
+                  msg: "The ATS resume service completely transformed my job hunt. Got 3 interview callbacks within two weeks!",
+                  author: "Vikram Malhotra",
+                  role: "Cloud Specialist",
+                },
+              ].map((rev, i) => (
+                <div key={i} className="hp-rev-card">
+                  <StarRating rating={5} />
+                  <p className="hp-rev-msg">&quot;{rev.msg}&quot;</p>
+                  <div className="hp-rev-author">
+                    <strong>— {rev.author}</strong>
+                    <span>{rev.role}</span>
+                  </div>
                 </div>
               ))
-          ) : (
-            <p>Be the first to share your feedback!</p>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="review-cta">
-          <button
-            onClick={() => setIsReviewModalOpen(true)}
-            className="btn btn-secondary"
-          >
-            + Add Your Review
-          </button>
+          <div style={{ textAlign: "center", marginTop: "32px" }}>
+            <button
+              onClick={() => setIsReviewModalOpen(true)}
+              className="hp-btn-secondary"
+              style={{ padding: "12px 24px" }}
+            >
+              + Share Your Review & Feedback
+            </button>
+          </div>
         </div>
       </section>
+
+      {/* ════════════════════ 7. FINAL CTA ════════════════════ */}
+      <section className="hp-section hp-cta-section hp-visible">
+        <div className="hp-container hp-cta-box">
+          <h2>Ready to Transform Your Professional Career?</h2>
+          <p>
+            Join thousands of successful candidates who earned global certifications and landed their dream roles.
+          </p>
+          <div className="hp-cta-btns">
+            <Link to="/courses" className="hp-btn-primary">
+              View Upcoming Batches
+            </Link>
+            <Link to="/services" className="hp-btn-secondary">
+              Browse All 6 Service Pages
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Review Modal */}
       {isReviewModalOpen && (
         <ReviewFormModal
           onSubmit={handleAddReview}
           onClose={() => setIsReviewModalOpen(false)}
         />
       )}
-      {/* Call to Action */}
-      <section className="mb-12 text-center">
-        <h2 className="text-2xl font-semibold mb-3">
-          Ready to Transform Your Career?
-        </h2>
-        <p>
-          Explore our certifications, training programs, and career services
-          today. Take the first step toward building a career that matches your
-          aspirations.
-        </p>
-        <div className="mt-4 cta-buttons">
-          {" "}
-          {/* Use new cta-buttons class */}
-          <Link to="/certifications" className="btn btn-primary">
-            {" "}
-            {/* Apply new button classes */}
-            Explore Certifications
-          </Link>
-          <Link to="/resume" className="btn btn-secondary">
-            {" "}
-            {/* Apply new button classes */}
-            Explore Resume Services
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

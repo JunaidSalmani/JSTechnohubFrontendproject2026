@@ -1,143 +1,184 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import ServiceFAQAccordion from './ServiceFAQAccordion';
 import './ServicesPage.css';
 
-// Data for our services
-const servicesData = [
-    {
-        title: "Master Oracle SQL & PL/SQL – Unlock High-Demand Tech Skills",
-description: "Ready to elevate your career with in-demand database skills? Join our on-demand Oracle SQL & PL/SQL webinar to gain practical, interview-focused expertise and advance your tech career.",
-outcomes: [
-  "Build core SQL and advanced PL/SQL skills",
-  "Apply real-time projects to reinforce learning",
-  "Learn performance tuning and optimization techniques",
-  "Prepare for technical interviews with confidence"
-]
-    },
-    {title: "Master Java Programming – From Basics to Advanced",
-description: "Accelerate your career with our comprehensive Java course. Learn core Java, object-oriented programming, and advanced concepts with hands-on, project-focused training designed for job readiness.",
-outcomes: [
-  "Build strong foundations in core Java and OOP concepts",
-  "Develop real-time projects and practical coding skills",
-  "Master advanced topics like multithreading, collections, and Java streams",
-  "Prepare for Java technical interviews and coding assessments"
-]
-}
+const SERVICES_CATALOG = [
+  {
+    id: "pmp",
+    badge: "PMI® Authorized",
+    title: "PMP® Certification Training & Exam Prep",
+    desc: "Master Predictive, Agile, and Gen AI project management workflows to pass your PMP® exam on the 1st attempt. Includes official 35 Contact Hours Certificate.",
+    link: "/services/pmp",
+    outcomes: [
+      "Official 35 Contact Hours Certificate",
+      "PMI® Examination Content Outline (ECO) coverage",
+      "1,500+ Situational Practice Questions",
+      "100% PMP® Application & Audit Clearance Support"
+    ]
+  },
+  {
+    id: "sap",
+    badge: "S/4HANA Enterprise",
+    title: "SAP Training & Certification (FICO, MM, SD, S/4HANA)",
+    desc: "Master SAP enterprise resource planning modules with dedicated 24/7 remote SAP GUI server access and real company master data configuration.",
+    link: "/services/sap",
+    outcomes: [
+      "SAP FICO, MM, SD & S/4HANA tracks",
+      "Dedicated 24/7 SAP GUI server access",
+      "Procure-to-Pay (P2P) & Order-to-Cash (O2C) flows",
+      "Official SAP Certification exam prep"
+    ]
+  },
+  {
+    id: "aws",
+    badge: "Cloud Computing",
+    title: "AWS Certified Solutions Architect Training",
+    desc: "Design scalable, resilient cloud architectures using Amazon Web Services with live hands-on AWS console labs, VPC subnets, and IAM security.",
+    link: "/services/aws",
+    outcomes: [
+      "AWS Solutions Architect SAA-C03 Blueprint",
+      "Real AWS Management Console practice labs",
+      "VPC, EC2, IAM, S3, RDS, & Lambda serverless",
+      "Cloud architecture project portfolio"
+    ]
+  },
+  {
+    id: "devops",
+    badge: "CI/CD Automation",
+    title: "DevOps Engineering & CI/CD Pipeline Training",
+    desc: "Master Linux, Docker containerization, Kubernetes cluster orchestration, Jenkins pipeline as code, and Terraform Infrastructure as Code.",
+    link: "/services/devops",
+    outcomes: [
+      "Docker containerization & multi-stage builds",
+      "Kubernetes (CKA) cluster management",
+      "Automated Jenkins CI/CD pipelines",
+      "Terraform Infrastructure as Code (IaC)"
+    ]
+  },
+  {
+    id: "certification-support",
+    badge: "1-on-1 Guidance",
+    title: "1-on-1 Certification Support & Audit Clearance",
+    desc: "Ensure 100% smooth eligibility verification, application draft writing, audit clearance, and exam voucher assistance across PMI, AWS, SAP, and Salesforce.",
+    link: "/services/certification-support",
+    outcomes: [
+      "Experience domain drafting & mapping",
+      "48-Hour vendor audit package clearance",
+      "Manager sign-off documentation assistance",
+      "Exam scheduling & retake coaching"
+    ]
+  },
+  {
+    id: "resume-career",
+    badge: "Career Growth",
+    title: "ATS Resume Writing & LinkedIn Profile Optimization",
+    desc: "Transform your resume into an ATS-compliant job magnet. Land 3x more recruiter interview calls with high-volume industry keyword optimization.",
+    link: "/services/resume-career",
+    outcomes: [
+      "100% ATS Parsing Guarantee (Word + PDF)",
+      "Quantified achievements & ROI metrics",
+      "LinkedIn Recruiter Search SEO optimization",
+      "Targeted cover letters for executive roles"
+    ]
+  }
 ];
 
-// Reusable FAQ Item Component
-const FaqItem = ({ question, answer }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <div className="faq-item">
-            <button className="faq-question" onClick={() => setIsOpen(!isOpen)}>
-                <span>{question}</span>
-                <span className={`faq-icon ${isOpen ? 'open' : ''}`}>+</span>
-            </button>
-            <div className={`faq-answer ${isOpen ? 'open' : ''}`}>
-                <p>{answer}</p>
-            </div>
-        </div>
-    );
-};
+const HUB_FAQS = [
+  {
+    q: "What services does JSTechnoHub specialize in?",
+    a: "JSTechnoHub specializes in 6 core areas: (1) PMI® PMP® Certification Prep, (2) SAP ERP Modules (FICO, MM, SD, S/4HANA), (3) AWS Cloud Architecture, (4) DevOps CI/CD Automation, (5) 1-on-1 Certification Application & Audit Support, and (6) ATS Resume & LinkedIn Optimization."
+  },
+  {
+    q: "Are classes live virtual or self-paced recorded?",
+    a: "We offer live interactive virtual weekend and weekday batches led by certified industry practitioners. All live sessions are recorded and made available to learners for lifetime review."
+  },
+  {
+    q: "How do I choose the right service or course for my background?",
+    a: "You can request a free 30-minute career counseling discovery call with our senior advisors. We evaluate your educational background, work experience, and career goals to recommend the optimal path."
+  }
+];
 
 function ServicesPage() {
-    return (
-        <div className="services-page-container">
-            {/* Section 1: Hero */}
-            <header className="services-hero">
-                <div className="hero-content">
-                    <h1>Services Designed for Your Success</h1>
-                    <p className="subtitle">Discover our tailored coaching programs designed to help you achieve your professional and personal goals.</p>
-                </div>
-            </header>
-
-            {/* Section 2: Service Offerings */}
-            <section className="services-section">
-                <div className="section-title">
-                    <h2>Our Coaching Programs</h2>
-                </div>
-                <div className="services-grid">
-                    {servicesData.map((service, index) => (
-                        <div className="service-card" key={index}>
-                            <h3>{service.title}</h3>
-                            <p className="service-description">{service.description}</p>
-                            <h4>Key Outcomes:</h4>
-                            <ul>
-                                {service.outcomes.map((item, i) => <li key={i}>{item}</li>)}
-                            </ul>
-                            <a href="/courses" className="service-button">Learn More</a>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Section 3: How It Works */}
-            <section className="how-it-works-section">
-                <div className="section-title">
-                    <h2>Our Simple 3-Step Process</h2>
-                </div>
-                <div className="process-steps">
-                    <div className="step">
-                        <div className="step-number">1</div>
-                        <h3>Discovery Call</h3>
-                        <p>A complimentary 30-minute call to discuss your goals and see if we're a good fit.</p>
-                    </div>
-                    <div className="step-connector"></div>
-                    <div className="step">
-                        <div className="step-number">2</div>
-                        <h3>Strategy Session</h3>
-                        <p>A deep-dive 90-minute session to create a personalized roadmap for your success.</p>
-                    </div>
-                    <div className="step-connector"></div>
-                    <div className="step">
-                        <div className="step-number">3</div>
-                        <h3>Ongoing Support</h3>
-                        <p>Regular coaching sessions with continuous support to keep you accountable and on track.</p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Section 4: Testimonial */}
-            <section className="testimonial-section">
-                 <div className="testimonial-content">
-                    
-                    <blockquote>
-                        "Working with JSTechnoHub was a game-changer. I not only found a new career path but also gained a level of confidence I never thought possible. The investment paid for itself tenfold."
-                    </blockquote>
-                    <cite>- Priya Sharma, Former Client</cite>
-                 </div>
-            </section>
-
-            {/* Section 5: FAQ */}
-            <section className="faq-section">
-                <div className="section-title">
-                    <h2>Frequently Asked Questions</h2>
-                </div>
-                <div className="faq-list">
-                    <FaqItem
-                        question="Who is coaching for?"
-                        answer="Coaching is for anyone who is committed to growth and ready to make a positive change in their life. Whether you're feeling stuck, facing a major transition, or wanting to level up, coaching provides the structure and support to get you there faster."
-                    />
-                    <FaqItem
-                        question="What is the difference between coaching and therapy?"
-                        answer="Therapy often focuses on healing past traumas and managing mental health conditions, while coaching is forward-focused. We work on where you are now, where you want to be, and create an actionable plan to bridge that gap."
-                    />
-                    <FaqItem
-                        question="How long does a typical coaching engagement last?"
-                        answer="Most clients see significant results within 3 to 6 months. We offer various packages to suit different needs, starting from a 3-month commitment to ensure we have enough time to create lasting change."
-                    />
-                </div>
-            </section>
-            
-            {/* Section 6: Final CTA */}
-            <section className="services-cta">
-                <h2>Ready to Take the First Step?</h2>
-                <p>Your journey to a more fulfilling life and career starts with a single conversation. Let's talk.</p>
-                <a href="/contact" className="cta-button">Book Your Free Discovery Call</a>
-            </section>
+  return (
+    <div className="services-page-container">
+      {/* Hero */}
+      <header className="services-hero">
+        <div className="hero-content">
+          <span className="hp-pill-tag" style={{ background: "#ecfdf5", color: "#059669" }}>
+            Comprehensive Training Catalog
+          </span>
+          <h1>Services & Certification Programs Designed for Your Success</h1>
+          <p className="subtitle">
+            Empowering professionals worldwide with official certification prep, hands-on enterprise labs, 1-on-1 application support, and ATS resume services.
+          </p>
         </div>
-    );
+      </header>
+
+      {/* Services Grid */}
+      <section className="services-section">
+        <div className="section-title">
+          <h2>Our Specialized Training & Career Services</h2>
+          <p style={{ textAlign: "center", color: "#475569", marginTop: "8px" }}>
+            Click on any service below to view detailed curriculum, eligibility requirements, and FAQs.
+          </p>
+        </div>
+        <div className="services-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "28px", marginTop: "32px" }}>
+          {SERVICES_CATALOG.map((service) => (
+            <div className="service-card" key={service.id} style={{ display: "flex", flexDirection: "column", background: "#ffffff", border: "1.5px solid #e2e8f0", borderRadius: "16px", padding: "28px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px" }}>
+                <span style={{ background: "#ecfdf5", color: "#059669", fontWeight: "700", fontSize: "0.8rem", padding: "4px 10px", borderRadius: "6px" }}>
+                  {service.badge}
+                </span>
+              </div>
+              <h3 style={{ fontSize: "1.3rem", fontWeight: "800", color: "#0f172a", marginBottom: "12px" }}>{service.title}</h3>
+              <p className="service-description" style={{ fontSize: "0.95rem", color: "#475569", marginBottom: "16px", flexGrow: 1 }}>{service.desc}</p>
+              <h4 style={{ fontSize: "0.9rem", fontWeight: "700", color: "#0f172a", marginBottom: "8px" }}>Key Outcomes:</h4>
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 20px 0" }}>
+                {service.outcomes.map((item, i) => (
+                  <li key={i} style={{ fontSize: "0.88rem", color: "#334155", padding: "4px 0", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ color: "#059669", fontWeight: "800" }}>✓</span> {item}
+                  </li>
+                ))}
+              </ul>
+              <Link to={service.link} className="service-button" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#059669", color: "#ffffff", fontWeight: "700", padding: "12px", borderRadius: "8px", textDecoration: "none", marginTop: "auto" }}>
+                View Dedicated Page & FAQs →
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3 Step Process */}
+      <section className="how-it-works-section">
+        <div className="section-title">
+          <h2>Our Simple 3-Step Success Methodology</h2>
+        </div>
+        <div className="process-steps">
+          <div className="step">
+            <div className="step-number">1</div>
+            <h3>1-on-1 Discovery Call</h3>
+            <p>Free 30-minute assessment to map your experience and select the right certification track.</p>
+          </div>
+          <div className="step-connector"></div>
+          <div className="step">
+            <div className="step-number">2</div>
+            <h3>Live Hands-On Training</h3>
+            <p>Interactive virtual classes with live instructor labs, official study kits, and AI tools.</p>
+          </div>
+          <div className="step-connector"></div>
+          <div className="step">
+            <div className="step-number">3</div>
+            <h3>Certification & Placement</h3>
+            <p>100% audit clearance support, exam voucher assistance, and ATS resume transformation.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <ServiceFAQAccordion title="General Services Frequently Asked Questions" faqs={HUB_FAQS} />
+    </div>
+  );
 }
 
 export default ServicesPage;

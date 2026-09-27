@@ -1,0 +1,10 @@
+/* ════════════════════════════════════════════════════════════════════════
+   ElasticOverscroll.css — Default Browser Overscroll Restored
+   ════════════════════════════════════════════════════════════════════════ */
+
+html,
+body {
+  overscroll-behavior: auto;
+  overscroll-behavior-y: auto;
+  overscroll-behavior-x: auto;
+}

@@ -21,15 +21,16 @@ function AdminAuth({ onLogin }) {
             <div className="auth-form-wrapper">
                 <h2>Admin Login</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                    <div className="admin-auth-group">
                         <input
                             type="password"
                             id="password"
+                            placeholder=" "
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+                        <label htmlFor="password">Password</label>
                     </div>
                     {error && <p className="error-message">{error}</p>}
                     <button type="submit" className="btn-submit">Login</button>

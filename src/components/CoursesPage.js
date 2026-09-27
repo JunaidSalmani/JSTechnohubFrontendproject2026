@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllCourses } from '../services/api'; 
+import PmpBatchesSection from './PmpBatchesSection';
 import './CoursesPage.css';
 
 function CoursesPage() {
@@ -30,12 +31,8 @@ function CoursesPage() {
 
     return (
         <div className="courses-page-container">
-            <header className="courses-hero">
-                <div className="hero-content">
-                    <h1>Invest in Your Growth</h1>
-                    <p className="subtitle">Browse our expert-led courses and take the next step in your personal and professional development journey.</p>
-                </div>
-            </header>
+            {/* ── PMP Training & Course Detail Content ── */}
+            <PmpBatchesSection />
 
             <section className="courses-section">
                 {/* --- Conditional rendering for loading and error states --- */}
@@ -51,9 +48,13 @@ function CoursesPage() {
                                         <h3>{course.title}</h3>
                                     </div>
                                     <div className="card-content">
-                                      
-                                     
-                                        <p>{course.description.substring(0, 100)}...</p>
+                                        <p>
+                                            {course.description 
+                                                ? (course.description.length > 100 
+                                                    ? `${course.description.substring(0, 100)}...` 
+                                                    : course.description) 
+                                                : 'No description available.'}
+                                        </p>
                                     </div>
                                     <div className="course-meta">
                                         <span><strong>Duration:</strong> {course.duration || 'N/A'}</span>

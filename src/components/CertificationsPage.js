@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import PmpBatchesSection from "./PmpBatchesSection";
 import "./CertificationsPage.css";
 import { submitCertificationEnquiry } from "../services/api";
 
 function CertificationsPage() {
   const { certId } = useParams();
-
-  const certificationTitle = certId
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -20,12 +16,36 @@ function CertificationsPage() {
   const [status, setStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  if (certId === "pmp" || certId === "pmp-certification" || certId === "pmp-training") {
+    return <PmpBatchesSection />;
+  }
+
+  const certificationTitle = (certId || "")
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      setStatus("error_name");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setStatus("error_email");
+      return;
+    }
+    const phoneCleaned = formData.phone.replace(/[^0-9]/g, "");
+    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
+      setStatus("error_phone");
+      return;
+    }
+
     setIsSubmitting(true);
 
     const enquiryPayload = {
@@ -136,37 +156,52 @@ function CertificationsPage() {
             </p>
 
             <form className="enquiry-form-detail" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name*"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Work Email*"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number (WhatsApp)*"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-              <textarea
-                name="message"
-                placeholder="Tell us about your learning goals..."
-                rows="4"
-                value={formData.message}
-                onChange={handleChange}
-              ></textarea>
+              <div className="fl-field">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder=" "
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Full Name *</label>
+              </div>
+
+              <div className="fl-field">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder=" "
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Work Email *</label>
+              </div>
+
+              <div className="fl-field">
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder=" "
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Phone Number (WhatsApp) *</label>
+              </div>
+
+              <div className="fl-field">
+                <textarea
+                  name="message"
+                  placeholder=" "
+                  rows="4"
+                  value={formData.message}
+                  onChange={handleChange}
+                ></textarea>
+                <label>Tell us about your learning goals...</label>
+              </div>
 
               <button
                 type="submit"
@@ -185,6 +220,15 @@ function CertificationsPage() {
                 <strong>Technical Program Advisor</strong> will reach out within
                 24 hours.
               </div>
+            )}
+            {status === "error_name" && (
+              <p className="error-msg">⚠️ Please enter a valid full name (at least 2 characters).</p>
+            )}
+            {status === "error_email" && (
+              <p className="error-msg">⚠️ Please enter a valid email address.</p>
+            )}
+            {status === "error_phone" && (
+              <p className="error-msg">⚠️ Please enter a valid 10-digit phone number.</p>
             )}
             {status === "error" && (
               <p className="error-msg">

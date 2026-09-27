@@ -231,9 +231,13 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
     if (e.target === overlayRef.current) onClose();
   };
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const step1Valid =
-    firstName.trim() && lastName.trim() && email.trim() && company.trim();
-  const step2Valid = phone.trim() && service && agreed;
+    firstName.trim().length >= 2 &&
+    lastName.trim().length >= 2 &&
+    emailRegex.test(email.trim()) &&
+    company.trim().length >= 2;
+  const step2Valid = phone.replace(/[^0-9]/g, "").length >= 10 && service && agreed;
 
   // ─── CHANGED: real API call ───────────────────────────────
   const handleSubmit = async (e) => {
@@ -361,69 +365,69 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
           </button>
         </div>
 
-        {/* Step 1 — unchanged */}
+        {/* Step 1 */}
         {formStep === 1 && (
           <>
             <div className="cs-modal-body">
               <div className="cs-form-row">
                 <div className="cs-form-group">
-                  <label>
-                    First Name <sup>*</sup>
-                  </label>
                   <input
                     type="text"
-                    placeholder="Rajiv"
+                    placeholder=" "
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
+                  <label>
+                    First Name <sup>*</sup>
+                  </label>
                 </div>
                 <div className="cs-form-group">
-                  <label>
-                    Last Name <sup>*</sup>
-                  </label>
                   <input
                     type="text"
-                    placeholder="Menon"
+                    placeholder=" "
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
                   />
+                  <label>
+                    Last Name <sup>*</sup>
+                  </label>
                 </div>
               </div>
               <div className="cs-form-group">
-                <label>
-                  Business Email <sup>*</sup>
-                </label>
                 <input
                   type="email"
-                  placeholder="rajiv@organisation.com"
+                  placeholder=" "
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
+                <label>
+                  Business Email <sup>*</sup>
+                </label>
               </div>
               <div className="cs-form-row">
                 <div className="cs-form-group">
-                  <label>
-                    Organisation Name <sup>*</sup>
-                  </label>
                   <input
                     type="text"
-                    placeholder="Company / Group Name"
+                    placeholder=" "
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     required
                   />
+                  <label>
+                    Organisation Name <sup>*</sup>
+                  </label>
                 </div>
                 <div className="cs-form-group">
-                  <label>Your Designation</label>
                   <input
                     type="text"
-                    placeholder="VP – HR, CHRO, COO…"
+                    placeholder=" "
                     value={jobTitle}
                     onChange={(e) => setJobTitle(e.target.value)}
                   />
+                  <label>Your Designation</label>
                 </div>
               </div>
             </div>
@@ -445,14 +449,11 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
           </>
         )}
 
-        {/* Step 2 — only handleSubmit changed */}
+        {/* Step 2 */}
         {formStep === 2 && (
           <form onSubmit={handleSubmit}>
             <div className="cs-modal-body">
               <div className="cs-form-group">
-                <label>
-                  Contact Number <sup>*</sup>
-                </label>
                 <div className="cs-phone-input-container">
                   <PhoneInput
                     country="in"
@@ -469,13 +470,13 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     }}
                   />
                 </div>
+                <label>
+                  Contact Number <sup>*</sup>
+                </label>
               </div>
 
               <div className="cs-form-row">
                 <div className="cs-form-group">
-                  <label>
-                    Service Required <sup>*</sup>
-                  </label>
                   <select
                     value={service}
                     onChange={(e) => setService(e.target.value)}
@@ -488,9 +489,11 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                       <option key={s.title}>{s.title}</option>
                     ))}
                   </select>
+                  <label>
+                    Service Required <sup>*</sup>
+                  </label>
                 </div>
                 <div className="cs-form-group">
-                  <label>Number of Positions</label>
                   <select
                     value={positions}
                     onChange={(e) => setPositions(e.target.value)}
@@ -504,21 +507,21 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     <option>200 – 500</option>
                     <option>500+</option>
                   </select>
+                  <label>Number of Positions</label>
                 </div>
               </div>
 
               <div className="cs-form-row">
                 <div className="cs-form-group">
-                  <label>Location of Requirement</label>
                   <input
                     type="text"
-                    placeholder="City / State / Pan-India"
+                    placeholder=" "
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                   />
+                  <label>Location of Requirement</label>
                 </div>
                 <div className="cs-form-group">
-                  <label>How did you find us?</label>
                   <select
                     value={heardFrom}
                     onChange={(e) => setHeardFrom(e.target.value)}
@@ -533,13 +536,13 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     <option>Existing Relationship</option>
                     <option>Other</option>
                   </select>
+                  <label>How did you find us?</label>
                 </div>
               </div>
 
               <div className="cs-form-group">
-                <label>Requirement Brief</label>
                 <textarea
-                  placeholder="Describe your workforce requirement — roles, timelines, industry context, any specific compliance or location considerations…"
+                  placeholder=" "
                   maxLength={1000}
                   value={message}
                   onChange={(e) => {
@@ -547,6 +550,7 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     setMsgLen(e.target.value.length);
                   }}
                 />
+                <label>Requirement Brief</label>
               </div>
               <p className="cs-char-count">{msgLen}/1000</p>
 

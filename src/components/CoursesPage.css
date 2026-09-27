@@ -39,7 +39,7 @@
 .hero-content h1 {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--heading-color);
+  color: #ffffff;
   font-family: "Syne", sans-serif;
 }
 
@@ -47,7 +47,7 @@
   font-size: 1.25rem;
   max-width: 700px;
   margin: 1rem auto 0;
-  color: var(--text-color);
+  color: #f1f5f9;
 }
 
 /* Courses Grid Section */

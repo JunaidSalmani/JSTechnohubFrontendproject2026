@@ -1,0 +1,144 @@
+/* ════════════════════════════════════════════════════════════════════════
+   ServiceFAQAccordion Stylesheet - Bright, Accessible, Modern Accordion
+   ════════════════════════════════════════════════════════════════════════ */
+
+.faq-acc-section {
+  padding: 64px 0;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.faq-acc-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.faq-acc-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.faq-acc-pill {
+  display: inline-block;
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.faq-acc-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.faq-acc-sub {
+  font-size: 1.05rem;
+  color: #475569;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.faq-acc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-acc-item {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.faq-acc-item:hover {
+  border-color: #a7f3d0;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.faq-acc-open {
+  border-color: #059669;
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.12);
+}
+
+.faq-acc-btn {
+  width: 100%;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.faq-acc-btn:hover {
+  color: #059669;
+}
+
+.faq-acc-question {
+  padding-right: 16px;
+  line-height: 1.4;
+}
+
+.faq-acc-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.faq-acc-open .faq-acc-icon {
+  background: #059669;
+  color: #ffffff;
+}
+
+.faq-acc-answer {
+  padding: 0 24px 20px 24px;
+  border-top: 1px dashed #e2e8f0;
+  margin-top: 4px;
+  animation: faqFadeIn 0.25s ease-out;
+}
+
+.faq-acc-answer p {
+  font-size: 1rem;
+  color: #334155;
+  line-height: 1.65;
+  margin: 16px 0 0;
+}
+
+@keyframes faqFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

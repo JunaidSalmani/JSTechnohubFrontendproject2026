@@ -1,91 +1,102 @@
-// ── Consulting Services Enquiry  ───────────────────────
-/**
- * Sends the EnquiryModal form data to:
- *   POST /api/consulting/enquiries
- *
- 
- * {
- *   firstName          : string   ← required
- *   lastName           : string   ← required
- *   email              : string   ← required
- *   company            : string   ← required
- *   jobTitle           : string   ← optional
- *   phone              : string   ← required (digits only, e.g. "919876543210")
- *   serviceRequired    : string   ← required
- *   positionsRange     : string   ← optional ("1 – 10", "10 – 50" …)
- *   requirementLocation: string   ← optional
- *   message            : string   ← optional
- *   heardFrom          : string   ← optional
- *   termsAccepted      : boolean  ← required (must be true)
- *   marketingOptedIn   : boolean  ← optional
- * }
- */
 import axios from "axios";
 
-// const API_URL = "https://jstechnohub-backend.onrender.com";
-// const API_URL = "https://jstechnohubbackend-production.up.railway.app";
-const API_URL = "https://api.jstechnohub.com";
+// Automatically use local Spring Boot server when developing on localhost
+const isLocalhost =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+   window.location.hostname === "127.0.0.1");
+
+const API_URL = isLocalhost
+  ? "http://localhost:8080"
+  : "https://api.jstechnohub.com";
+
 const api = axios.create({
   baseURL: API_URL,
+  timeout: 8000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+// Helper for automatic local fallback if remote API is down/unreachable
+const executeWithFallback = async (requestFn, localEndpoint, method = "post", data = null) => {
+  try {
+    return await requestFn();
+  } catch (err) {
+    if (!API_URL.includes("localhost")) {
+      console.warn(`Remote API failed (${err.message}). Falling back to local backend: http://localhost:8080${localEndpoint}`);
+      if (method === "post") return await axios.post(`http://localhost:8080${localEndpoint}`, data);
+      if (method === "get") return await axios.get(`http://localhost:8080${localEndpoint}`);
+      if (method === "delete") return await axios.delete(`http://localhost:8080${localEndpoint}`);
+      if (method === "patch") return await axios.patch(`http://localhost:8080${localEndpoint}`, data);
+    }
+    throw err;
+  }
+};
+
 // ----------------- Courses -----------------
-export const getAllCourses = () => api.get("/api/courses");
-export const getCourseById = (id) => api.get(`/api/courses/${id}`);
-export const createCourse = (course) => api.post("/api/courses", course);
-export const updateCourse = (id, course) =>
-  api.put(`/api/courses/${id}`, course);
-export const deleteCourse = (id) => api.delete(`/api/courses/${id}`);
+export const getAllCourses = () => executeWithFallback(() => api.get("/api/courses"), "/api/courses", "get");
+export const getCourseById = (id) => executeWithFallback(() => api.get(`/api/courses/${id}`), `/api/courses/${id}`, "get");
+export const createCourse = (course) => executeWithFallback(() => api.post("/api/courses", course), "/api/courses", "post", course);
+export const updateCourse = (id, course) => executeWithFallback(() => api.put(`/api/courses/${id}`, course), `/api/courses/${id}`, "put", course);
+export const deleteCourse = (id) => executeWithFallback(() => api.delete(`/api/courses/${id}`), `/api/courses/${id}`, "delete");
+
+// ----------------- Training Batches -----------------
+export const getAllBatches = () => executeWithFallback(() => api.get("/api/batches"), "/api/batches", "get");
+export const getBatchById = (id) => executeWithFallback(() => api.get(`/api/batches/${id}`), `/api/batches/${id}`, "get");
+export const createBatch = (batch) => executeWithFallback(() => api.post("/api/batches", batch), "/api/batches", "post", batch);
+export const updateBatch = (id, batch) => executeWithFallback(() => api.put(`/api/batches/${id}`, batch), `/api/batches/${id}`, "put", batch);
+export const deleteBatch = (id) => executeWithFallback(() => api.delete(`/api/batches/${id}`), `/api/batches/${id}`, "delete");
 
 // ----------------- Enquiries -----------------
 // Course enquiry
-export const submitEnquiry = (enquiry) => api.post("/api/enquiries", enquiry);
+export const submitEnquiry = (enquiry) =>
+  executeWithFallback(() => api.post("/api/enquiries", enquiry), "/api/enquiries", "post", enquiry);
 
 // Certification enquiry
 export const submitCertificationEnquiry = (enquiry) =>
-  api.post("/api/enquiries/certification", enquiry);
+  executeWithFallback(() => api.post("/api/enquiries/certification", enquiry), "/api/enquiries/certification", "post", enquiry);
 
 // Consulting Services Enquiry
 export const submitConsultingEnquiry = (enquiry) =>
-  api.post("/api/consulting/enquiries", enquiry);
+  executeWithFallback(() => api.post("/api/consulting/enquiries", enquiry), "/api/consulting/enquiries", "post", enquiry);
 
 // ----------------- Admin (Unified) -----------------
-// This now fetches Courses, Certs, and Consulting combined thanks to your new Backend Controller
-export const getAllEnquiries = () => api.get("/api/admin/enquiries");
-
-// Toggles course/certification "clarified" status
+export const getAllEnquiries = () => executeWithFallback(() => api.get("/api/admin/enquiries"), "/api/admin/enquiries", "get");
 export const toggleEnquiryClarified = (type, id) =>
-  api.patch(`/api/admin/enquiries/${type}/${id}/toggle`);
-
-// export const getAllConsultingEnquiries = () => api.get("/api/enquiries");
-// export const getConsultingEnquiriesByStatus = (status) =>
-//   api.get(`/api/enquiries/status/${status}`);
+  executeWithFallback(() => api.patch(`/api/admin/enquiries/${type}/${id}/toggle`), `/api/admin/enquiries/${type}/${id}/toggle`, "patch");
 
 // ----------------- Reviews -----------------
-export const getPublicReviews = () => api.get("/api/reviews/public");
-export const getAllReviews = () => api.get("/api/reviews/admin");
-export const addReview = (reviewData) => api.post("/api/reviews", reviewData);
+export const getPublicReviews = () => executeWithFallback(() => api.get("/api/reviews/public"), "/api/reviews/public", "get");
+export const getAllReviews = () => executeWithFallback(() => api.get("/api/reviews/admin"), "/api/reviews/admin", "get");
+export const addReview = (reviewData) => executeWithFallback(() => api.post("/api/reviews", reviewData), "/api/reviews", "post", reviewData);
 export const toggleReviewApproval = (reviewId) =>
-  api.patch(`/api/reviews/${reviewId}/toggle`);
+  executeWithFallback(() => api.patch(`/api/reviews/${reviewId}/toggle`), `/api/reviews/${reviewId}/toggle`, "patch");
 
 // ----------------- Interview Questions -----------------
 export const addInterviewQuestion = (questionData) =>
-  api.post("/api/interview-questions", questionData);
+  executeWithFallback(() => api.post("/api/interview-questions", questionData), "/api/interview-questions", "post", questionData);
 export const getAllInterviewQuestions = () =>
-  api.get("/api/interview-questions");
+  executeWithFallback(() => api.get("/api/interview-questions"), "/api/interview-questions", "get");
+export const deleteInterviewQuestion = (id) =>
+  executeWithFallback(() => api.delete(`/api/interview-questions/${id}`), `/api/interview-questions/${id}`, "delete");
 
 // ----------------- OTP & User -----------------
-export const sendOtp = (email) => api.post(`/send-otp?email=${email}`);
+export const sendOtp = (email) => executeWithFallback(() => api.post(`/send-otp?email=${email}`), `/send-otp?email=${email}`, "post");
 export const verifyOtpApi = (email, otp) =>
-  api.post(`/verify-otp?email=${email}&otp=${otp}`);
-export const createUser = (userData) => api.post("/user", userData);
+  executeWithFallback(() => api.post(`/verify-otp?email=${email}&otp=${otp}`), `/verify-otp?email=${email}&otp=${otp}`, "post");
+
+export const createUser = (userData) =>
+  executeWithFallback(() => api.post("/user", userData), "/user", "post", userData);
 
 // ----------------- Payment -----------------
 export const createOrder = (paymentData) =>
-  api.post("/create-order", paymentData);
-export const verifyPayment = (data) => api.post("/verify", data);
+  executeWithFallback(() => api.post("/create-order", paymentData), "/create-order", "post", paymentData);
+
+export const verifyPayment = (data) =>
+  executeWithFallback(() => api.post("/verify", data), "/verify", "post", data);
+
+export const getAllPayments = () =>
+  executeWithFallback(() => api.get("/api/admin/payments"), "/api/admin/payments", "get");
 
 export default api;
