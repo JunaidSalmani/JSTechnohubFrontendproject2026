@@ -4,19 +4,71 @@ import "react-phone-input-2/lib/style.css";
 import "./PhoneInputField.css";
 
 /**
+ * Returns an error string if phone/WhatsApp number is invalid, or "" if valid.
+ */
+export const getPhoneValidationError = (phone) => {
+  if (!phone || typeof phone !== "string") {
+    return "Please enter your WhatsApp number.";
+  }
+  const digits = phone.replace(/[^0-9]/g, "");
+
+  // If user has not typed anything beyond country code or left it empty
+  if (digits.length <= 4) {
+    return "Please enter your WhatsApp number.";
+  }
+
+  // India (+91)
+  if (digits.startsWith("91")) {
+    const subscriber = digits.slice(2);
+    if (subscriber.length === 0) {
+      return "Please enter your 10-digit WhatsApp number.";
+    }
+    if (subscriber.length < 10) {
+      return `Please enter a complete 10-digit WhatsApp number (${10 - subscriber.length} digits left).`;
+    }
+    if (subscriber.length > 10) {
+      return "WhatsApp number cannot exceed 10 digits for India.";
+    }
+    if (!/^[6-9]/.test(subscriber)) {
+      return "Indian mobile numbers must start with 6, 7, 8, or 9.";
+    }
+    if (/^(\d)\1{9}$/.test(subscriber)) {
+      return "Please enter a valid, non-dummy WhatsApp number.";
+    }
+    if (subscriber === "1234567890" || subscriber === "0123456789") {
+      return "Please enter a genuine WhatsApp number.";
+    }
+    return "";
+  }
+
+  // International numbers (E.164: 8 to 16 digits total)
+  if (digits.length < 8) {
+    return "Please enter a valid WhatsApp number with country code.";
+  }
+  if (digits.length > 16) {
+    return "Phone number is too long.";
+  }
+
+  // Check for dummy repeated digits across subscriber part
+  const subscriberApprox = digits.slice(2);
+  if (subscriberApprox.length >= 6 && /^(\d)\1+$/.test(subscriberApprox)) {
+    return "Please enter a valid, non-dummy WhatsApp number.";
+  }
+
+  return "";
+};
+
+/**
  * Validates whether a phone number with country code is plausible.
- * Accepts numbers with 8 to 16 total digits (including country dial code).
  */
 export const isValidPhoneNumber = (phone) => {
-  if (!phone) return false;
-  const digits = phone.toString().replace(/[^0-9]/g, "");
-  // Dial code (1-4 digits) + subscriber number (typically 7-12 digits) = 8 to 16 digits
-  return digits.length >= 8 && digits.length <= 16;
+  return getPhoneValidationError(phone) === "";
 };
 
 export default function PhoneInputField({
   value = "",
   onChange,
+  onBlur,
   name = "phone",
   id,
   label = "Phone Number *",
@@ -84,7 +136,12 @@ export default function PhoneInputField({
           value={value || ""}
           onChange={handlePhoneChange}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onBlur={(e) => {
+            setIsFocused(false);
+            if (typeof onBlur === "function") {
+              onBlur(e);
+            }
+          }}
           enableSearch
           searchPlaceholder="Search country..."
           searchNotFound="No country found"

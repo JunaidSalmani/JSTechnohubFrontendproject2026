@@ -111,8 +111,14 @@
 
 .formWrapper label {
   display: block;
-  margin: 12px 0 6px;
+  margin: 0;
   font-weight: 500;
+}
+
+.formWrapper :global(.phone-floating-label) {
+  margin: 0 !important;
+  top: 6px !important;
+  left: 56px !important;
 }
 
 .formWrapper input,
@@ -272,6 +278,85 @@
   }
 }
 
+/* --- Recommended Mobile Typography (<= 768px) --- */
+@media (max-width: 768px) {
+  /* Main heading (H1): 28–32px | 700 */
+  .contactHeader h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  /* Section heading (H2): 22–26px | 600–700 */
+  .ctaSection h2,
+  .formWrapper h2,
+  .faqSection h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  /* Subheading (H3): 18–20px | 600 */
+  .otherOptions h3,
+  .faqItem h4 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  /* Body text: 16px | 400 */
+  .contactHeader p,
+  .ctaSection p,
+  .faqItem p,
+  .otherOptions p,
+  .contactBody p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Secondary text: 14px | 400 */
+  .responseTime,
+  .statusMessage p,
+  .otherOptions span {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  /* Buttons: 15–16px | 600 */
+  .ctaButton,
+  .submitButton {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* Small labels: 12–13px | 500 */
+  .formWrapper label,
+  .formWrapper :global(.phone-floating-label),
+  .contactBody label {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .contactHeader {
+    padding: 48px 18px;
+    border-radius: 0 0 18px 18px;
+  }
+
+  .ctaSection {
+    padding: 32px 18px;
+    margin: 24px 16px;
+  }
+
+  .faqSection {
+    padding: 32px 20px;
+    margin: 32px 16px 50px;
+  }
+}
+
 a[href^="mailto:"] {
   text-decoration: none;
 }
+

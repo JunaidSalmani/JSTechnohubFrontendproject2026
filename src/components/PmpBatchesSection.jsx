@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createOrder, verifyPayment, submitEnquiry, getAllCourses, getAllBatches } from "../services/api";
-import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
+import PhoneInputField, { isValidPhoneNumber, getPhoneValidationError } from "./PhoneInputField";
 import "./PmpBatchesSection.css";
 
 // ── SVG ICONS (NO EMOJIS) ──────────────────────────────────────────
@@ -334,6 +334,7 @@ const PmpBatchesSection = () => {
   const [enquiryForm, setEnquiryForm] = useState({ name: "", email: "", phone: "", goal: "PMP Training" });
   const [enquiryStatus, setEnquiryStatus] = useState(null);
   const [enquiryLoading, setEnquiryLoading] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
 
   // Dynamic Batches from Backend DB (Admin Panel)
   const [batches, setBatches] = useState([]);
@@ -389,8 +390,9 @@ const PmpBatchesSection = () => {
       setErrorMsg("Please enter a valid email address.");
       return;
     }
-    if (!isValidPhoneNumber(userData.phone)) {
-      setErrorMsg("Please enter a valid phone number with country code.");
+    const phoneErr = getPhoneValidationError(userData.phone);
+    if (phoneErr) {
+      setErrorMsg(phoneErr);
       return;
     }
 
@@ -454,8 +456,18 @@ const PmpBatchesSection = () => {
     }
   };
 
+  const handleEnquiryPhoneChange = (val) => {
+    setEnquiryForm((prev) => ({ ...prev, phone: val }));
+    // If an error is already showing from a prior submit click, re-evaluate dynamically
+    if (phoneError) {
+      const err = getPhoneValidationError(val);
+      setPhoneError(err);
+    }
+  };
+
   const handleEnquirySubmit = async (e) => {
     e.preventDefault();
+
     if (!enquiryForm.name.trim() || enquiryForm.name.trim().length < 2) {
       setEnquiryStatus("Please enter your full name (at least 2 characters).");
       return;
@@ -465,11 +477,13 @@ const PmpBatchesSection = () => {
       setEnquiryStatus("Please enter a valid email address.");
       return;
     }
-    if (!isValidPhoneNumber(enquiryForm.phone)) {
-      setEnquiryStatus("Please enter a valid phone number with country code.");
+    const phoneErr = getPhoneValidationError(enquiryForm.phone);
+    if (phoneErr) {
+      setPhoneError(phoneErr);
       return;
     }
 
+    setPhoneError("");
     setEnquiryLoading(true);
     setEnquiryStatus(null);
 
@@ -483,6 +497,7 @@ const PmpBatchesSection = () => {
       });
       setEnquiryStatus("success");
       setEnquiryForm({ name: "", email: "", phone: "", goal: "PMP Training" });
+      setPhoneError("");
     } catch (err) {
       console.error(err);
       setEnquiryStatus("error");
@@ -640,7 +655,11 @@ const PmpBatchesSection = () => {
                       name="phone"
                       label="WhatsApp Number *"
                       value={userData.phone}
-                      onChange={(val) => setUserData({ ...userData, phone: val })}
+                      onChange={(val) => {
+                        setUserData({ ...userData, phone: val });
+                        if (errorMsg) setErrorMsg("");
+                      }}
+                      error={errorMsg && (errorMsg.toLowerCase().includes("whatsapp") || errorMsg.toLowerCase().includes("phone") || errorMsg.toLowerCase().includes("mobile") || errorMsg.toLowerCase().includes("digit")) ? errorMsg : ""}
                       required
                     />
 
@@ -1004,8 +1023,12 @@ const PmpBatchesSection = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleEnquirySubmit} className="pmp-eq-form">
-                    {enquiryStatus === "error" && (
-                      <div className="pmp-eq-error">Error submitting. Please try again.</div>
+                    {enquiryStatus && enquiryStatus !== "success" && (
+                      <div className="pmp-eq-error">
+                        {enquiryStatus === "error"
+                          ? "Error submitting enquiry. Please check your details and try again."
+                          : enquiryStatus}
+                      </div>
                     )}
 
                     <div className="pmp-eq-group">
@@ -1014,7 +1037,12 @@ const PmpBatchesSection = () => {
                         required
                         placeholder=" "
                         value={enquiryForm.name}
-                        onChange={(e) => setEnquiryForm({ ...enquiryForm, name: e.target.value })}
+                        onChange={(e) => {
+                          setEnquiryForm({ ...enquiryForm, name: e.target.value });
+                          if (enquiryStatus && enquiryStatus.toLowerCase().includes("name")) {
+                            setEnquiryStatus(null);
+                          }
+                        }}
                       />
                       <label>Full Name *</label>
                     </div>
@@ -1025,7 +1053,12 @@ const PmpBatchesSection = () => {
                         required
                         placeholder=" "
                         value={enquiryForm.email}
-                        onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
+                        onChange={(e) => {
+                          setEnquiryForm({ ...enquiryForm, email: e.target.value });
+                          if (enquiryStatus && enquiryStatus.toLowerCase().includes("email")) {
+                            setEnquiryStatus(null);
+                          }
+                        }}
                       />
                       <label>Work Email *</label>
                     </div>
@@ -1034,7 +1067,8 @@ const PmpBatchesSection = () => {
                       name="phone"
                       label="WhatsApp Number *"
                       value={enquiryForm.phone}
-                      onChange={(val) => setEnquiryForm({ ...enquiryForm, phone: val })}
+                      onChange={handleEnquiryPhoneChange}
+                      error={phoneError}
                       required
                     />
 

@@ -509,6 +509,66 @@ const BatchForm = ({ initialBatch, isEditing, onSave, onCancel }) => {
   );
 };
 
+/**
+ * Formats phone numbers for admin enquiries display with '+' and a space between country code and number.
+ * Example: 917780286812 -> +91 7780286812
+ */
+export const formatDisplayPhone = (rawPhone) => {
+  if (!rawPhone || typeof rawPhone !== "string") return "";
+  const cleaned = rawPhone.trim();
+  if (!cleaned) return "";
+
+  // If already formatted like "+91 7780286812"
+  if (/^\+\d{1,4}\s.+/.test(cleaned)) {
+    return cleaned;
+  }
+
+  // Extract digits only
+  const digits = cleaned.replace(/\D/g, "");
+  if (!digits) return cleaned;
+
+  // 10-digit Indian number without country code
+  if (digits.length === 10 && /^[6-9]/.test(digits)) {
+    return `+91 ${digits}`;
+  }
+
+  // India: starts with 91 and has 10 subsequent digits
+  if (digits.startsWith("91") && digits.length >= 12) {
+    return `+91 ${digits.slice(2)}`;
+  }
+
+  // Common 3-digit country codes
+  const threeDigitCodes = ["971", "966", "974", "965", "968", "973", "880", "977", "353", "351", "358", "380", "420", "421", "852", "886"];
+  for (const cc of threeDigitCodes) {
+    if (digits.startsWith(cc) && digits.length > cc.length + 5) {
+      return `+${cc} ${digits.slice(cc.length)}`;
+    }
+  }
+
+  // Common 2-digit country codes
+  const twoDigitCodes = ["44", "61", "65", "60", "92", "94", "49", "33", "81", "82", "86", "20", "27", "31", "34", "39", "55", "62", "63", "64", "66", "90"];
+  for (const cc of twoDigitCodes) {
+    if (digits.startsWith(cc) && digits.length > cc.length + 5) {
+      return `+${cc} ${digits.slice(cc.length)}`;
+    }
+  }
+
+  // 1-digit country codes (1 for US/CA, 7 for RU/KZ)
+  if (digits.startsWith("1") && digits.length === 11) {
+    return `+1 ${digits.slice(1)}`;
+  }
+  if (digits.startsWith("7") && digits.length === 11) {
+    return `+7 ${digits.slice(1)}`;
+  }
+
+  // General fallback: if 11-15 digits, split after 2 digits
+  if (digits.length >= 11) {
+    return `+${digits.slice(0, 2)} ${digits.slice(2)}`;
+  }
+
+  return `+${digits}`;
+};
+
 const AdminPage = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState(() => {
     return localStorage.getItem("adminActiveTab") || "dashboard";
@@ -1004,7 +1064,7 @@ const AdminPage = ({ onLogout }) => {
                                   {enq.phone && (
                                     <span className="contact-phone">
                                       <Icon name="phone" size={12} />
-                                      {enq.phone}
+                                      {formatDisplayPhone(enq.phone)}
                                     </span>
                                   )}
                                 </div>
