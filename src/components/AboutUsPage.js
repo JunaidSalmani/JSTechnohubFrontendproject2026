@@ -26,16 +26,16 @@ function AboutUsPage() {
     "email": "support@jstechnohub.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Plot No. 42, Techno Hub Towers, HITECH City",
-      "addressLocality": "Hyderabad",
-      "addressRegion": "Telangana",
-      "postalCode": "500081",
+      "streetAddress": "West High Court Road, Dharampeth",
+      "addressLocality": "Nagpur",
+      "addressRegion": "Maharashtra",
+      "postalCode": "440010",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 17.4483,
-      "longitude": 78.3808
+      "latitude": 21.1458,
+      "longitude": 79.0882
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -167,15 +167,15 @@ function AboutUsPage() {
       {/* Business & Location Info */}
       <section className="about-section" style={{ backgroundColor: "#ffffff", padding: "48px 24px" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", marginBottom: "32px" }}>Company Headquarters & Contact Details</h2>
+          <h2 style={{ textAlign: "center", marginBottom: "32px" }}>Company Offices &amp; Contact Details</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
             <div style={{ border: "1.5px solid #e2e8f0", padding: "28px", borderRadius: "16px", background: "#f8fafc" }}>
               <h3 style={{ fontSize: "1.2rem", color: "#0f172a", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaMapMarkerAlt style={{ color: "#059669" }} /> Global Headquarters
+                <FaMapMarkerAlt style={{ color: "#059669" }} /> Nagpur Office (Primary)
               </h3>
-              <p style={{ margin: "4px 0", color: "#334155" }}><strong>JSTechnoHub Training & Career Consulting</strong></p>
-              <p style={{ margin: "4px 0", color: "#475569" }}>Plot No. 42, Techno Hub Towers, HITECH City</p>
-              <p style={{ margin: "4px 0", color: "#475569" }}>Hyderabad, Telangana 500081, India</p>
+              <p style={{ margin: "4px 0", color: "#334155" }}><strong>JSTechnoHub Training &amp; Career Consulting</strong></p>
+              <p style={{ margin: "4px 0", color: "#475569" }}>West High Court Road, Dharampeth</p>
+              <p style={{ margin: "4px 0", color: "#475569" }}>Nagpur, Maharashtra 440010, India</p>
               <p style={{ margin: "12px 0 4px", color: "#059669", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
                 <FaPhoneAlt /> Phone: +91 98765 43210 / +91 87430 39914
               </p>
@@ -186,13 +186,15 @@ function AboutUsPage() {
 
             <div style={{ border: "1.5px solid #e2e8f0", padding: "28px", borderRadius: "16px", background: "#f8fafc" }}>
               <h3 style={{ fontSize: "1.2rem", color: "#0f172a", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaBuilding style={{ color: "#2563eb" }} /> Regional Offices
+                <FaBuilding style={{ color: "#2563eb" }} /> Bangalore Office
               </h3>
-              <p style={{ margin: "8px 0 4px", color: "#334155" }}><strong>Nagpur Regional Office:</strong></p>
-              <p style={{ margin: "2px 0", color: "#475569" }}>West High Court Road, Dharampeth, Nagpur, MS 440010</p>
-              <p style={{ margin: "12px 0 4px", color: "#334155" }}><strong>Bangalore Regional Center:</strong></p>
-              <p style={{ margin: "2px 0", color: "#475569" }}>MG Road, Bengaluru, Karnataka 560001</p>
-              <p style={{ margin: "12px 0 4px", color: "#64748b", fontSize: "0.9rem" }}><strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM IST</p>
+              <p style={{ margin: "4px 0", color: "#334155" }}><strong>JSTechnoHub Training &amp; Career Consulting</strong></p>
+              <p style={{ margin: "4px 0", color: "#475569" }}>MG Road, Bengaluru</p>
+              <p style={{ margin: "4px 0", color: "#475569" }}>Karnataka 560001, India</p>
+              <p style={{ margin: "12px 0 4px", color: "#2563eb", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
+                <FaPhoneAlt /> Phone: +91 98765 43210 / +91 87430 39914
+              </p>
+              <p style={{ margin: "4px 0", color: "#64748b", fontSize: "0.9rem" }}><strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM IST</p>
             </div>
           </div>
         </div>

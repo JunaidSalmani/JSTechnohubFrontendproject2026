@@ -199,10 +199,10 @@ function HomePage() {
     "telephone": "+91-9876543210",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Plot No. 42, Techno Hub Towers, HITECH City",
-      "addressLocality": "Hyderabad",
-      "addressRegion": "Telangana",
-      "postalCode": "500081",
+      "streetAddress": "West High Court Road, Dharampeth",
+      "addressLocality": "Nagpur",
+      "addressRegion": "Maharashtra",
+      "postalCode": "440010",
       "addressCountry": "IN"
     }
   };

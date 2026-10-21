@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ContactPage.module.css";
 import { submitCertificationEnquiry } from "../services/api";
+import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
 
 const ContactHero = () => (
   <div className={styles.contactHeader}>
@@ -52,8 +53,7 @@ const ContactForm = ({ certificationName }) => {
       setStatus("error_email");
       return;
     }
-    const phoneCleaned = formData.phone.replace(/[^0-9]/g, "");
-    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
+    if (!isValidPhoneNumber(formData.phone)) {
       setStatus("error_phone");
       return;
     }
@@ -111,18 +111,14 @@ const ContactForm = ({ certificationName }) => {
           <label htmlFor="email">Email Address *</label>
         </div>
 
-        <div className="fl-field">
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder=" "
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="phone">Phone Number *</label>
-        </div>
+        <PhoneInputField
+          name="phone"
+          id="phone"
+          label="Phone Number *"
+          value={formData.phone}
+          onChange={(val) => setFormData((p) => ({ ...p, phone: val }))}
+          required
+        />
 
         <div className="fl-field">
           <textarea
@@ -158,7 +154,7 @@ const ContactForm = ({ certificationName }) => {
           <p className={styles.errorMsg}>⚠️ Please enter a valid email address.</p>
         )}
         {status === "error_phone" && (
-          <p className={styles.errorMsg}>⚠️ Please enter a valid 10-digit phone number.</p>
+          <p className={styles.errorMsg}>⚠️ Please enter a valid phone number with country code.</p>
         )}
         {status === "error_message" && (
           <p className={styles.errorMsg}>⚠️ Please enter a brief message (at least 5 characters).</p>
@@ -178,16 +174,17 @@ const ContactForm = ({ certificationName }) => {
 
 const LocationAndDetails = () => (
   <div style={{ background: "#ffffff", border: "1.5px solid #e2e8f0", borderRadius: "16px", padding: "28px", marginTop: "24px" }}>
-    <h3 style={{ fontSize: "1.25rem", color: "#0f172a", marginBottom: "16px" }}>📍 Corporate Contact & Offices</h3>
+    <h3 style={{ fontSize: "1.25rem", color: "#0f172a", marginBottom: "16px" }}>📍 Corporate Contact &amp; Offices</h3>
     <div style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "0.95rem", color: "#334155" }}>
-      <p><strong>Company:</strong> JSTechnoHub Training & Career Consulting</p>
-      <p><strong>Global HQ:</strong> Plot No. 42, Techno Hub Towers, HITECH City, Hyderabad, Telangana 500081, India</p>
+      <p><strong>Company:</strong> JSTechnoHub Training &amp; Career Consulting</p>
+      <p><strong>Nagpur Office:</strong> West High Court Road, Dharampeth, Nagpur, Maharashtra 440010, India</p>
+      <p><strong>Bangalore Office:</strong> MG Road, Bengaluru, Karnataka 560001, India</p>
       <p><strong>Support Email:</strong> <a href="mailto:support@jstechnohub.com" style={{ color: "#059669", fontWeight: "700" }}>support@jstechnohub.com</a></p>
       <p><strong>Support Phone:</strong> <a href="tel:+919876543210" style={{ color: "#059669", fontWeight: "700" }}>+91 98765 43210</a> / <a href="tel:+918743039914" style={{ color: "#059669", fontWeight: "700" }}>+91 87430 39914</a></p>
       <p><strong>Working Hours:</strong> Monday – Saturday: 9:00 AM – 8:00 PM IST</p>
     </div>
 
-    <h4 style={{ fontSize: "1rem", color: "#0f172a", marginTop: "20px", marginBottom: "8px" }}>Follow & Connect:</h4>
+    <h4 style={{ fontSize: "1rem", color: "#0f172a", marginTop: "20px", marginBottom: "8px" }}>Follow &amp; Connect:</h4>
     <div style={{ display: "flex", gap: "12px" }}>
       <a href="https://www.linkedin.com/company/jstechnohub/" target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", fontWeight: "700", textDecoration: "none" }}>
         LinkedIn Profile →
@@ -212,10 +209,10 @@ const ContactPage = () => {
       "email": "support@jstechnohub.com",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Plot No. 42, Techno Hub Towers, HITECH City",
-        "addressLocality": "Hyderabad",
-        "addressRegion": "Telangana",
-        "postalCode": "500081",
+        "streetAddress": "West High Court Road, Dharampeth",
+        "addressLocality": "Nagpur",
+        "addressRegion": "Maharashtra",
+        "postalCode": "440010",
         "addressCountry": "IN"
       }
     }

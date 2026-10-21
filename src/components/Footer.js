@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { submitCertificationEnquiry } from "../services/api";
+import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
 import {
   FaLinkedin,
   FaInstagram,
@@ -53,9 +54,8 @@ export default function Footer() {
       setStatus("Please enter a valid email address.");
       return;
     }
-    const phoneCleaned = form.phone.replace(/[^0-9]/g, "");
-    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
-      setStatus("Please enter a valid 10-digit phone number.");
+    if (!isValidPhoneNumber(form.phone)) {
+      setStatus("Please enter a valid phone number with country code.");
       return;
     }
 
@@ -99,7 +99,7 @@ export default function Footer() {
           <div style={{ margin: "16px 0", fontSize: "0.88rem", color: "#94a3b8", lineHeight: "1.8" }}>
             <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
               <FaMapMarkerAlt style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
-              <span><strong>HQ:</strong> HITECH City, Hyderabad, TS 500081</span>
+              <span><strong>Offices:</strong> Nagpur &amp; Bangalore, India</span>
             </p>
             <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
               <FaPhoneAlt style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
@@ -212,18 +212,13 @@ export default function Footer() {
               />
               <label>Your Email *</label>
             </div>
-            <div className="fl-field">
-              <input
-                className="ft-input"
-                type="tel"
-                name="phone"
-                placeholder=" "
-                value={form.phone}
-                onChange={handleChange}
-                required
-              />
-              <label>Phone Number *</label>
-            </div>
+            <PhoneInputField
+              name="phone"
+              label="Phone Number *"
+              value={form.phone}
+              onChange={(val) => setForm((p) => ({ ...p, phone: val }))}
+              required
+            />
             <div className="fl-field">
               <textarea
                 className="ft-input ft-textarea"
@@ -255,30 +250,30 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ══════════════ MAPS & REGIONAL CENTERS ROW ══════════════ */}
+      {/* ══════════════ MAPS ROW ══════════════ */}
       <div className="ft-maps">
         <div className="ft-map-card">
           <p className="ft-map-label">
             <span className="ft-map-dot" />
-            Nagpur Regional Center
+            Nagpur Office
           </p>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.423535758346!2d79.0881547154023!3d21.14580068903689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c7bd80c3f53f%3A0x2b8f6d8b1c5cfb5d!2sNagpur!5e0!3m2!1sen!2sin!4v1631872740123!5m2!1sen!2sin"
             allowFullScreen=""
             loading="lazy"
-            title="Nagpur Regional Center"
+            title="Nagpur Office"
           />
         </div>
         <div className="ft-map-card">
           <p className="ft-map-label">
             <span className="ft-map-dot" />
-            Bangalore Regional Center
+            Bangalore Office
           </p>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.8893790352333!2d77.59456271533603!3d12.971598990856214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670b3f7a9b7%3A0x37ef2c0c1a92a69f!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1631872780164!5m2!1sen!2sin"
             allowFullScreen=""
             loading="lazy"
-            title="Bangalore Regional Center"
+            title="Bangalore Office"
           />
         </div>
       </div>

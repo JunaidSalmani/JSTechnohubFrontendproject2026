@@ -1,6 +1,7 @@
 // src/components/PaymentFormModal.js
 
 import React, { useState } from 'react';
+import PhoneInputField, { isValidPhoneNumber } from './PhoneInputField';
 import './PaymentFormModal.css'; 
 
 function PaymentFormModal({ plan, onSubmit, onClose, paymentState, onOtpSubmit, errorMessage }) {
@@ -25,9 +26,8 @@ function PaymentFormModal({ plan, onSubmit, onClose, paymentState, onOtpSubmit, 
             setLocalErr('Please enter a valid email address.');
             return;
         }
-        const phoneCleaned = formData.mobile.replace(/[^0-9]/g, '');
-        if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
-            setLocalErr('Please enter a valid 10-digit mobile number.');
+        if (!isValidPhoneNumber(formData.mobile)) {
+            setLocalErr('Please enter a valid mobile number with country code.');
             return;
         }
         onSubmit(formData);
@@ -76,10 +76,13 @@ function PaymentFormModal({ plan, onSubmit, onClose, paymentState, onOtpSubmit, 
                             <input type="email" name="email" placeholder=" " value={formData.email} onChange={handleChange} required />
                             <label>Email Address *</label>
                         </div>
-                        <div className="fl-field">
-                            <input type="tel" name="mobile" placeholder=" " value={formData.mobile} onChange={handleChange} required />
-                            <label>Mobile Number *</label>
-                        </div>
+                        <PhoneInputField
+                            name="mobile"
+                            label="Mobile Number *"
+                            value={formData.mobile}
+                            onChange={(val) => setFormData(prev => ({ ...prev, mobile: val }))}
+                            required
+                        />
                         <button type="submit" className="submit-btn">Proceed to Verify</button>
                     </form>
                 )}

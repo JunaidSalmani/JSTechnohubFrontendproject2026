@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCourseById, submitEnquiry } from '../services/api';
+import PhoneInputField, { isValidPhoneNumber } from './PhoneInputField';
 import './CourseDetailPage.css';
 
 
@@ -60,10 +61,9 @@ function CourseDetailPage() {
             setFormError("Please enter a valid email address.");
             return;
         }
-        if (formData.phoneNumber) {
-            const phoneCleaned = formData.phoneNumber.replace(/[^0-9]/g, "");
-            if (phoneCleaned.length > 0 && (phoneCleaned.length < 10 || phoneCleaned.length > 15)) {
-                setFormError("Please enter a valid 10-digit phone number.");
+        if (formData.phoneNumber && formData.phoneNumber.trim().length > 0) {
+            if (!isValidPhoneNumber(formData.phoneNumber)) {
+                setFormError("Please enter a valid phone number with country code.");
                 return;
             }
         }
@@ -214,16 +214,13 @@ function CourseDetailPage() {
                                     <label>Your Email *</label>
                                 </div>
 
-                                <div className="form-group">
-                                    <input
-                                        type="tel"
-                                        name="phoneNumber"
-                                        placeholder=" "
-                                        value={formData.phoneNumber}
-                                        onChange={handleInputChange}
-                                    />
-                                    <label>Phone Number</label>
-                                </div>
+                                <PhoneInputField
+                                    name="phoneNumber"
+                                    label="Phone Number"
+                                    value={formData.phoneNumber}
+                                    onChange={(val) => setFormData(p => ({ ...p, phoneNumber: val }))}
+                                    required={false}
+                                />
 
                                 <div className="form-group">
                                     <textarea

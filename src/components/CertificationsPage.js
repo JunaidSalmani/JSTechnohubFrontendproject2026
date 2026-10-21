@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import PmpBatchesSection from "./PmpBatchesSection";
 import "./CertificationsPage.css";
 import { submitCertificationEnquiry } from "../services/api";
+import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
 
 function CertificationsPage() {
   const { certId } = useParams();
@@ -40,8 +41,7 @@ function CertificationsPage() {
       setStatus("error_email");
       return;
     }
-    const phoneCleaned = formData.phone.replace(/[^0-9]/g, "");
-    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
+    if (!isValidPhoneNumber(formData.phone)) {
       setStatus("error_phone");
       return;
     }
@@ -180,17 +180,13 @@ function CertificationsPage() {
                 <label>Work Email *</label>
               </div>
 
-              <div className="fl-field">
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder=" "
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-                <label>Phone Number (WhatsApp) *</label>
-              </div>
+              <PhoneInputField
+                name="phone"
+                label="WhatsApp Number *"
+                value={formData.phone}
+                onChange={(val) => setFormData((p) => ({ ...p, phone: val }))}
+                required
+              />
 
               <div className="fl-field">
                 <textarea
@@ -228,7 +224,7 @@ function CertificationsPage() {
               <p className="error-msg">⚠️ Please enter a valid email address.</p>
             )}
             {status === "error_phone" && (
-              <p className="error-msg">⚠️ Please enter a valid 10-digit phone number.</p>
+              <p className="error-msg">⚠️ Please enter a valid phone number with country code.</p>
             )}
             {status === "error" && (
               <p className="error-msg">

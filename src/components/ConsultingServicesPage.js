@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ConsultingServices.css";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
 import { submitConsultingEnquiry } from "../services/api"; 
 
 
@@ -237,7 +236,7 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
     lastName.trim().length >= 2 &&
     emailRegex.test(email.trim()) &&
     company.trim().length >= 2;
-  const step2Valid = phone.replace(/[^0-9]/g, "").length >= 10 && service && agreed;
+  const step2Valid = isValidPhoneNumber(phone) && service && agreed;
 
   // ─── CHANGED: real API call ───────────────────────────────
   const handleSubmit = async (e) => {
@@ -453,27 +452,13 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
         {formStep === 2 && (
           <form onSubmit={handleSubmit}>
             <div className="cs-modal-body">
-              <div className="cs-form-group">
-                <div className="cs-phone-input-container">
-                  <PhoneInput
-                    country="in"
-                    value={phone}
-                    onChange={(value) => setPhone(value)}
-                    enableSearch
-                    searchPlaceholder="Search country…"
-                    searchNotFound="No country found"
-                    placeholder="98765 43210"
-                    inputProps={{
-                      name: "phone",
-                      required: true,
-                      autoComplete: "tel",
-                    }}
-                  />
-                </div>
-                <label>
-                  Contact Number <sup>*</sup>
-                </label>
-              </div>
+                <PhoneInputField
+                  name="phone"
+                  label="Contact Number *"
+                  value={phone}
+                  onChange={(val) => setPhone(val)}
+                  required
+                />
 
               <div className="cs-form-row">
                 <div className="cs-form-group">

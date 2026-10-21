@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createOrder, verifyPayment, submitEnquiry, getAllCourses, getAllBatches } from "../services/api";
+import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
 import "./PmpBatchesSection.css";
 
 // ── SVG ICONS (NO EMOJIS) ──────────────────────────────────────────
@@ -388,9 +389,8 @@ const PmpBatchesSection = () => {
       setErrorMsg("Please enter a valid email address.");
       return;
     }
-    const phoneCleaned = userData.phone.replace(/[^0-9]/g, "");
-    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
-      setErrorMsg("Please enter a valid 10-digit phone number.");
+    if (!isValidPhoneNumber(userData.phone)) {
+      setErrorMsg("Please enter a valid phone number with country code.");
       return;
     }
 
@@ -465,9 +465,8 @@ const PmpBatchesSection = () => {
       setEnquiryStatus("Please enter a valid email address.");
       return;
     }
-    const phoneCleaned = enquiryForm.phone.replace(/[^0-9]/g, "");
-    if (phoneCleaned.length < 10 || phoneCleaned.length > 15) {
-      setEnquiryStatus("Please enter a valid 10-digit phone number.");
+    if (!isValidPhoneNumber(enquiryForm.phone)) {
+      setEnquiryStatus("Please enter a valid phone number with country code.");
       return;
     }
 
@@ -637,16 +636,13 @@ const PmpBatchesSection = () => {
                       <label>Work Email *</label>
                     </div>
 
-                    <div className="fl-field">
-                      <input
-                        type="tel"
-                        required
-                        placeholder=" "
-                        value={userData.phone}
-                        onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
-                      />
-                      <label>WhatsApp Phone Number *</label>
-                    </div>
+                    <PhoneInputField
+                      name="phone"
+                      label="WhatsApp Number *"
+                      value={userData.phone}
+                      onChange={(val) => setUserData({ ...userData, phone: val })}
+                      required
+                    />
 
                     {/* Price Breakdown */}
                     <div className="pmp-co-summary-box">
@@ -1034,16 +1030,13 @@ const PmpBatchesSection = () => {
                       <label>Work Email *</label>
                     </div>
 
-                    <div className="pmp-eq-group">
-                      <input
-                        type="tel"
-                        required
-                        placeholder=" "
-                        value={enquiryForm.phone}
-                        onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
-                      />
-                      <label>WhatsApp Phone *</label>
-                    </div>
+                    <PhoneInputField
+                      name="phone"
+                      label="WhatsApp Number *"
+                      value={enquiryForm.phone}
+                      onChange={(val) => setEnquiryForm({ ...enquiryForm, phone: val })}
+                      required
+                    />
 
                     <div className="pmp-eq-group">
                       <select

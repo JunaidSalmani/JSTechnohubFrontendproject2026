@@ -46,9 +46,9 @@
 /* Main Two-Column Layout */
 .cert-detail-main {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 3rem;
-  max-width: 1200px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(330px, 1fr);
+  gap: 2.5rem;
+  max-width: 1240px;
   margin: 3rem auto;
   padding: 0 2rem;
 }
@@ -94,7 +94,7 @@
 
 .enquiry-form-wrapper-detail {
   background: var(--card-bg);
-  padding: 2rem;
+  padding: 1.75rem 1.5rem;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
 }
@@ -115,7 +115,8 @@
   flex-direction: column-reverse !important;
 }
 
-.enquiry-form-detail input,
+.enquiry-form-detail .fl-field input,
+.enquiry-form-detail .fl-field textarea,
 .enquiry-form-detail textarea {
   width: 100% !important;
   padding: 1.35rem 0.875rem 0.45rem 0.875rem !important;
