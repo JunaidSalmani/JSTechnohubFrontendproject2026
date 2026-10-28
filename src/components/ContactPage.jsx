@@ -205,7 +205,7 @@ const ContactPage = () => {
     "mainEntity": {
       "@type": "EducationalOrganization",
       "name": "JSTechnoHub",
-      "telephone": "+91-9876543210",
+      "telephone": "+91 87430 39914",
       "email": "support@jstechnohub.com",
       "address": {
         "@type": "PostalAddress",
