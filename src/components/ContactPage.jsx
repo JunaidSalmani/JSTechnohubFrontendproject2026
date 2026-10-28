@@ -180,7 +180,7 @@ const LocationAndDetails = () => (
       <p><strong>Nagpur Office:</strong> West High Court Road, Dharampeth, Nagpur, Maharashtra 440010, India</p>
       <p><strong>Bangalore Office:</strong> MG Road, Bengaluru, Karnataka 560001, India</p>
       <p><strong>Support Email:</strong> <a href="mailto:support@jstechnohub.com" style={{ color: "#059669", fontWeight: "700" }}>support@jstechnohub.com</a></p>
-      <p><strong>Support Phone:</strong> <a href="tel:+919876543210" style={{ color: "#059669", fontWeight: "700" }}>+91 98765 43210</a> / <a href="tel:+918743039914" style={{ color: "#059669", fontWeight: "700" }}>+91 87430 39914</a></p>
+      <p><strong>Support Phone:</strong> <a href="tel:+918743039914" style={{ color: "#059669", fontWeight: "700" }}>+91 87430 39914</a></p>
       <p><strong>Working Hours:</strong> Monday – Saturday: 9:00 AM – 8:00 PM IST</p>
     </div>
 
