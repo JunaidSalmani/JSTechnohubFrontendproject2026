@@ -22,7 +22,7 @@ const BookingCTA = () => (
       href="tel:+919876543210"
       className={styles.ctaButton}
     >
-      📞 Call Us: +91 98765 43210
+      📞 Call Us: +91 87430 39914
     </a>
   </div>
 );
