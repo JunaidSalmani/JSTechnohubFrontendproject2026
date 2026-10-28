@@ -103,7 +103,7 @@ export default function Footer() {
             </p>
             <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
               <FaPhoneAlt style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
-              <span><strong>Phone:</strong> +91 98765 43210 / +91 87430 39914</span>
+              <span><strong>Phone:</strong> +91 87430 39914</span>
             </p>
             <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
               <FaEnvelope style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
