@@ -22,7 +22,7 @@ function AboutUsPage() {
     "url": "https://www.jstechnohub.com",
     "logo": "https://www.jstechnohub.com/JSlogo.png",
     "description": "Global professional training institute and career accelerator specializing in PMP, SAP, AWS Cloud, DevOps, Certification Application Support, and ATS Resume Writing.",
-    "telephone": "+91-9876543210",
+    "telephone": "+91 87430 39914",
     "email": "support@jstechnohub.com",
     "address": {
       "@type": "PostalAddress",
@@ -177,7 +177,7 @@ function AboutUsPage() {
               <p style={{ margin: "4px 0", color: "#475569" }}>West High Court Road, Dharampeth</p>
               <p style={{ margin: "4px 0", color: "#475569" }}>Nagpur, Maharashtra 440010, India</p>
               <p style={{ margin: "12px 0 4px", color: "#059669", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FaPhoneAlt /> Phone: +91 98765 43210 / +91 87430 39914
+                <FaPhoneAlt /> Phone: +91 87430 39914
               </p>
               <p style={{ margin: "4px 0", color: "#059669", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
                 <FaEnvelope /> Email: support@jstechnohub.com
@@ -192,7 +192,7 @@ function AboutUsPage() {
               <p style={{ margin: "4px 0", color: "#475569" }}>MG Road, Bengaluru</p>
               <p style={{ margin: "4px 0", color: "#475569" }}>Karnataka 560001, India</p>
               <p style={{ margin: "12px 0 4px", color: "#2563eb", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FaPhoneAlt /> Phone: +91 98765 43210 / +91 87430 39914
+                <FaPhoneAlt /> Phone: +91 87430 39914
               </p>
               <p style={{ margin: "4px 0", color: "#64748b", fontSize: "0.9rem" }}><strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM IST</p>
             </div>
