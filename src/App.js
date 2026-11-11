@@ -17,7 +17,7 @@ import ServicesPage from "./components/ServicesPage";
 import AboutUsPage from "./components/AboutUsPage";
 import CertificationsListPage from "./components/CertificationsListPage";
 import CertificationsPage from "./components/CertificationsPage";
-// import PmpBatchesSection from "./components/PmpBatchesSection";
+import PmpBatchesSection from "./components/PmpBatchesSection";
 import AdminAuth from "./components/AdminAuth";
 import AdminPage from "./components/AdminPage";
 import ContactPage from "./components/ContactPage";
@@ -490,8 +490,8 @@ function AppLogic() {
           <Route path="/consulting" element={<ConsultingServicesPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/course/:id" element={<CourseDetail />} />
-          {/* <Route path="/pmp" element={<PmpBatchesSection />} /> */}
-          {/* <Route path="/pmp-certification" element={<PmpBatchesSection />} /> */}
+          <Route path="/pmp" element={<PmpBatchesSection />} />
+          <Route path="/pmp-certification" element={<PmpBatchesSection />} />
           <Route path="/certifications" element={<CertificationsListPage />} />
           <Route
             path="/certifications/:certId"

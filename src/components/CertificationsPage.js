@@ -12,7 +12,6 @@ import {
   FaWhatsapp,
   FaStar,
 } from "react-icons/fa";
-import PmpBatchesSection from "./PmpBatchesSection";
 import "./CertificationsPage.css";
 import { submitCertificationEnquiry } from "../services/api";
 import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
@@ -843,6 +842,114 @@ const CERT_CATALOG = {
       },
     ],
   },
+  pmp: {
+    id: "pmp",
+    title: "Project Management Professional (PMP)® Certification",
+    shortName: "PMP",
+    vendor: "Project Management Institute (PMI®)",
+    examCode: "PMI® PMP ECO 2026 / PMBOK 7th Ed.",
+    examDuration: "230 Minutes",
+    examQuestions: "180 Multiple Choice & Situational Questions",
+    passingScore: "Above Target across People, Process & Business Environment",
+    deliveryFormat: "Pearson VUE (Online Proctored or In-Person Test Center)",
+    duration: "8 Weeks (35 Contact Hours Included)",
+    mode: "Live Interactive Cohort + 1,500+ Practice Exam Questions",
+    targetRoles: [
+      "Project Manager",
+      "Senior Project Lead",
+      "Program & Portfolio Manager",
+      "Scrum Master / Agile Project Manager",
+      "IT Project Delivery Manager",
+      "Operations & Engineering Lead",
+    ],
+    prerequisites:
+      "A 4-year degree + 36 months of project leadership experience, OR High School Diploma + 60 months experience, PLUS 35 mandatory formal Contact Hours (included in our program).",
+    overview:
+      "The Project Management Professional (PMP)® is the world's gold standard credential for project leaders. JSTechnoHub's PMI® Authorized PMP course equips you with mastery over Predictive (Waterfall), Agile, and Hybrid frameworks, modern Gen AI project management workflows, and provides 35 formal Contact Hours alongside 100% PMI® application audit clearance support.",
+    modules: [
+      {
+        title: "Module 1: Creating a High-Performing Team (People Domain)",
+        topics: [
+          "Building and organizing project teams, defining ground rules, and negotiating project agreements",
+          "Empowering team members and stakeholders with appropriate training and mentorship",
+          "Engaging remote/hybrid virtual teams and implementing conflict management strategies",
+          "Collaboration tools, emotional intelligence (EQ), and servant leadership principles",
+        ],
+      },
+      {
+        title: "Module 2: Starting & Managing the Project (Process Domain)",
+        topics: [
+          "Determining project methodology: Predictive, Agile (Scrum/Kanban), or Hybrid lifecycle",
+          "Planning and managing scope, Work Breakdown Structure (WBS), and product backlog grooming",
+          "Schedule management, critical path method (CPM), and earned value management (EVM: SPI/CPI)",
+          "Budget and resource forecasting, procurement planning, and quality metrics",
+        ],
+      },
+      {
+        title: "Module 3: Project Risk, Quality & Governance (Process Domain)",
+        topics: [
+          "Risk identification, qualitative & quantitative risk analysis, and contingency reserve management",
+          "Quality assurance, continuous improvement protocols, and acceptance criteria verification",
+          "Managing project changes, change control board (CCB), and milestone stage-gate reviews",
+          "Project artifacts management, closure procedures, and lessons learned registers",
+        ],
+      },
+      {
+        title: "Module 4: Keeping the Business in Mind (Business Environment Domain)",
+        topics: [
+          "Evaluating project compliance, security protocols, and regulatory requirements",
+          "Aligning project deliverables with strategic business objectives and organizational goals",
+          "Evaluating and delivering organizational benefits, ROI, and value realization metrics",
+          "Managing external business environment changes and enterprise environmental factors (EEFs)",
+        ],
+      },
+      {
+        title: "Module 5: Gen AI Prompting & Automation for Modern PMs",
+        topics: [
+          "Using AI prompts to draft project charters, scope statements, and stakeholder communication plans",
+          "Automating risk logs, sprint velocity tracking, and status reporting with LLMs",
+          "AI-driven scenario simulation and schedule compression techniques (Crashing & Fast-Tracking)",
+        ],
+      },
+      {
+        title: "Module 6: PMI® Application Audit & 1,500+ Situational Mock Prep",
+        topics: [
+          "1-on-1 personalized review of your PMI® application experience descriptions",
+          "100% Audit clearance guarantee with pre-verified employer documentation templates",
+          "Timed full-length mock exams simulating Pearson VUE interface with deep situational question reviews",
+        ],
+      },
+    ],
+    whyChooseUs: [
+      "Authorized 35 Contact Hours Verifiable Certificate satisfying PMI® examination eligibility",
+      "1,500+ realistic situational mock exam questions aligned with the latest PMP® ECO 2026",
+      "Dedicated 1-on-1 Mentor application audit support with 100% clearance guarantee",
+      "Exclusive Gen AI project management prompting toolkit included at no extra cost",
+      "98.4% first-attempt pass rate with lifetime access to session recordings and PMBOK 7th Ed. mind maps",
+    ],
+    faqs: [
+      {
+        q: "What is PMP® certification and why is it recognized globally?",
+        a: "The Project Management Professional (PMP)® is the world's most prestigious project management credential issued by PMI®. Certified project managers earn on average 16% to 32% higher salaries worldwide and lead high-impact initiatives across Fortune 500 organizations.",
+      },
+      {
+        q: "Does this course provide the 35 Contact Hours required by PMI®?",
+        a: "Yes! JSTechnoHub issues an official, verifiable 35 Contact Hours Certificate immediately upon training completion, which is 100% accepted by PMI® for your exam application.",
+      },
+      {
+        q: "How does JSTechnoHub guarantee 100% audit clearance?",
+        a: "If your application is selected for random PMI® audit, our certified mentor team directly reviews your documentation, experience logs, and supervisor signature forms to ensure complete compliance within 48 hours.",
+      },
+      {
+        q: "What is the PMP® exam format in 2026?",
+        a: "The exam consists of 180 questions (multiple-choice, multiple-response, drag-and-drop, hotspot) within 230 minutes, with two optional 10-minute breaks. It covers 42% People, 50% Process, and 8% Business Environment.",
+      },
+      {
+        q: "What if I do not pass on my first attempt?",
+        a: "We offer an Exam Pass Guarantee: you receive complimentary access to attend subsequent live cohorts, mentor doubt-clearing sessions, and updated mock exams until you are certified.",
+      },
+    ],
+  },
 };
 
 // Aliases mapping so users accessing /certifications/salesforce or /certifications/cams get routed seamlessly
@@ -860,6 +967,9 @@ const ALIAS_MAP = {
   cia: "cia-training",
   "capm-training": "capm-training",
   capm: "capm-training",
+  pmp: "pmp",
+  "pmp-certification": "pmp",
+  "pmp-training": "pmp",
 };
 
 export default function CertificationsPage() {
@@ -875,15 +985,6 @@ export default function CertificationsPage() {
   const [status, setStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
-
-  // If certId is PMP, delegate cleanly to PmpBatchesSection
-  if (
-    certId === "pmp" ||
-    certId === "pmp-certification" ||
-    certId === "pmp-training"
-  ) {
-    return <PmpBatchesSection />;
-  }
 
   const resolvedKey = ALIAS_MAP[certId] || certId;
   const certData = CERT_CATALOG[resolvedKey];

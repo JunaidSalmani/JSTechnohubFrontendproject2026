@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createOrder, verifyPayment, submitEnquiry, getAllBatches } from "../services/api";
+import { createOrder, verifyPayment, submitCertificationEnquiry } from "../services/api";
 import PhoneInputField, { getPhoneValidationError } from "./PhoneInputField";
 import "./PmpBatchesSection.css";
 
 // ── SVG ICONS ────────────────────────────────────────────────────────
-const CalendarIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
+const PhoneIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <polyline points="22,6 12,13 2,6" />
+  </svg>
+);
+
+const WhatsAppIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
   </svg>
 );
 
@@ -21,12 +31,14 @@ const ClockIcon = () => (
   </svg>
 );
 
+/*
 const UserIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
     <circle cx="12" cy="7" r="4" />
   </svg>
 );
+*/
 
 const CheckIcon = ({ className = "" }) => (
   <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -67,7 +79,8 @@ const LockIcon = () => (
   </svg>
 );
 
-// ── BATCH DATA (AUTHENTIC FALLBACK) ──────────────────────────────────
+// ── BATCH DATA (Commented out per client request) ──────────────────────────────────
+/*
 const DEFAULT_BATCHES = [
   {
     id: 86483,
@@ -122,6 +135,7 @@ const DEFAULT_BATCHES = [
     discount: "50% OFF",
   },
 ];
+*/
 
 // ── PRICING PLANS ────────────────────────────────────────────────────
 const PLANS = [
@@ -179,65 +193,121 @@ const CURRICULUM = [
   {
     number: "01",
     title: "Business Environment & Project Initiation",
+    domain: "Business Environment",
+    weight: "8% Exam Weight",
+    hours: "4 Hours",
+    description: "Align enterprise initiatives with corporate governance, regulatory standards, and strategic business value realization.",
     topics: [
-      "PMI® Alignment & PMP® Exam ECO Framework",
-      "Compliance, Organizational Culture & Project Charters",
-      "Evaluating Business Value, Benefits & Feasibility",
+      "PMI® Alignment & PMP® Examination Content Outline (ECO) 2026",
+      "Organizational Culture, Strategic Value & Project Charters",
+      "Evaluating Business Case, Cost-Benefit Analysis & Feasibility",
+      "Enterprise Environmental Factors (EEFs) & Organizational Process Assets (OPAs)",
+      "Regulatory Compliance & Project Governance Models",
     ],
+    deliverable: "Official Project Charter & Business Case Matrix",
+    tools: "Business Case Matrix, Governance Audit Checklist",
   },
   {
     number: "02",
-    title: "People Management & Team Leadership",
+    title: "People Management & High-Performing Teams",
+    domain: "People Domain",
+    weight: "42% Exam Weight",
+    hours: "10 Hours",
+    description: "Master leadership dynamics, emotional intelligence, team agreements, and remote/hybrid collaboration protocols.",
     topics: [
-      "Building High-Performing Virtual & Hybrid Teams",
-      "Leadership Styles, Emotional Intelligence & Empowerment",
-      "Conflict Resolution, Stakeholder Engagement & Mentoring",
+      "Building and Organizing High-Performing Project Teams",
+      "Servant Leadership, Emotional Intelligence (EQ) & Mentorship",
+      "Conflict Resolution Strategies & Negotiating Project Agreements",
+      "Empowering Team Members & Active Stakeholder Engagement",
+      "Managing Virtual/Hybrid Communication Channels",
     ],
+    deliverable: "Team Working Agreement & Stakeholder RACI Matrix",
+    tools: "RACI Framework, Conflict Management Protocol",
   },
   {
     number: "03",
     title: "Process Execution & Scope Management",
+    domain: "Process Domain",
+    weight: "50% Exam Weight",
+    hours: "6 Hours",
+    description: "Structure requirements gathering, Work Breakdown Structures (WBS), and deliverable sign-offs without scope creep.",
     topics: [
-      "Defining Scope, WBS & Requirements Traceability Matrix",
-      "Managing Changes, Issues & Knowledge Transfer",
-      "Quality Standards & Artifact Maintenance",
+      "Scope Planning, Requirements Gathering & Backlog Grooming",
+      "Work Breakdown Structure (WBS) & WBS Dictionary Creation",
+      "Managing Scope Creep, Scope Baseline & Change Control Boards (CCB)",
+      "Deliverable Verification & Formal Acceptance Criteria",
+      "Continuous Improvement & Phase-Gate Review Milestones",
     ],
+    deliverable: "Full WBS Decomposition & Requirements Traceability Matrix",
+    tools: "WBS Schedule Pro, Confluence Requirements Board",
   },
   {
     number: "04",
-    title: "Schedule, Cost & Earned Value Management (EVM)",
+    title: "Schedule, Cost & Earned Value Management",
+    domain: "Process Domain",
+    weight: "50% Exam Weight",
+    hours: "6 Hours",
+    description: "Master Critical Path Method (CPM), schedule compression, budget forecasting, and all essential EVM calculations.",
     topics: [
-      "Critical Path Method (CPM), Fast-Tracking & Crashing",
-      "Cost Estimation, Budgeting & EVM Formulas (CPI, SPI, EAC)",
-      "Financial Forecasting & Variance Analysis",
+      "Critical Path Method (CPM), Float Analysis & Precedence Diagramming",
+      "Schedule Compression Techniques: Fast-Tracking & Crashing",
+      "Cost Estimation, Contingency Reserves & Cost Baseline",
+      "Earned Value Management (EVM): CPI, SPI, CV, SV, EAC, ETC",
+      "Financial Variance Reporting & Project Completion Forecasting",
     ],
+    deliverable: "CPM Network Diagram & Complete EVM Financial Calculator",
+    tools: "MS Project, EVM Simulation Model, Float Calculators",
   },
   {
     number: "05",
     title: "Quality, Risk & Procurement Management",
+    domain: "Process Domain",
+    weight: "50% Exam Weight",
+    hours: "5 Hours",
+    description: "Implement qualitative and quantitative risk analysis, quality assurance audits, and vendor contract negotiations.",
     topics: [
-      "Qualitative & Quantitative Risk Assessment",
-      "Risk Mitigation, Response Planning & Contingency",
-      "Vendor Selection, Contract Types (FFP, T&M) & Procurements",
+      "Qualitative & Quantitative Risk Assessment (Probability & Impact)",
+      "Risk Mitigation Planning, Residual Risks & Contingency Reserves",
+      "Quality Assurance Standards, Audits & Continuous Quality Control",
+      "Procurement Planning, RFP Generation & Vendor Scorecards",
+      "Contract Types: Firm Fixed Price (FFP), Time & Material (T&M), Cost-Plus",
     ],
+    deliverable: "Enterprise Risk Register & Procurement SOW Document",
+    tools: "Probability-Impact Matrix, Vendor Evaluation Scorecard",
   },
   {
     number: "06",
     title: "Agile, Scrum & Hybrid Frameworks",
+    domain: "Agile & Hybrid",
+    weight: "50% Exam Weight",
+    hours: "6 Hours",
+    description: "Gain hands-on command over Scrum ceremonies, Kanban workflows, user story estimation, and Hybrid lifecycle models.",
     topics: [
-      "Agile Manifesto, Values & Servant Leadership",
-      "Scrum Ceremonies: Sprints, Daily Standups, Reviews & Retros",
-      "Kanban Boards, User Stories, Velocity & Burndown Charts",
+      "Agile Manifesto, 12 Core Principles & Mindset Transformation",
+      "Scrum Ceremonies: Sprint Planning, Daily Standups, Reviews & Retros",
+      "Kanban Boards, WIP Limits, Cycle Time & Lead Time Optimization",
+      "User Story Writing, Story Points & Fibonacci Estimation",
+      "Hybrid Project Management: Blending Waterfall with Agile Sprints",
     ],
+    deliverable: "Sprint Backlog, Burndown Charts & Hybrid Release Roadmap",
+    tools: "Jira Agile, Trello Kanban Boards, Miro Sprint Canvas",
   },
   {
     number: "07",
     title: "Gen AI Modules for Modern Project Managers",
+    domain: "2026 Executive Special",
+    weight: "Executive Masterclass",
+    hours: "4 Hours",
+    description: "Leverage Generative AI, prompt engineering, and automated reporting to accelerate project workflows tenfold.",
     topics: [
-      "ChatGPT & Claude Prompt Engineering for Project Management",
-      "Automating Project Charters, Risk Registers & WBS Breakdown",
-      "AI-Assisted Stakeholder Communication & Status Reporting",
+      "ChatGPT & Claude Prompt Engineering for Project Managers",
+      "Automated WBS Generation, Risk Registers & Charters with AI",
+      "AI-Powered Stakeholder Communication & Executive Status Reports",
+      "Predictive Trend Analysis & Variance Reporting using LLMs",
+      "Ethical AI Governance, IP Security & Data Privacy in Enterprise PM",
     ],
+    deliverable: "JSTechnoHub Gen AI PM Prompt Library & Automation Vault",
+    tools: "ChatGPT Plus, Claude 3.7, PMI Infinity AI Assistant",
   },
 ];
 
@@ -280,64 +350,89 @@ const FAQS = [
 const PmpBatchesSection = () => {
   const navigate = useNavigate();
 
-  // Filter States
-  const [selectedMonth, setSelectedMonth] = useState("All");
-  const [selectedTiming, setSelectedTiming] = useState("All");
+  // Interactive Curriculum Explorer State
+  const [activeModuleIndex, setActiveModuleIndex] = useState(0);
 
-  // Accordion States
-  const [openCurriculumIndex, setOpenCurriculumIndex] = useState(0);
-  const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  // Accordion FAQ State
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
-  // Full-Width Checkout View State
+  // Full-Width Registration / Checkout View State
   const [isCheckoutView, setIsCheckoutView] = useState(false);
-  const [activeBatch, setActiveBatch] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(PLANS[1]);
   const [userData, setUserData] = useState({ name: "", email: "", phone: "" });
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Quick Enquiry Form Beside Batches
-  const [enquiryForm, setEnquiryForm] = useState({ name: "", email: "", phone: "", goal: "PMP Training" });
-  const [enquiryStatus, setEnquiryStatus] = useState(null);
-  const [enquiryLoading, setEnquiryLoading] = useState(false);
-  const [phoneError, setPhoneError] = useState("");
-
-  // Dynamic Batches from DB or curated fallback
-  const [batches, setBatches] = useState(DEFAULT_BATCHES);
-
-  useEffect(() => {
-    getAllBatches()
-      .then((res) => {
-        if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-          setBatches(res.data);
-        }
-      })
-      .catch(() => { });
-  }, []);
-
-  const availableMonths = ["All", ...Array.from(new Set(batches.map((b) => b.monthName)))];
-
-  const filteredBatches = batches.filter((b) => {
-    const monthMatch = selectedMonth === "All" || b.monthName === selectedMonth;
-    const timingMatch = selectedTiming === "All" || b.timingType === selectedTiming;
-    return monthMatch && timingMatch;
+  // Integrated Contact & Counseling Form State
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    experience: "Ready to Certify (3-5 Years Project Experience)",
+    message: "",
   });
+  const [contactStatus, setContactStatus] = useState(null);
+  const [contactLoading, setContactLoading] = useState(false);
+  const [contactPhoneError, setContactPhoneError] = useState("");
 
-  const handleEnroll = (batch) => {
-    setActiveBatch(batch);
+  const handleSelectPlan = (plan) => {
+    setSelectedPlan(plan);
     setIsCheckoutView(true);
     setErrorMsg("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSelectPlan = (plan) => {
-    setSelectedPlan(plan);
-    if (!activeBatch && batches.length > 0) {
-      setActiveBatch(batches[0]);
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    if (!contactForm.name.trim() || contactForm.name.trim().length < 2) {
+      setContactStatus("Please enter your full name.");
+      return;
     }
-    setIsCheckoutView(true);
-    setErrorMsg("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactForm.email.trim())) {
+      setContactStatus("Please enter a valid work email address.");
+      return;
+    }
+    const pErr = getPhoneValidationError(contactForm.phone);
+    if (pErr) {
+      setContactPhoneError(pErr);
+      return;
+    }
+
+    setContactLoading(true);
+    setContactStatus(null);
+    try {
+      await submitCertificationEnquiry({
+        name: contactForm.name,
+        email: contactForm.email,
+        phone: contactForm.phone,
+        certificationName: "Project Management Professional (PMP)® Certification",
+        message: `Candidate Experience Level: ${contactForm.experience}. Message/Goal: ${contactForm.message || "Requesting PMP syllabus, fee breakdown, and schedule counseling."}`,
+      });
+      setContactStatus("success");
+      setContactForm({
+        name: "",
+        email: "",
+        phone: "",
+        experience: "Ready to Certify (3-5 Years Project Experience)",
+        message: "",
+      });
+      setContactPhoneError("");
+    } catch {
+      setContactStatus("Failed to submit enquiry. Please call us directly at +91 87430 39914 or chat on WhatsApp.");
+    } finally {
+      setContactLoading(false);
+    }
+  };
+
+  const scrollToPlans = () => {
+    const el = document.getElementById("pmp-pricing-section");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToContact = () => {
+    const el = document.getElementById("pmp-contact-section");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   const handlePaymentSubmit = async (e) => {
@@ -417,53 +512,7 @@ const PmpBatchesSection = () => {
     }
   };
 
-  const handleEnquiryPhoneChange = (val) => {
-    setEnquiryForm((prev) => ({ ...prev, phone: val }));
-    if (phoneError) setPhoneError("");
-    if (enquiryStatus) setEnquiryStatus(null);
-  };
 
-  const handleEnquirySubmit = async (e) => {
-    e.preventDefault();
-    if (!enquiryForm.name.trim() || enquiryForm.name.trim().length < 2) {
-      setEnquiryStatus("Please enter your name.");
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(enquiryForm.email.trim())) {
-      setEnquiryStatus("Please enter a valid email address.");
-      return;
-    }
-    const pErr = getPhoneValidationError(enquiryForm.phone);
-    if (pErr) {
-      setPhoneError(pErr);
-      return;
-    }
-
-    setEnquiryLoading(true);
-    setEnquiryStatus(null);
-    try {
-      await submitEnquiry({
-        name: enquiryForm.name,
-        email: enquiryForm.email,
-        phoneNumber: enquiryForm.phone,
-        message: `Goal: ${enquiryForm.goal}. Interested in PMP Batch details and discount.`,
-        courseTitle: "PMP Certification Training",
-      });
-      setEnquiryStatus("success");
-      setEnquiryForm({ name: "", email: "", phone: "", goal: "PMP Training" });
-      setPhoneError("");
-    } catch {
-      setEnquiryStatus("error");
-    } finally {
-      setEnquiryLoading(false);
-    }
-  };
-
-  const scrollToBatches = () => {
-    const el = document.getElementById("pmp-batches-schedule-section");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <div className="pmp-page-wrap">
@@ -475,18 +524,18 @@ const PmpBatchesSection = () => {
               <button className="pmp-co-back-btn" onClick={() => setIsCheckoutView(false)}>
                 <ArrowLeftIcon /> Back to Program Overview
               </button>
-              <span className="pmp-co-step-badge">Step 2 of 2: Confirm Batch &amp; Checkout</span>
+              <span className="pmp-co-step-badge">Candidate Registration Form</span>
             </div>
 
             <div className="pmp-co-header">
-              <h2>PMP® Certification Course Checkout</h2>
-              <p>Review your batch schedule, select your plan, and complete secure registration.</p>
+              <h2>PMP® Course Registration &amp; Enrollment</h2>
+              <p>Complete your candidate registration details below to enroll in your selected training plan.</p>
             </div>
 
             <div className="pmp-co-grid">
-              {/* Left Column: Batch & Plan Cards */}
+              {/* Left Column: Plan Card */}
               <div className="pmp-co-col-left">
-                {/* Batch Information Card */}
+                {/* Batch Information Card (Commented out per request)
                 <div className="pmp-co-card">
                   <div className="pmp-co-card-head">
                     <div className="pmp-co-head-icon">
@@ -494,23 +543,22 @@ const PmpBatchesSection = () => {
                     </div>
                     <div>
                       <span className="pmp-co-card-sub">Selected Batch Schedule</span>
-                      <h3>{activeBatch?.dates || "Upcoming Live Batch"} ({activeBatch?.monthName || "PMP Prep"})</h3>
+                      <h3>Upcoming Live Batch (PMP Prep)</h3>
                     </div>
-                    {activeBatch?.discount && <span className="pmp-co-discount-pill">{activeBatch.discount}</span>}
                   </div>
 
                   <div className="pmp-co-details-grid">
                     <div className="pmp-co-detail-item">
                       <span className="pmp-co-d-label">Class Timing</span>
-                      <span className="pmp-co-d-val"><ClockIcon /> {activeBatch?.timing || "07:00 AM - 11:30 AM IST"}</span>
+                      <span className="pmp-co-d-val"><ClockIcon /> 07:00 AM - 11:30 AM IST</span>
                     </div>
                     <div className="pmp-co-detail-item">
                       <span className="pmp-co-d-label">Slot Format</span>
-                      <span className="pmp-co-d-val">{activeBatch?.dayType || "Weekend Batch | 8 Sessions"}</span>
+                      <span className="pmp-co-d-val">Weekend Batch | 8 Sessions</span>
                     </div>
                     <div className="pmp-co-detail-item">
                       <span className="pmp-co-d-label">Lead Instructor</span>
-                      <span className="pmp-co-d-val"><UserIcon /> {activeBatch?.trainer || "JSTechnoHub Senior PMP® Trainer"}</span>
+                      <span className="pmp-co-d-val"><UserIcon /> JSTechnoHub Senior PMP® Trainer</span>
                     </div>
                     <div className="pmp-co-detail-item">
                       <span className="pmp-co-d-label">Venue</span>
@@ -518,6 +566,7 @@ const PmpBatchesSection = () => {
                     </div>
                   </div>
                 </div>
+                ── */}
 
                 {/* Plan Customizer */}
                 <div className="pmp-co-card">
@@ -564,8 +613,8 @@ const PmpBatchesSection = () => {
               {/* Right Column: Student Form & Payment */}
               <div className="pmp-co-col-right">
                 <div className="pmp-co-card pmp-co-checkout-form-card">
-                  <h3>Candidate Details &amp; Payment</h3>
-                  <p className="pmp-co-form-sub">Enter your details to generate your invoice and proceed to payment.</p>
+                  <h3>Candidate Registration Form</h3>
+                  <p className="pmp-co-form-sub">Enter your details to generate your enrollment invoice and proceed to payment.</p>
 
                   <form onSubmit={handlePaymentSubmit} className="pmp-co-form">
                     {errorMsg && <div className="pmp-m-error">{errorMsg}</div>}
@@ -680,11 +729,11 @@ const PmpBatchesSection = () => {
                 </div>
 
                 <div className="pmp-hero-buttons">
-                  <button className="pmp-btn-primary" onClick={scrollToBatches}>
-                    <span>Explore Upcoming Batches &amp; Enroll&nbsp;→</span>
+                  <button className="pmp-btn-primary" onClick={scrollToPlans}>
+                    <span>Choose Plan &amp; Register Now&nbsp;→</span>
                   </button>
-                  <button className="pmp-btn-secondary" onClick={scrollToBatches}>
-                    Request Batch Timetable &amp; Syllabus
+                  <button className="pmp-btn-secondary" onClick={scrollToContact}>
+                    Speak to Advisor &amp; Get Syllabus ↓
                   </button>
                 </div>
               </div>
@@ -713,7 +762,7 @@ const PmpBatchesSection = () => {
             </div>
           </section>
 
-          {/* ── 3. UPCOMING BATCHES WITH ENQUIRY BESIDE ── */}
+          {/* ── 3. UPCOMING BATCHES (Commented out per request) ──
           <section id="pmp-batches-schedule-section" className="pmp-content-section">
             <div className="app-container">
               <div className="pmp-section-head">
@@ -721,7 +770,6 @@ const PmpBatchesSection = () => {
                 <h2>Upcoming Training Batches</h2>
                 <p>Choose your weekend cohort schedule and secure your seat with instant checkout, or request details below.</p>
 
-                {/* Filter Controls */}
                 <div className="pmp-filter-bar">
                   <div className="pmp-fb-group">
                     <span className="pmp-fb-label">Month:</span>
@@ -751,9 +799,7 @@ const PmpBatchesSection = () => {
                 </div>
               </div>
 
-              {/* 2-Column Batches Layout */}
               <div className="pmp-schedule-grid">
-                {/* Left: Batches List */}
                 <div className="pmp-schedule-col">
                   {filteredBatches.map((b) => (
                     <div key={b.id} className="pmp-batch-card">
@@ -795,7 +841,6 @@ const PmpBatchesSection = () => {
                   ))}
                 </div>
 
-                {/* Right: Quick Enquiry Form Beside Batches */}
                 <div className="pmp-enquiry-col">
                   <div className="pmp-enquiry-box">
                     <div className="pmp-eq-header">
@@ -872,9 +917,10 @@ const PmpBatchesSection = () => {
               </div>
             </div>
           </section>
+          ── */}
 
           {/* ── 4. CHOOSE YOUR TRAINING PLAN ── */}
-          <section className="pmp-content-section pmp-section-alt">
+          <section id="pmp-pricing-section" className="pmp-content-section pmp-section-alt">
             <div className="app-container">
               <div className="pmp-section-head">
                 <span className="pmp-kicker">Transparent Tuition</span>
@@ -913,7 +959,7 @@ const PmpBatchesSection = () => {
                       className={`pmp-btn-tier-select ${selectedPlan.id === plan.id ? "pmp-btn-tier-select--active" : ""}`}
                       onClick={() => handleSelectPlan(plan)}
                     >
-                      {selectedPlan.id === plan.id ? "Selected Plan (Checkout) →" : "Select Plan"}
+                      Register Now →
                     </button>
                   </div>
                 ))}
@@ -921,46 +967,84 @@ const PmpBatchesSection = () => {
             </div>
           </section>
 
-          {/* ── 5. DETAILED CURRICULUM (ACCORDION) ── */}
-          <section className="pmp-content-section">
+          {/* ── 5. OFFICIAL COURSE CURRICULUM (INTERACTIVE EXPLORER) ── */}
+          <section id="pmp-curriculum-section" className="pmp-content-section">
             <div className="app-container">
               <div className="pmp-section-head">
                 <span className="pmp-kicker">PMI® ECO 2026 Aligned</span>
-                <h2>Detailed Course Curriculum</h2>
-                <p>Comprehensive 7-module syllabus covering Predictive, Agile, Hybrid, and Gen AI project workflows.</p>
+                <h2>Official Course Curriculum &amp; Learning Roadmap</h2>
+                <p>Interactive 7-module syllabus covering Predictive, Agile, Hybrid, and Gen AI project workflows.</p>
               </div>
 
-              <div className="pmp-curriculum-accordion">
-                {CURRICULUM.map((module, idx) => {
-                  const isOpen = openCurriculumIndex === idx;
-                  return (
-                    <div key={idx} className={`pmp-curr-card ${isOpen ? "pmp-curr-card--open" : ""}`}>
+              <div className="pmp-curriculum-explorer">
+                {/* Left Column: Module Navigation Tabs */}
+                <div className="pmp-curr-nav">
+                  <div className="pmp-curr-nav-title">7 In-Depth Modules</div>
+                  {CURRICULUM.map((mod, idx) => {
+                    const isActive = activeModuleIndex === idx;
+                    return (
                       <button
-                        className="pmp-curr-toggle"
-                        onClick={() => setOpenCurriculumIndex(isOpen ? null : idx)}
+                        key={idx}
+                        type="button"
+                        className={`pmp-curr-tab ${isActive ? "pmp-curr-tab--active" : ""}`}
+                        onClick={() => setActiveModuleIndex(idx)}
                       >
-                        <div className="pmp-curr-title-wrap">
-                          <span className="pmp-curr-num">{module.number}</span>
-                          <span className="pmp-curr-title">{module.title}</span>
+                        <span className="pmp-curr-tab-num">{mod.number}</span>
+                        <div className="pmp-curr-tab-meta">
+                          <span className="pmp-curr-tab-domain">{mod.domain}</span>
+                          <span className="pmp-curr-tab-title">{mod.title}</span>
                         </div>
-                        <ChevronDownIcon open={isOpen} />
+                        <span className="pmp-curr-tab-arrow">{isActive ? "●" : "→"}</span>
                       </button>
+                    );
+                  })}
+                </div>
 
-                      {isOpen && (
-                        <div className="pmp-curr-content">
-                          <ul>
-                            {module.topics.map((t, tIdx) => (
-                              <li key={tIdx}>
-                                <CheckIcon className="pmp-curr-check" />
-                                <span>{t}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                {/* Right Column: Active Module Showcase Panel */}
+                <div className="pmp-curr-showcase">
+                  <div className="pmp-curr-sc-header">
+                    <div className="pmp-curr-sc-badges">
+                      <span className="pmp-curr-sc-num">Module {CURRICULUM[activeModuleIndex].number}</span>
+                      <span className="pmp-curr-sc-domain">{CURRICULUM[activeModuleIndex].domain}</span>
+                      <span className="pmp-curr-sc-weight">{CURRICULUM[activeModuleIndex].weight}</span>
                     </div>
-                  );
-                })}
+                    <h3 className="pmp-curr-sc-title">{CURRICULUM[activeModuleIndex].title}</h3>
+                    <p className="pmp-curr-sc-desc">{CURRICULUM[activeModuleIndex].description}</p>
+                  </div>
+
+                  <div className="pmp-curr-sc-body">
+                    <h4 className="pmp-curr-sc-subhead">Key Competencies &amp; Syllabus Covered:</h4>
+                    <ul className="pmp-curr-topics-grid">
+                      {CURRICULUM[activeModuleIndex].topics.map((t, tIdx) => (
+                        <li key={tIdx} className="pmp-curr-topic-item">
+                          <CheckIcon className="pmp-curr-topic-check" />
+                          <span>{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="pmp-curr-sc-highlights">
+                      <div className="pmp-curr-hl-item">
+                        <span className="pmp-curr-hl-label">Practical Deliverable:</span>
+                        <span className="pmp-curr-hl-val">{CURRICULUM[activeModuleIndex].deliverable}</span>
+                      </div>
+                      <div className="pmp-curr-hl-item">
+                        <span className="pmp-curr-hl-label">Tools &amp; Frameworks:</span>
+                        <span className="pmp-curr-hl-val">{CURRICULUM[activeModuleIndex].tools}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pmp-curr-sc-footer">
+                    <div className="pmp-curr-sc-duration">
+                      <ClockIcon />
+                      <span>{CURRICULUM[activeModuleIndex].hours} of Live Training Included</span>
+                    </div>
+                    <button type="button" className="pmp-btn-curr-enquire" onClick={scrollToContact}>
+                      Enquire About This Module →
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -1030,6 +1114,193 @@ const PmpBatchesSection = () => {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </section>
+
+          {/* ── 8. INTEGRATED CONTACT & ADVISORY SECTION ── */}
+          <section id="pmp-contact-section" className="pmp-content-section pmp-contact-section">
+            <div className="app-container">
+              <div className="pmp-section-head">
+                <span className="pmp-kicker">Personalized Mentorship</span>
+                <h2>Speak with a Senior PMP® Advisor</h2>
+                <p>Have questions about your exam eligibility, 36-month project experience, or course details? Connect with us directly.</p>
+              </div>
+
+              <div className="pmp-contact-grid">
+                {/* Left Column: Direct Reach & Advisory Promise */}
+                <div className="pmp-contact-info-col">
+                  <div className="pmp-contact-advisor-card">
+                    <div className="pmp-advisor-badge">
+                      <AwardIcon />
+                      <span>Certified PMP® Advisory Cell</span>
+                    </div>
+                    <h3>Direct Guidance from Certified Mentors</h3>
+                    <p>
+                      Avoid costly exam application rejections. Our PMI-certified counseling team evaluates your resume, verifies your project management hours, and helps you pass on your first attempt.
+                    </p>
+
+                    <div className="pmp-contact-methods">
+                      <a href="tel:+918743039914" className="pmp-cm-item">
+                        <div className="pmp-cm-icon pmp-cm-icon--phone">
+                          <PhoneIcon />
+                        </div>
+                        <div className="pmp-cm-meta">
+                          <span className="pmp-cm-label">Call Our Senior Advisor</span>
+                          <span className="pmp-cm-val">+91 87430 39914</span>
+                        </div>
+                      </a>
+
+                      <a
+                        href="https://wa.me/918743039914?text=Hi%20JSTechnoHub%2C%20I%20am%20interested%20in%20the%20PMP%20Certification%20Training%20program."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pmp-cm-item"
+                      >
+                        <div className="pmp-cm-icon pmp-cm-icon--wa">
+                          <WhatsAppIcon />
+                        </div>
+                        <div className="pmp-cm-meta">
+                          <span className="pmp-cm-label">Instant WhatsApp Chat</span>
+                          <span className="pmp-cm-val">+91 87430 39914 (24/7 Response)</span>
+                        </div>
+                      </a>
+
+                      <a href="mailto:info@jstechnohub.com" className="pmp-cm-item">
+                        <div className="pmp-cm-icon pmp-cm-icon--mail">
+                          <MailIcon />
+                        </div>
+                        <div className="pmp-cm-meta">
+                          <span className="pmp-cm-label">Official Support Desk</span>
+                          <span className="pmp-cm-val">info@jstechnohub.com</span>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div className="pmp-contact-guarantees">
+                      <div className="pmp-cg-pill">
+                        <CheckIcon />
+                        <span>100% Free Eligibility Check</span>
+                      </div>
+                      <div className="pmp-cg-pill">
+                        <CheckIcon />
+                        <span>Audit Clearance Support</span>
+                      </div>
+                      <div className="pmp-cg-pill">
+                        <CheckIcon />
+                        <span>35 Verified Contact Hours</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Contact & Enquiry Form */}
+                <div className="pmp-contact-form-col">
+                  <div className="pmp-contact-form-card">
+                    <div className="pmp-cf-header">
+                      <h3>Request Free Counseling &amp; Syllabus</h3>
+                      <p>Fill in your details below and an executive advisor will call you within 15 minutes.</p>
+                    </div>
+
+                    {contactStatus === "success" ? (
+                      <div className="pmp-cf-success">
+                        <div className="pmp-cf-success-icon">
+                          <CheckIcon />
+                        </div>
+                        <h4>Thank You! Your Request is Received.</h4>
+                        <p>Our senior PMP advisor will connect with you shortly via phone/WhatsApp to evaluate your eligibility and share the syllabus.</p>
+                        <a
+                          href="https://wa.me/918743039914?text=Hi%20JSTechnoHub%2C%20I%20just%20submitted%20the%20PMP%20counseling%20form."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pmp-btn-cf-wa"
+                        >
+                          <WhatsAppIcon /> Message Us on WhatsApp Right Now
+                        </a>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleContactSubmit} className="pmp-cf-form">
+                        {contactStatus && contactStatus !== "success" && (
+                          <div className="pmp-cf-error">{contactStatus}</div>
+                        )}
+
+                        <div className="fl-field">
+                          <input
+                            type="text"
+                            required
+                            placeholder=" "
+                            value={contactForm.name}
+                            onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                          />
+                          <label>Full Name *</label>
+                        </div>
+
+                        <div className="fl-field">
+                          <input
+                            type="email"
+                            required
+                            placeholder=" "
+                            value={contactForm.email}
+                            onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                          />
+                          <label>Work Email *</label>
+                        </div>
+
+                        <PhoneInputField
+                          name="contactPhone"
+                          label="WhatsApp Number *"
+                          value={contactForm.phone}
+                          onChange={(val) => {
+                            setContactForm({ ...contactForm, phone: val });
+                            if (contactPhoneError) setContactPhoneError("");
+                          }}
+                          error={contactPhoneError}
+                          required
+                        />
+
+                        <div className="fl-field fl-select-field">
+                          <select
+                            value={contactForm.experience}
+                            onChange={(e) => setContactForm({ ...contactForm, experience: e.target.value })}
+                          >
+                            <option value="Ready to Certify (3-5 Years Project Experience)">
+                              Ready to Certify (3-5 Years Project Experience)
+                            </option>
+                            <option value="Senior PM / Lead (5+ Years Experience)">
+                              Senior PM / Lead (5+ Years Experience)
+                            </option>
+                            <option value="Assessing Eligibility (0-3 Years Experience)">
+                              Assessing Eligibility (0-3 Years Experience)
+                            </option>
+                            <option value="Corporate / Team Training Inquiry">
+                              Corporate / Team Training Inquiry
+                            </option>
+                          </select>
+                          <label>Project Experience Level</label>
+                        </div>
+
+                        <div className="fl-field fl-textarea-field">
+                          <textarea
+                            rows="3"
+                            placeholder=" "
+                            value={contactForm.message}
+                            onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                          />
+                          <label>Questions or Specific Goals (Optional)</label>
+                        </div>
+
+                        <button type="submit" className="pmp-btn-cf-submit" disabled={contactLoading}>
+                          {contactLoading ? "Submitting Request..." : "Request Free Counseling & Syllabus →"}
+                        </button>
+
+                        <div className="pmp-cf-trust-note">
+                          <LockIcon />
+                          <span>100% Confidential · Zero Spam Guarantee · Instant Callback</span>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
