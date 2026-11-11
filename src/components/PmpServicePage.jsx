@@ -61,7 +61,7 @@ export default function PmpServicePage() {
         <div className="sp-container sp-hero-grid">
           <div>
             <span className="sp-hero-badge">
-              <FaBolt style={{ color: "#059669" }} /> PMI® Authorized 35 Contact Hours Included
+              <FaBolt style={{ color: "#eb001b" }} /> PMI® Authorized 35 Contact Hours Included
             </span>
             <h1 className="sp-hero-title">PMP® Certification Prep & Gen AI Mastery</h1>
             <p className="sp-hero-desc">
@@ -69,13 +69,13 @@ export default function PmpServicePage() {
             </p>
             <div className="sp-hero-meta">
               <div className="sp-meta-item">
-                <FaClock style={{ color: "#059669" }} /> <span>4 Weeks (35 Hrs)</span>
+                <FaClock style={{ color: "#eb001b" }} /> <span>4 Weeks (35 Hrs)</span>
               </div>
               <div className="sp-meta-item">
                 <FaStar style={{ color: "#f59e0b" }} /> <span>4.9 / 5 Rating</span>
               </div>
               <div className="sp-meta-item">
-                <FaTrophy style={{ color: "#059669" }} /> <span>98.4% Pass Rate</span>
+                <FaTrophy style={{ color: "#eb001b" }} /> <span>98.4% Pass Rate</span>
               </div>
             </div>
           </div>

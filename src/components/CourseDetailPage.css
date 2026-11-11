@@ -162,6 +162,50 @@
   }
 }
 
+@media (max-width: 768px) {
+  .course-detail-page {
+    padding: 1.2rem 16px;
+  }
+
+  .course-detail-hero {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .course-detail-hero h1 {
+    font-size: clamp(1.5rem, 5.5vw, 1.95rem);
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .course-detail-info {
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+  }
+
+  .course-detail-info h2 {
+    font-size: 1.3rem;
+  }
+
+  .course-detail-info p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .course-detail-info li {
+    font-size: 13.5px;
+  }
+
+  .course-detail-sidebar {
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+  }
+
+  .enquiry-form-container h3 {
+    font-size: 1.2rem;
+  }
+}
+
 /* Fade In Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

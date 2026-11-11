@@ -2,7 +2,7 @@
    Footer.css — JSTechnoHub  |  Premium Footer
    ───────────────────────────────────────────────────────────────────
    Matches App.css design system exactly:
-   Palette : Midnight #0D1321 · Cyan #00C2FF · Gold #F0A500
+   Palette : Deep Obsidian #0D1321 · Flame Red #EB001B · Sun Gold #F79E1B
    Font    : Plus Jakarta Sans (body) · Syne 700 (display)
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -28,7 +28,7 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(0, 194, 255, 0.07) 0%,
+    rgba(247, 158, 27, 0.08) 0%,
     transparent 65%
   );
   pointer-events: none;
@@ -36,15 +36,15 @@
 
 /* ── Top accent line (matches navbar shimmer) ─────────────────── */
 .ft-accent {
-  height: 1px;
+  height: 1.5px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    #00c2ff 30%,
-    #f0a500 65%,
+    #eb001b 30%,
+    #f79e1b 65%,
     transparent 100%
   );
-  opacity: 0.45;
+  opacity: 0.7;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -91,10 +91,10 @@
 }
 
 .ft-logo-js {
-  color: #60cbff;
+  color: #eb001b;
 }
 .ft-logo-t {
-  color: #f0a500;
+  color: #f79e1b;
 }
 .ft-logo-rest {
   color: rgba(255, 255, 255, 0.9);
@@ -139,9 +139,9 @@
 }
 
 .ft-social-link:hover {
-  background: rgba(0, 194, 255, 0.12);
-  border-color: rgba(0, 194, 255, 0.28);
-  color: #00c2ff;
+  background: rgba(235, 0, 27, 0.12);
+  border-color: rgba(235, 0, 27, 0.28);
+  color: #eb001b;
   transform: translateY(-2px);
 }
 
@@ -166,7 +166,7 @@
   font-family: "Syne", sans-serif;
   font-size: 20px;
   font-weight: 700;
-  color: #00c2ff;
+  color: #f79e1b;
   line-height: 1;
   margin-bottom: 3px;
 }
@@ -198,7 +198,7 @@
   display: block;
   width: 20px;
   height: 1.5px;
-  background: #00c2ff;
+  background: #eb001b;
   flex-shrink: 0;
   border-radius: 2px;
 }
@@ -238,9 +238,9 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #00c2ff;
+  background: #f79e1b;
   flex-shrink: 0;
-  opacity: 0.3;
+  opacity: 0.4;
   transition: opacity 0.18s ease;
 }
 
@@ -279,9 +279,9 @@
 }
 
 .ft-input:focus {
-  border-color: rgba(0, 194, 255, 0.4);
-  background: rgba(0, 194, 255, 0.06);
-  box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.1);
+  border-color: rgba(235, 0, 27, 0.45);
+  background: rgba(235, 0, 27, 0.05);
+  box-shadow: 0 0 0 3px rgba(235, 0, 27, 0.12);
 }
 
 .ft-textarea {
@@ -299,12 +299,12 @@
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 13.5px;
   font-weight: 700;
-  color: #0d1321;
+  color: #ffffff;
   cursor: pointer;
   letter-spacing: 0.01em;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(135deg, #00c2ff 0%, #0093cc 100%);
+  background: linear-gradient(135deg, #eb001b 0%, #c90017 100%);
   transition:
     transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.22s ease;
@@ -312,7 +312,7 @@
 
 .ft-submit:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0, 194, 255, 0.38);
+  box-shadow: 0 8px 28px rgba(235, 0, 27, 0.38);
 }
 
 .ft-submit:disabled {
@@ -376,7 +376,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #00c2ff;
+  background: #eb001b;
   flex-shrink: 0;
 }
 
@@ -395,6 +395,28 @@
 .ft-map-card:hover iframe {
   filter: brightness(1) contrast(1) saturate(1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TRADEMARK & LEGAL DISCLAIMER
+══════════════════════════════════════════════════════════════════ */
+.ft-disclaimer-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 18px 52px 0;
+}
+
+.ft-disclaimer {
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.42);
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 16px;
+}
+
+.ft-disclaimer strong {
+  color: rgba(255, 255, 255, 0.68);
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -457,6 +479,9 @@
   .ft-maps {
     padding: 32px 32px;
   }
+  .ft-disclaimer-wrap {
+    padding: 16px 32px 0;
+  }
   .ft-bottom {
     padding: 18px 32px;
   }
@@ -478,6 +503,9 @@
   .ft-maps {
     padding: 28px;
   }
+  .ft-disclaimer-wrap {
+    padding: 16px 28px 0;
+  }
   .ft-bottom {
     padding: 18px 28px;
   }
@@ -497,6 +525,9 @@
     grid-template-columns: 1fr;
     padding: 24px 20px;
     gap: 20px;
+  }
+  .ft-disclaimer-wrap {
+    padding: 14px 20px 0;
   }
   .ft-bottom {
     flex-direction: column;

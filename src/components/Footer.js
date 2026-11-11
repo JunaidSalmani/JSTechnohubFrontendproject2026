@@ -97,16 +97,16 @@ export default function Footer() {
           </p>
 
           <div style={{ margin: "16px 0", fontSize: "0.88rem", color: "#94a3b8", lineHeight: "1.8" }}>
-            <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
-              <FaMapMarkerAlt style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
+            <p style={{ margin: "6px 0", display: "flex", alignItems: "center" }}>
+              <FaMapMarkerAlt style={{ color: "#eb001b", marginRight: "10px", flexShrink: 0, fontSize: "14px" }} />
               <span><strong>Offices:</strong> Nagpur &amp; Bangalore, India</span>
             </p>
-            <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
-              <FaPhoneAlt style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
+            <p style={{ margin: "6px 0", display: "flex", alignItems: "center" }}>
+              <FaPhoneAlt style={{ color: "#eb001b", marginRight: "10px", flexShrink: 0, fontSize: "14px" }} />
               <span><strong>Phone:</strong> +91 87430 39914</span>
             </p>
-            <p style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
-              <FaEnvelope style={{ color: "#00c2ff", marginRight: "8px", flexShrink: 0 }} />
+            <p style={{ margin: "6px 0", display: "flex", alignItems: "center" }}>
+              <FaEnvelope style={{ color: "#eb001b", marginRight: "10px", flexShrink: 0, fontSize: "14px" }} />
               <span><strong>Email:</strong> support@jstechnohub.com</span>
             </p>
           </div>
@@ -276,6 +276,13 @@ export default function Footer() {
             title="Bangalore Office"
           />
         </div>
+      </div>
+
+      {/* ══════════════ TRADEMARK & LEGAL DISCLAIMER ══════════════ */}
+      <div className="ft-disclaimer-wrap">
+        <p className="ft-disclaimer">
+          <strong>Disclaimer:</strong> PMI, PMP, PMBOK, and CAPM are registered marks of the Project Management Institute, Inc. AWS is a registered trademark of Amazon Web Services, Inc. SAP, SAP S/4HANA are registered trademarks of SAP SE. Salesforce is a registered trademark of Salesforce, Inc. Cisco is a registered trademark of Cisco Systems, Inc. JSTechnoHub is an independent training provider offering exam preparation and career advisory services aligned with official vendor blueprints.
+        </p>
       </div>
 
       {/* ══════════════ BOTTOM BAR ══════════════ */}

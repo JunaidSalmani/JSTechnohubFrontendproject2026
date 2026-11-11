@@ -61,7 +61,7 @@ export default function AwsTrainingPage() {
         <div className="sp-container sp-hero-grid">
           <div>
             <span className="sp-hero-badge">
-              <FaCloud style={{ color: "#059669" }} /> AWS Authorized Curriculum & Live Console Labs
+              <FaCloud style={{ color: "#eb001b" }} /> AWS Authorized Curriculum & Live Console Labs
             </span>
             <h1 className="sp-hero-title">AWS Certified Solutions Architect Training</h1>
             <p className="sp-hero-desc">
@@ -69,13 +69,13 @@ export default function AwsTrainingPage() {
             </p>
             <div className="sp-hero-meta">
               <div className="sp-meta-item">
-                <FaClock style={{ color: "#059669" }} /> <span>6 Weeks (40 Hrs)</span>
+                <FaClock style={{ color: "#eb001b" }} /> <span>6 Weeks (40 Hrs)</span>
               </div>
               <div className="sp-meta-item">
                 <FaStar style={{ color: "#f59e0b" }} /> <span>4.9 / 5 Rating</span>
               </div>
               <div className="sp-meta-item">
-                <FaTools style={{ color: "#059669" }} /> <span>100% Hands-On Labs</span>
+                <FaTools style={{ color: "#eb001b" }} /> <span>100% Hands-On Labs</span>
               </div>
             </div>
           </div>

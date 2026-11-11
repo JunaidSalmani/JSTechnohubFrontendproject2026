@@ -281,9 +281,9 @@
 
 .phone-input-field--dark .phone-input-control-box.is-focused .react-tel-input .form-control.custom-tel-input,
 .phone-input-field--dark .phone-input-control-box .react-tel-input .form-control.custom-tel-input:focus {
-  border-color: rgba(0, 194, 255, 0.6) !important;
-  background: rgba(0, 194, 255, 0.08) !important;
-  box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.18) !important;
+  border-color: rgba(235, 0, 27, 0.6) !important;
+  background: rgba(235, 0, 27, 0.08) !important;
+  box-shadow: 0 0 0 3px rgba(235, 0, 27, 0.18) !important;
 }
 
 .phone-input-field--dark .phone-input-control-box .react-tel-input .flag-dropdown.custom-tel-button {
@@ -297,7 +297,7 @@
 
 .phone-input-field--dark .phone-input-control-box.is-focused .react-tel-input .flag-dropdown.custom-tel-button,
 .phone-input-field--dark .phone-input-control-box .react-tel-input .flag-dropdown.open {
-  border-color: rgba(0, 194, 255, 0.6) !important;
+  border-color: rgba(235, 0, 27, 0.6) !important;
   background: rgba(255, 255, 255, 0.1) !important;
   z-index: 999999 !important;
 }
@@ -316,7 +316,7 @@
 }
 
 .phone-input-field--dark .phone-input-control-box .react-tel-input .selected-flag .arrow.up {
-  border-bottom-color: #00c2ff !important;
+  border-bottom-color: #eb001b !important;
 }
 
 .phone-input-field--dark .phone-input-control-box .phone-floating-label {
@@ -335,7 +335,7 @@
 }
 
 .phone-input-field--dark .phone-input-control-box.is-focused .phone-floating-label {
-  color: #00c2ff !important;
+  color: #eb001b !important;
 }
 
 .phone-input-field--dark .phone-input-control-box .react-tel-input .country-list,
@@ -359,9 +359,9 @@
 }
 
 .phone-input-field--dark .phone-input-control-box .react-tel-input .country-list .country.highlight {
-  background-color: rgba(0, 194, 255, 0.18) !important;
-  background: rgba(0, 194, 255, 0.18) !important;
-  color: #00c2ff !important;
+  background-color: rgba(235, 0, 27, 0.18) !important;
+  background: rgba(235, 0, 27, 0.18) !important;
+  color: #eb001b !important;
 }
 
 .phone-input-field--dark .phone-input-control-box .react-tel-input .country-list .dial-code {
@@ -383,7 +383,7 @@
 }
 
 .phone-input-field--dark .phone-input-control-box .react-tel-input .country-list .search-box:focus {
-  border-color: #00c2ff !important;
+  border-color: #eb001b !important;
   background-color: #1a2235 !important;
   background: #1a2235 !important;
 }

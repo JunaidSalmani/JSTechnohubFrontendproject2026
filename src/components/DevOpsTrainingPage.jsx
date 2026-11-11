@@ -61,7 +61,7 @@ export default function DevOpsTrainingPage() {
         <div className="sp-container sp-hero-grid">
           <div>
             <span className="sp-hero-badge">
-              <FaRocket style={{ color: "#059669" }} /> Continuous Integration & Automation Masterclass
+              <FaRocket style={{ color: "#eb001b" }} /> Continuous Integration & Automation Masterclass
             </span>
             <h1 className="sp-hero-title">DevOps Engineering & CI/CD Pipeline Training</h1>
             <p className="sp-hero-desc">
@@ -69,13 +69,13 @@ export default function DevOpsTrainingPage() {
             </p>
             <div className="sp-hero-meta">
               <div className="sp-meta-item">
-                <FaClock style={{ color: "#059669" }} /> <span>8 Weeks (50 Hrs)</span>
+                <FaClock style={{ color: "#eb001b" }} /> <span>8 Weeks (50 Hrs)</span>
               </div>
               <div className="sp-meta-item">
                 <FaStar style={{ color: "#f59e0b" }} /> <span>4.9 / 5 Rating</span>
               </div>
               <div className="sp-meta-item">
-                <FaBoxOpen style={{ color: "#059669" }} /> <span>Real CI/CD Projects</span>
+                <FaBoxOpen style={{ color: "#eb001b" }} /> <span>Real CI/CD Projects</span>
               </div>
             </div>
           </div>

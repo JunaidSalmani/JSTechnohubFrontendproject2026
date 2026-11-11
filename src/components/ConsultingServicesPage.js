@@ -1,12 +1,131 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ConsultingServices.css";
 import PhoneInputField, { isValidPhoneNumber } from "./PhoneInputField";
-import { submitConsultingEnquiry } from "../services/api"; 
+import { submitConsultingEnquiry } from "../services/api";
 
+// ── SVG ICONS ────────────────────────────────────────────────────────
+const UsersIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
 
+const BriefcaseIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+);
+
+const TargetIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
+const ZapIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+const TrendingUpIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+    <polyline points="17 6 23 6 23 12" />
+  </svg>
+);
+
+const FileTextIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+    <polyline points="10 9 9 9 8 9" />
+  </svg>
+);
+
+const GlobeIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
+const AwardIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="8" r="7" />
+    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+  </svg>
+);
+
+const HeadphonesIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+  </svg>
+);
+
+const ShieldCheckIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    <polyline points="9 12 11 14 15 10" />
+  </svg>
+);
+
+const MapPinIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
+
+const LayersIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </svg>
+);
+
+const HandshakeIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M11 17l-5-5a3 3 0 0 1 4.24-4.24L11 8.5l.76-.76a3 3 0 0 1 4.24 4.24L11 17z" />
+    <path d="M14 14l3.5 3.5a2 2 0 0 0 2.83-2.83L17 11.5" />
+    <path d="M7 7L3.5 10.5a2 2 0 0 0 2.83 2.83L10 9.5" />
+  </svg>
+);
+
+const StarIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="#f79e1b" stroke="#f79e1b" strokeWidth="1">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+const CheckIcon = ({ className = "" }) => (
+  <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+// ── SERVICES DATA (100% AUTHENTIC) ───────────────────────────────────
 const SERVICES = [
   {
-    icon: "👥",
+    icon: <UsersIcon />,
     tag: "High Volume",
     title: "General Staffing",
     short: "Scale your workforce without scaling your overhead.",
@@ -14,7 +133,7 @@ const SERVICES = [
       "Rapidly deploy vetted, job-ready talent across blue-collar, semi-skilled, and entry-level roles. We manage sourcing, screening, onboarding, and compliance — so your operations never miss a beat.",
   },
   {
-    icon: "🎓",
+    icon: <BriefcaseIcon />,
     tag: "Specialist",
     title: "Professional Staffing",
     short: "The right specialist. The right moment. Zero compromise.",
@@ -22,7 +141,7 @@ const SERVICES = [
       "Access a curated network of mid-to-senior professionals across finance, IT, engineering, legal, and operations. Every candidate is assessed for role-fit, cultural alignment, and long-term performance potential.",
   },
   {
-    icon: "🔗",
+    icon: <TargetIcon />,
     tag: "Strategic",
     title: "Permanent Recruitment",
     short: "Hire once. Hire right. Build lasting organizational value.",
@@ -30,7 +149,7 @@ const SERVICES = [
       "Our permanent placement practice combines executive search rigour with high-volume efficiency. We identify, attract, and place candidates who don't just fill roles — they elevate them.",
   },
   {
-    icon: "⚡",
+    icon: <ZapIcon />,
     tag: "Flexible",
     title: "RPO Lite Services",
     short: "Recruitment process power, without full-scale commitment.",
@@ -38,7 +157,7 @@ const SERVICES = [
       "Plug our recruitment engine directly into your existing HR function. RPO Lite gives growing organizations access to structured hiring processes, ATS management, and sourcing expertise — modular, scalable, and cost-efficient.",
   },
   {
-    icon: "📣",
+    icon: <TrendingUpIcon />,
     tag: "Revenue",
     title: "Field Sales & Marketing Outsourcing",
     short: "Extend your market reach without extending your headcount.",
@@ -46,7 +165,7 @@ const SERVICES = [
       "We deploy trained, performance-driven field sales and marketing teams that represent your brand with precision. From territory coverage to BTL activations, we manage execution so you can focus on strategy.",
   },
   {
-    icon: "📋",
+    icon: <FileTextIcon />,
     tag: "Compliance",
     title: "Payroll Outsourcing",
     short: "Accurate payroll. Full compliance. Zero administrative burden.",
@@ -54,7 +173,7 @@ const SERVICES = [
       "Offload the complexity of payroll processing, statutory compliance, TDS, PF, ESI, and labour law obligations to our specialist team. We ensure your workforce is paid correctly and on time — every cycle, without exception.",
   },
   {
-    icon: "🌐",
+    icon: <GlobeIcon />,
     tag: "Enterprise",
     title: "Diversified Services",
     short: "One partner. Every workforce requirement.",
@@ -62,7 +181,7 @@ const SERVICES = [
       "From facility management staffing and security personnel to specialized project-based teams, our Diversified Services arm handles workforce requirements that don't fit standard categories — with the same rigour as every engagement.",
   },
   {
-    icon: "🏛️",
+    icon: <AwardIcon />,
     tag: "Capability",
     title: "Skills Academy",
     short: "Transform talent potential into measurable workforce capability.",
@@ -70,7 +189,7 @@ const SERVICES = [
       "Our Skills Academy designs and delivers role-specific training programmes aligned to your business objectives. From induction to advanced upskilling, we build the workforce capability your organization requires for sustained performance.",
   },
   {
-    icon: "🖥️",
+    icon: <HeadphonesIcon />,
     tag: "Outsourcing",
     title: "BPO Services",
     short: "Operational excellence delivered through people and process.",
@@ -78,7 +197,7 @@ const SERVICES = [
       "We manage back-office and customer-facing business processes with trained teams, defined SLAs, and continuous quality controls. Our BPO delivery model reduces your operational costs while maintaining service standards your clients expect.",
   },
   {
-    icon: "📈",
+    icon: <TrendingUpIcon />,
     tag: "Development",
     title: "Training & Skilling Solutions",
     short: "Close the skills gap before it closes your competitive edge.",
@@ -89,32 +208,32 @@ const SERVICES = [
 
 const WHY_ITEMS = [
   {
-    icon: "✅",
+    icon: <ShieldCheckIcon />,
     title: "100% Statutory Compliance",
     desc: "Every engagement is structured to meet current labour laws, PF, ESI, TDS, and contractual obligations — protecting your organization at every level.",
   },
   {
-    icon: "🌍",
+    icon: <MapPinIcon />,
     title: "Pan-India Deployment",
     desc: "Operational presence across 20+ states with local sourcing networks, regional compliance expertise, and the ability to mobilize at scale within defined timelines.",
   },
   {
-    icon: "⚙️",
+    icon: <LayersIcon />,
     title: "Structured Delivery Process",
     desc: "Every mandate follows a defined SLA framework — from intake to deployment. No ambiguity, no gaps, and no surprises mid-engagement.",
   },
   {
-    icon: "📊",
+    icon: <TrendingUpIcon />,
     title: "Data-Driven Talent Intelligence",
     desc: "We use market mapping, compensation benchmarking, and demand analytics to inform hiring decisions and give your organization a strategic advantage.",
   },
   {
-    icon: "🤝",
+    icon: <HandshakeIcon />,
     title: "Long-Term Partnership Model",
     desc: "We don't close mandates and move on. We function as an extension of your HR and operations team — invested in your workforce outcomes quarter after quarter.",
   },
   {
-    icon: "🏆",
+    icon: <AwardIcon />,
     title: "Domain Depth Across Industries",
     desc: "Dedicated practice heads for BFSI, manufacturing, FMCG, IT/ITeS, retail, and infrastructure ensure you receive counsel from genuine sector specialists.",
   },
@@ -128,8 +247,7 @@ const TESTIMONIALS = [
     name: "Rajiv Menon",
     role: "VP — Human Resources",
     company: "Fortune 500 FMCG",
-    avatar: "👨🏽‍💼",
-    bg: "linear-gradient(135deg, #0B2545, #1C3A5E)",
+    initials: "RM",
   },
   {
     stars: 5,
@@ -138,8 +256,7 @@ const TESTIMONIALS = [
     name: "Sunita Krishnan",
     role: "CFO",
     company: "Mid-Market Logistics Group",
-    avatar: "👩🏽‍💼",
-    bg: "linear-gradient(135deg, #0B1628, #1A3A6B)",
+    initials: "SK",
   },
   {
     stars: 5,
@@ -148,8 +265,7 @@ const TESTIMONIALS = [
     name: "Arjun Sharma",
     role: "Head of Talent Acquisition",
     company: "Series B Technology Company",
-    avatar: "👨🏻‍💼",
-    bg: "linear-gradient(135deg, #0B2D2A, #0F4C43)",
+    initials: "AS",
   },
 ];
 
@@ -192,7 +308,6 @@ const INDUSTRY_CHIPS = [
 ];
 
 // ─── 2-STEP ENQUIRY MODAL ─────────────────────────────────────────────────────
-
 const EnquiryModal = ({ onClose, defaultService = "" }) => {
   const [formStep, setFormStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -238,12 +353,10 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
     company.trim().length >= 2;
   const step2Valid = isValidPhoneNumber(phone) && service && agreed;
 
-  // ─── CHANGED: real API call ───────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setApiError("");
-
 
     const payload = {
       firstName,
@@ -251,24 +364,21 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
       email,
       company,
       jobTitle: jobTitle || undefined,
-      phone, // react-phone-input-2: "919876543210" (no +)
+      phone,
       serviceRequired: service,
       positionsRange: positions || undefined,
       requirementLocation: location || undefined,
       message: message || undefined,
       heardFrom: heardFrom || undefined,
       termsAccepted: agreed,
-      
     };
 
     try {
       const response = await submitConsultingEnquiry(payload);
-      
       const data = response.data;
       setReferenceNumber(data?.referenceNumber || "");
       setSubmitted(true);
     } catch (err) {
-
       const serverMsg =
         err?.response?.data?.error ||
         err?.response?.data?.message ||
@@ -279,52 +389,27 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
       setLoading(false);
     }
   };
-  // ─────────────────────────────────────────────────────────
 
-  const stepLabel = (n, label) => (
-    <div
-      className={`cs-modal-step-pill ${formStep === n ? "active" : formStep > n ? "done" : ""}`}
-    >
-      <span className="cs-modal-step-dot" />
-      {formStep > n ? "✓ " : ""}
-      {label}
-    </div>
-  );
-
-  // ── Success screen ────────────────────────────────────────
   if (submitted) {
     return (
-      <div
-        className="cs-modal-overlay"
-        ref={overlayRef}
-        onClick={handleOverlayClick}
-      >
+      <div className="cs-modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
         <div className="cs-modal" role="dialog" aria-modal="true">
           <div className="cs-modal-success">
-            <div className="cs-success-icon">✅</div>
-            <h3>Enquiry Received</h3>
+            <div className="cs-success-icon-wrap">
+              <CheckIcon className="cs-success-icon" />
+            </div>
+            <h3>Enquiry Received Successfully</h3>
             {referenceNumber && (
-              <p
-                style={{
-                  fontSize: 13,
-                  color: "#c9a84c",
-                  fontWeight: 600,
-                  margin: "4px 0 12px",
-                }}
-              >
-                Reference Number: {referenceNumber}
+              <p className="cs-ref-badge">
+                Reference ID: <strong>{referenceNumber}</strong>
               </p>
             )}
-            <p>
-              A member of our team will review your requirement and contact you
+            <p className="cs-success-text">
+              A member of our enterprise consulting team will review your requirement and connect with you
               within one business day to schedule a detailed briefing call.
             </p>
-            <button
-              className="btn-primary"
-              onClick={onClose}
-              style={{ marginTop: 8 }}
-            >
-              Close
+            <button className="cs-btn-primary" onClick={onClose} style={{ marginTop: 12 }}>
+              Close Window
             </button>
           </div>
         </div>
@@ -333,34 +418,26 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
   }
 
   return (
-    <div
-      className="cs-modal-overlay"
-      ref={overlayRef}
-      onClick={handleOverlayClick}
-    >
-      <div
-        className="cs-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Business Enquiry"
-      >
-        {/* Header — unchanged */}
+    <div className="cs-modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
+      <div className="cs-modal" role="dialog" aria-modal="true" aria-label="Business Enquiry">
         <div className="cs-modal-header">
           <div className="cs-modal-header-text">
-            <h3>Business Enquiry</h3>
-            <p>Our team responds within one business day.</p>
+            <h3>Enterprise Workforce Enquiry</h3>
+            <p>Our consulting leads respond within one business day.</p>
             <div className="cs-modal-steps">
-              {stepLabel(1, "Organisation Details")}
+              <div className={`cs-modal-step-pill ${formStep === 1 ? "active" : "done"}`}>
+                <span className="cs-modal-step-dot" />
+                {formStep > 1 ? "✓ " : ""}1. Organisation Details
+              </div>
               <div className="cs-modal-step-divider" />
-              {stepLabel(2, "Requirement & Contact")}
+              <div className={`cs-modal-step-pill ${formStep === 2 ? "active" : ""}`}>
+                <span className="cs-modal-step-dot" />
+                2. Requirement &amp; Contact
+              </div>
             </div>
           </div>
-          <button
-            className="cs-modal-close"
-            onClick={onClose}
-            aria-label="Close"
-          >
-            ✕
+          <button className="cs-modal-close" onClick={onClose} aria-label="Close">
+            <CloseIcon />
           </button>
         </div>
 
@@ -377,9 +454,7 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
-                  <label>
-                    First Name <sup>*</sup>
-                  </label>
+                  <label>First Name *</label>
                 </div>
                 <div className="cs-form-group">
                   <input
@@ -389,11 +464,10 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     onChange={(e) => setLastName(e.target.value)}
                     required
                   />
-                  <label>
-                    Last Name <sup>*</sup>
-                  </label>
+                  <label>Last Name *</label>
                 </div>
               </div>
+
               <div className="cs-form-group">
                 <input
                   type="email"
@@ -402,10 +476,9 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <label>
-                  Business Email <sup>*</sup>
-                </label>
+                <label>Work Email *</label>
               </div>
+
               <div className="cs-form-row">
                 <div className="cs-form-group">
                   <input
@@ -415,9 +488,7 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     onChange={(e) => setCompany(e.target.value)}
                     required
                   />
-                  <label>
-                    Organisation Name <sup>*</sup>
-                  </label>
+                  <label>Organisation Name *</label>
                 </div>
                 <div className="cs-form-group">
                   <input
@@ -430,20 +501,19 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                 </div>
               </div>
             </div>
-            <div className="cs-modal-form-nav">
-              <div className="cs-modal-form-nav-left">
-                <strong>Step 1 of 2 — Organisation Details</strong>
-                All information is handled with strict confidentiality.
+
+            <div className="cs-modal-nav">
+              <div className="cs-modal-nav-info">
+                <strong>Step 1 of 2</strong> · Handled with strict enterprise confidentiality.
               </div>
-              <div className="cs-modal-form-nav-right">
-                <button
-                  className="btn-next"
-                  onClick={() => setFormStep(2)}
-                  disabled={!step1Valid}
-                >
-                  Continue →
-                </button>
-              </div>
+              <button
+                type="button"
+                className="cs-btn-primary"
+                onClick={() => setFormStep(2)}
+                disabled={!step1Valid}
+              >
+                Continue to Step 2 →
+              </button>
             </div>
           </>
         )}
@@ -452,13 +522,13 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
         {formStep === 2 && (
           <form onSubmit={handleSubmit}>
             <div className="cs-modal-body">
-                <PhoneInputField
-                  name="phone"
-                  label="Contact Number *"
-                  value={phone}
-                  onChange={(val) => setPhone(val)}
-                  required
-                />
+              <PhoneInputField
+                name="phone"
+                label="Direct Contact Number *"
+                value={phone}
+                onChange={(val) => setPhone(val)}
+                required
+              />
 
               <div className="cs-form-row">
                 <div className="cs-form-group">
@@ -467,32 +537,26 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     onChange={(e) => setService(e.target.value)}
                     required
                   >
-                    <option value="" disabled>
-                      Select a service
-                    </option>
+                    <option value="" disabled>Select a service</option>
                     {SERVICES.map((s) => (
                       <option key={s.title}>{s.title}</option>
                     ))}
                   </select>
-                  <label>
-                    Service Required <sup>*</sup>
-                  </label>
+                  <label>Service Required *</label>
                 </div>
                 <div className="cs-form-group">
                   <select
                     value={positions}
                     onChange={(e) => setPositions(e.target.value)}
                   >
-                    <option value="" disabled>
-                      Select range
-                    </option>
+                    <option value="" disabled>Select positions range</option>
                     <option>1 – 10</option>
                     <option>10 – 50</option>
                     <option>50 – 200</option>
                     <option>200 – 500</option>
                     <option>500+</option>
                   </select>
-                  <label>Number of Positions</label>
+                  <label>Estimated Positions</label>
                 </div>
               </div>
 
@@ -504,16 +568,14 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                   />
-                  <label>Location of Requirement</label>
+                  <label>Location / City of Deployment</label>
                 </div>
                 <div className="cs-form-group">
                   <select
                     value={heardFrom}
                     onChange={(e) => setHeardFrom(e.target.value)}
                   >
-                    <option value="" disabled>
-                      Select option
-                    </option>
+                    <option value="" disabled>Select referral source</option>
                     <option>Google Search</option>
                     <option>LinkedIn</option>
                     <option>Industry Referral</option>
@@ -521,7 +583,7 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     <option>Existing Relationship</option>
                     <option>Other</option>
                   </select>
-                  <label>How did you find us?</label>
+                  <label>How Did You Find Us?</label>
                 </div>
               </div>
 
@@ -535,9 +597,9 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                     setMsgLen(e.target.value.length);
                   }}
                 />
-                <label>Requirement Brief</label>
+                <label>Requirement Brief / Role Specifications</label>
               </div>
-              <p className="cs-char-count">{msgLen}/1000</p>
+              <p className="cs-char-counter">{msgLen}/1000</p>
 
               <div className="cs-form-check">
                 <input
@@ -548,12 +610,11 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                   required
                 />
                 <label htmlFor="cs-agree">
-                  I have read and accepted the <a href="/terms">Terms of Use</a>
-                  , <a href="/privacy">Privacy Policy</a> and{" "}
-                  <a href="/policy">Cookie Policy</a>.{" "}
-                  <sup style={{ color: "#e84545" }}>*</sup>
+                  I agree to the <a href="/terms">Terms of Service</a> and{" "}
+                  <a href="/privacy">Privacy Policy</a>. *
                 </label>
               </div>
+
               <div className="cs-form-check">
                 <input
                   type="checkbox"
@@ -562,54 +623,35 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
                   onChange={(e) => setMarketingOptIn(e.target.checked)}
                 />
                 <label htmlFor="cs-updates">
-                  Keep me informed about workforce insights, regulatory updates,
-                  and industry reports.
+                  Keep me informed with quarterly workforce intelligence &amp; compliance reports.
                 </label>
               </div>
 
-              {/* ── API error — shown below checkboxes ── */}
               {apiError && (
-                <div
-                  style={{
-                    marginTop: 12,
-                    padding: "10px 14px",
-                    background: "rgba(232,69,69,.09)",
-                    border: "1px solid rgba(232,69,69,.28)",
-                    borderRadius: 8,
-                    color: "#e84545",
-                    fontSize: 13,
-                    fontWeight: 500,
-                  }}
-                >
-                  ✗ {apiError}
+                <div className="cs-form-error">
+                  ✕ {apiError}
                 </div>
               )}
             </div>
 
-            <div className="cs-modal-form-nav">
-              <div className="cs-modal-form-nav-left">
-                <strong>🔒 Strictly Confidential</strong>
-                Your requirement details are never shared with third parties.
-              </div>
-              <div className="cs-modal-form-nav-right">
-                <button
-                  type="button"
-                  className="btn-back"
-                  onClick={() => {
-                    setFormStep(1);
-                    setApiError("");
-                  }}
-                >
-                  ← Back
-                </button>
-                <button
-                  type="submit"
-                  className="btn-submit"
-                  disabled={loading || !step2Valid}
-                >
-                  {loading ? "Submitting…" : "Submit Enquiry →"}
-                </button>
-              </div>
+            <div className="cs-modal-nav">
+              <button
+                type="button"
+                className="cs-btn-back"
+                onClick={() => {
+                  setFormStep(1);
+                  setApiError("");
+                }}
+              >
+                ← Back
+              </button>
+              <button
+                type="submit"
+                className="cs-btn-primary"
+                disabled={loading || !step2Valid}
+              >
+                {loading ? "Submitting Mandate…" : "Submit Enterprise Enquiry →"}
+              </button>
             </div>
           </form>
         )}
@@ -618,8 +660,7 @@ const EnquiryModal = ({ onClose, defaultService = "" }) => {
   );
 };
 
-// ─── MAIN PAGE — completely unchanged ────────────────────────────────────────
-
+// ─── MAIN CONSULTING SERVICES PAGE ──────────────────────────────────────────
 const ConsultingServicesPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [defaultService, setDefault] = useState("");
@@ -631,264 +672,226 @@ const ConsultingServicesPage = () => {
 
   return (
     <div className="cs-page">
-      <section className="cs-hero">
-        <div className="cs-hero-inner">
-          <div className="cs-hero-content">
-            <div className="cs-hero-eyebrow">Workforce Solutions Partner</div>
-            <h1>
-              Delivering the right
-              <br />
-              talent, <em>at scale,</em>
-              <br />
-              on time.
-            </h1>
-            <p className="cs-hero-desc">
-              End-to-end staffing, recruitment, payroll, and outsourcing
-              solutions built for organizations that demand compliance,
-              capability, and speed — without compromise.
-            </p>
-            <div className="cs-hero-actions">
-              <button className="btn-primary" onClick={() => openModal()}>
-                Business Enquiry
-              </button>
-              <button
-                className="btn-ghost"
-                onClick={() =>
-                  document
-                    .getElementById("cs-services")
-                    .scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                Our Solutions ↓
-              </button>
-            </div>
-            <div className="cs-hero-trust">
-              <div className="cs-hero-trust-avatars">
-                <span>👩🏽</span>
-                <span>👨🏻</span>
-                <span>🧑🏾</span>
+      {/* ── 1. HERO SECTION ── */}
+      <section className="cs-hero-section">
+        <div className="app-container">
+          <div className="cs-hero-grid">
+            <div className="cs-hero-copy">
+              <div className="cs-hero-badge">
+                <span className="cs-badge-dot" />
+                Enterprise Workforce Solutions · Pan-India Deployment
               </div>
-              <div className="cs-hero-trust-text">
-                <strong>Trusted by 500+ enterprises</strong> across BFSI, FMCG,
-                Manufacturing & IT sectors
+
+              <h1 className="cs-hero-title">
+                Delivering the Right Talent, <br />
+                <span className="cs-text-gradient">at Scale, on Time.</span>
+              </h1>
+
+              <p className="cs-hero-desc">
+                End-to-end staffing, recruitment, payroll, and outsourcing solutions engineered for
+                enterprises that demand statutory compliance, proven capability, and rapid mobilization.
+              </p>
+
+              <div className="cs-hero-actions">
+                <button className="cs-btn-primary" onClick={() => openModal()}>
+                  Submit Business Enquiry →
+                </button>
+                <button
+                  className="cs-btn-ghost"
+                  onClick={() =>
+                    document.getElementById("cs-solutions")?.scrollIntoView({ behavior: "smooth" })
+                  }
+                >
+                  Explore Solutions ↓
+                </button>
+              </div>
+
+              <div className="cs-hero-trust-tag">
+                <AwardIcon />
+                <span>Trusted by 500+ enterprises across BFSI, FMCG, Manufacturing &amp; IT/ITeS</span>
               </div>
             </div>
-          </div>
-          <div className="cs-hero-visual">
-            <div className="cs-stat-row">
+
+            <div className="cs-hero-stats-panel">
               <div className="cs-stat-card">
-                <div className="cs-stat-num">
-                  50K<sup>+</sup>
-                </div>
-                <div className="cs-stat-label">
-                  Professionals deployed annually
-                </div>
+                <div className="cs-stat-num">50K<sup>+</sup></div>
+                <div className="cs-stat-label">Professionals Deployed Annually</div>
               </div>
               <div className="cs-stat-card">
-                <div className="cs-stat-num">
-                  98<sup>%</sup>
-                </div>
-                <div className="cs-stat-label">Statutory compliance rate</div>
-              </div>
-            </div>
-            <div className="cs-stat-row">
-              <div className="cs-stat-card">
-                <div className="cs-stat-num">
-                  20<sup>+</sup>
-                </div>
-                <div className="cs-stat-label">
-                  States with active operations
-                </div>
+                <div className="cs-stat-num">98<sup>%</sup></div>
+                <div className="cs-stat-label">Statutory Compliance SLA Rate</div>
               </div>
               <div className="cs-stat-card">
-                <div className="cs-stat-num">
-                  72<sup>hr</sup>
-                </div>
-                <div className="cs-stat-label">
-                  Average mobilization turnaround
-                </div>
+                <div className="cs-stat-num">20<sup>+</sup></div>
+                <div className="cs-stat-label">States with Active Operations</div>
               </div>
-            </div>
-            <div className="cs-stat-row">
-              <div className="cs-stat-card wide">
-                <div className="cs-stat-icon">🏆</div>
-                <div>
-                  <div className="cs-stat-num">Fortune 500</div>
-                  <div className="cs-stat-label">
-                    clients across 12 industries in our portfolio
-                  </div>
-                </div>
+              <div className="cs-stat-card">
+                <div className="cs-stat-num">72<sup>hr</sup></div>
+                <div className="cs-stat-label">Average Mobilization Turnaround</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="cs-trust-strip">
-        <span className="cs-trust-strip-label">Industries Served</span>
-        <div className="cs-trust-chips">
-          {INDUSTRY_CHIPS.map((t) => (
-            <span key={t} className="cs-trust-chip">
-              {t}
-            </span>
-          ))}
+      {/* ── 2. INDUSTRIES SERVED RIBBON ── */}
+      <section className="cs-industries-ribbon">
+        <div className="app-container">
+          <div className="cs-ribbon-inner">
+            <span className="cs-ribbon-title">Industries Served:</span>
+            <div className="cs-industry-chips">
+              {INDUSTRY_CHIPS.map((chip) => (
+                <span key={chip} className="cs-ind-chip">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="cs-services-outer" id="cs-services">
-        <section className="cs-section">
-          <div className="cs-section-header">
-            <div className="cs-section-label">Our Solutions</div>
-            <h2>
-              Comprehensive workforce solutions for every stage of your business
-            </h2>
-            <p className="cs-section-sub">
-              From high-volume contract staffing to specialist permanent
-              recruitment, payroll outsourcing, and skills development — we are
-              structured to handle the full spectrum of your workforce
-              requirements.
+      {/* ── 3. SOLUTIONS GRID ── */}
+      <section className="cs-section" id="cs-solutions">
+        <div className="app-container">
+          <div className="cs-section-head">
+            <span className="cs-kicker">Core Capabilities</span>
+            <h2>Comprehensive Workforce Solutions</h2>
+            <p>
+              From high-volume contract staffing to specialist executive search, payroll compliance,
+              and skills development — engineered to handle the full spectrum of your human capital requirements.
             </p>
           </div>
+
           <div className="cs-services-grid">
             {SERVICES.map((s, i) => (
               <div key={i} className="cs-service-card">
-                <div className="cs-service-card-accent-bar" />
-                <div className="cs-service-card-top">
-                  <div className="cs-service-icon-wrap">{s.icon}</div>
-                  <span className="cs-service-tag">{s.tag}</span>
+                <div className="cs-card-topbar">
+                  <div className="cs-card-icon-wrap">{s.icon}</div>
+                  <span className="cs-card-tag">{s.tag}</span>
                 </div>
                 <h3>{s.title}</h3>
-                <p className="cs-service-short">{s.short}</p>
-                <p>{s.description}</p>
+                <p className="cs-card-short">{s.short}</p>
+                <p className="cs-card-desc">{s.description}</p>
                 <button
-                  className="cs-service-link"
+                  className="cs-card-link-btn"
                   onClick={() => openModal(s.title)}
                 >
-                  Enquire now →
+                  Enquire for this service →
                 </button>
               </div>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div className="cs-why-outer">
-        <div className="cs-why-inner">
-          <div className="cs-section-header">
-            <div className="cs-section-label">Why Choose Us</div>
-            <h2>
-              Built for enterprise demands. Structured for long-term
-              partnership.
-            </h2>
-            <p className="cs-section-sub">
-              We do not operate as a transactional vendor. Every client
-              relationship is structured as a strategic partnership — with
-              defined accountability, documented processes, and measurable
-              outcomes.
+      {/* ── 4. WHY CHOOSE US (6 PILLARS) ── */}
+      <section className="cs-section cs-bg-alt">
+        <div className="app-container">
+          <div className="cs-section-head">
+            <span className="cs-kicker">Enterprise Standards</span>
+            <h2>Why Organizations Partner With Us</h2>
+            <p>
+              We do not operate as a transactional vendor. Every engagement is structured as an executive
+              partnership — with defined accountability, statutory compliance, and measurable outcomes.
             </p>
           </div>
+
           <div className="cs-why-grid">
             {WHY_ITEMS.map((item, i) => (
-              <div key={i} className="cs-why-item">
-                <div className="cs-why-item-num">0{i + 1}</div>
-                <span className="cs-why-icon">{item.icon}</span>
+              <div key={i} className="cs-why-card">
+                <div className="cs-why-num">0{i + 1}</div>
+                <div className="cs-why-icon-wrap">{item.icon}</div>
                 <h4>{item.title}</h4>
                 <p>{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="cs-testimonials-outer">
-        <section className="cs-section">
-          <div className="cs-section-header">
-            <div className="cs-section-label">Client Outcomes</div>
-            <h2>What our clients say.</h2>
-            <p className="cs-section-sub">
-              Results verified by HR heads, CFOs, and operations leaders from
-              organizations that have relied on us for workforce-critical
-              mandates.
+      {/* ── 5. CLIENT OUTCOMES / TESTIMONIALS ── */}
+      <section className="cs-section">
+        <div className="app-container">
+          <div className="cs-section-head">
+            <span className="cs-kicker">Proven Track Record</span>
+            <h2>Verified Client Outcomes</h2>
+            <p>
+              Results validated by HR heads, CFOs, and operations leaders who rely on JSTechnoHub for
+              mission-critical workforce mandates.
             </p>
           </div>
+
           <div className="cs-testimonials-grid">
             {TESTIMONIALS.map((t, i) => (
               <div key={i} className="cs-testimonial-card">
-                <div className="cs-testimonial-stars">
-                  {"★".repeat(t.stars)}
+                <div className="cs-testi-stars">
+                  {[...Array(t.stars)].map((_, sIdx) => (
+                    <StarIcon key={sIdx} />
+                  ))}
                 </div>
-                <blockquote>"{t.quote}"</blockquote>
-                <div className="cs-testimonial-author">
-                  <div
-                    className="cs-testimonial-avatar"
-                    style={{ background: t.bg }}
-                  >
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <div className="cs-testimonial-name">{t.name}</div>
-                    <div className="cs-testimonial-role">{t.role}</div>
-                    <span className="cs-testimonial-company">{t.company}</span>
+                <blockquote className="cs-testi-quote">"{t.quote}"</blockquote>
+                <div className="cs-testi-author">
+                  <div className="cs-author-avatar">{t.initials}</div>
+                  <div className="cs-author-meta">
+                    <strong>{t.name}</strong>
+                    <span>{t.role}</span>
+                    <span className="cs-author-company">{t.company}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div className="cs-process-outer">
-        <section className="cs-section">
-          <div className="cs-section-header">
-            <div className="cs-section-label">Our Engagement Model</div>
-            <h2>A structured process from mandate to measurable outcome</h2>
-            <p className="cs-section-sub">
-              Every client engagement follows the same rigorous framework —
-              ensuring consistency, transparency, and predictable delivery
-              regardless of scale.
+      {/* ── 6. ENGAGEMENT MODEL (4 STEPS) ── */}
+      <section className="cs-section cs-bg-alt">
+        <div className="app-container">
+          <div className="cs-section-head">
+            <span className="cs-kicker">Delivery Framework</span>
+            <h2>Our Structured Engagement Model</h2>
+            <p>
+              Every mandate follows a disciplined framework — ensuring transparency, predictable delivery,
+              and seamless SLA governance regardless of scale.
             </p>
           </div>
-          <div className="cs-process-steps">
-            <div className="cs-process-line" />
+
+          <div className="cs-steps-grid">
             {STEPS.map((s, i) => (
-              <div key={i} className="cs-step">
-                <div className="cs-step-num">{s.n}</div>
+              <div key={i} className="cs-step-card">
+                <div className="cs-step-badge">{s.n}</div>
                 <h4>{s.title}</h4>
                 <p>{s.desc}</p>
               </div>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div className="cs-cta-outer">
-        <div className="cs-cta-banner">
-          <div className="cs-cta-glow" />
-          <div className="cs-cta-glow-2" />
-          <div className="cs-cta-banner-content">
-            <h2>
-              Ready to build a workforce that
-              <br />
-              <span>performs at every level?</span>
-            </h2>
-            <p>
-              Submit an enquiry and a senior account manager will contact you
-              within one business day to discuss your requirement in detail. No
-              obligation, no generic proposals.
-            </p>
-          </div>
-          <div className="cs-cta-banner-actions">
-            <button className="btn-primary" onClick={() => openModal()}>
-              Submit Business Enquiry
-            </button>
-            <p className="cs-cta-slots">
-              <strong>Dedicated account managers</strong> assigned to every
-              client
-            </p>
+      {/* ── 7. CTA BANNER ── */}
+      <section className="cs-cta-section">
+        <div className="app-container">
+          <div className="cs-cta-card">
+            <div className="cs-cta-copy">
+              <h2>Ready to Build a High-Performing Workforce?</h2>
+              <p>
+                Submit an enquiry and a senior consulting advisor will connect with you within one business day
+                to discuss your mandate specifications in detail.
+              </p>
+            </div>
+            <div className="cs-cta-action">
+              <button className="cs-btn-primary" onClick={() => openModal()}>
+                Submit Business Enquiry →
+              </button>
+              <span className="cs-cta-guarantee">
+                <CheckIcon /> Dedicated Account Director assigned to each enterprise client
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* ── 8. MODAL ── */}
       {showModal && (
         <EnquiryModal
           onClose={() => setShowModal(false)}

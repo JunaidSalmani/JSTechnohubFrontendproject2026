@@ -1,19 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaLandmark,
   FaCloud,
   FaChartBar,
-  FaLink,
+  FaLinkedin,
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaEnvelope,
   FaBuilding,
-  FaCheckCircle,
-} from 'react-icons/fa';
-import './AboutUsPage.css';
+  FaAward,
+  FaShieldAlt,
+  FaArrowRight,
+  FaExternalLinkAlt,
+  FaClock,
+  FaUsers,
+  FaGlobeAmericas,
+} from "react-icons/fa";
+import "./AboutUsPage.css";
 
-function AboutUsPage() {
+export default function AboutUsPage() {
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": ["EducationalOrganization", "LocalBusiness"],
@@ -21,7 +27,8 @@ function AboutUsPage() {
     "legalName": "JSTechnoHub Training & Career Consulting",
     "url": "https://www.jstechnohub.com",
     "logo": "https://www.jstechnohub.com/JSlogo.png",
-    "description": "Global professional training institute and career accelerator specializing in PMP, SAP, AWS Cloud, DevOps, Certification Application Support, and ATS Resume Writing.",
+    "description":
+      "Global professional training institute and career accelerator specializing in PMP, SAP S/4HANA, AWS Cloud, DevOps, Certification Application Support, and ATS Resume Writing.",
     "telephone": "+91 87430 39914",
     "email": "support@jstechnohub.com",
     "address": {
@@ -30,187 +37,453 @@ function AboutUsPage() {
       "addressLocality": "Nagpur",
       "addressRegion": "Maharashtra",
       "postalCode": "440010",
-      "addressCountry": "IN"
+      "addressCountry": "IN",
     },
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": 21.1458,
-      "longitude": 79.0882
+      "longitude": 79.0882,
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
       "opens": "09:00",
-      "closes": "20:00"
+      "closes": "20:00",
     },
     "sameAs": [
       "https://www.linkedin.com/company/jstechnohub/",
       "https://www.instagram.com/jstechno_hub",
       "https://www.pmi.org/",
       "https://aws.amazon.com/certification/",
-      "https://www.sap.com/training-certification.html"
-    ]
+      "https://www.sap.com/training-certification.html",
+    ],
   };
 
   return (
-    <div className="about-us-container">
-      {/* Inject Organization & LocalBusiness Schema */}
+    <div className="about-page">
+      {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
 
-      {/* Hero */}
-      <header className="about-hero">
-        <div className="hero-content">
-          <span className="hp-pill-tag" style={{ background: "#ecfdf5", color: "#059669" }}>
-            Global Career Acceleration Institute
-          </span>
-          <h1>About JSTechnoHub</h1>
-          <p className="subtitle">
-            Bridging international certification standards, practical enterprise labs, and career advancement for professionals across 20+ countries.
+      {/* ── Executive Hero ── */}
+      <header className="ab-hero">
+        <div className="ab-container">
+          <div className="ab-breadcrumb">
+            <Link to="/">Home</Link>
+            <span className="crumb-sep">/</span>
+            <span className="crumb-active">About JSTechnoHub</span>
+          </div>
+
+          <div className="ab-badge">
+            <FaAward className="ab-badge-icon" />
+            <span>GLOBAL CAREER ACCELERATION & CREDENTIAL MASTERY</span>
+          </div>
+
+          <h1 className="ab-hero-title">
+            Empowering Careers Through <span className="title-red">Precision Training</span> &amp; Industry Excellence
+          </h1>
+
+          <p className="ab-hero-subtitle">
+            Founded in 2018, JSTechnoHub bridges the divide between theoretical exam blueprints
+            and real-world enterprise infrastructure. We equip working professionals across 20+
+            countries with practitioner-led training, 100% audit-cleared certification support,
+            and executive career velocity.
           </p>
+
+          {/* 4 Core Quantitative Benchmarks */}
+          <div className="ab-metrics-grid">
+            <div className="ab-metric-card">
+              <span className="metric-num">8+ Years</span>
+              <span className="metric-label">Proven Track Record (Est. 2018)</span>
+            </div>
+            <div className="ab-metric-card">
+              <span className="metric-num">1,200+</span>
+              <span className="metric-label">Certified Alumni Worldwide</span>
+            </div>
+            <div className="ab-metric-card">
+              <span className="metric-num">50,000+</span>
+              <span className="metric-label">Workshop &amp; Webinar Participants</span>
+            </div>
+            <div className="ab-metric-card">
+              <span className="metric-num">100%</span>
+              <span className="metric-label">Guaranteed Audit Clearance</span>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* Corporate Overview & Story */}
-      <section className="about-section story-section">
-        <div className="story-content">
-          <h2>Our Story & Mission</h2>
-          <p>
-            Founded in 2018, <strong>JSTechnoHub</strong> was established to eliminate the gap between theoretical certification exams and real-world enterprise execution. Over the past 8+ years, we have empowered more than <strong>1,200+ certified candidates</strong> and <strong>50,000+ workshop attendees</strong> to master PMP®, SAP S/4HANA, AWS Cloud, DevOps pipelines, and ATS career strategies.
-          </p>
-          <p>
-            We operate as a premier global training institute and career accelerator. Our instructors hold active industry credentials (PMP®, AWS Certified Solutions Architect Professional, SAP S/4HANA Certified Lead) and possess over 12+ years of corporate leadership experience at top Fortune 500 enterprises.
-          </p>
+      {/* ── Corporate Story & Guiding Principles ── */}
+      <section className="ab-story-section">
+        <div className="ab-container ab-story-grid">
+          <div className="story-left">
+            <span className="sec-tag">OUR MISSION &amp; ORIGIN</span>
+            <h2>Bridging Certification Rigor and Enterprise Reality</h2>
+            <p className="lead-p">
+              Too many technical training programs focus solely on memorizing question banks to pass
+              exams, leaving candidates underprepared when tasked with managing complex multi-million
+              dollar projects, configuring production cloud clusters, or defending architectural choices.
+            </p>
+            <p>
+              <strong>JSTechnoHub</strong> was founded to dismantle that compromise. We believe
+              every candidate deserves to possess both the globally accredited credential on their
+              resume and the practical technical confidence to deliver on day one.
+            </p>
+            <p>
+              Our mentors hold active leadership roles at top Fortune 500 multinational companies
+              and average 12+ years of hands-on delivery experience across PMI®, SAP, AWS, and
+              enterprise DevOps ecosystems. We don&apos;t just teach the syllabus; we teach the trade.
+            </p>
+
+            <div className="story-stats-inline">
+              <div className="stat-pill">
+                <FaGlobeAmericas className="pill-icon" />
+                <span>Alumni in 20+ Countries</span>
+              </div>
+              <div className="stat-pill">
+                <FaUsers className="pill-icon" />
+                <span>1-on-1 Practitioner Mentoring</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="story-right">
+            <div className="principles-card">
+              <h3>Our Guiding Principles</h3>
+              <ul className="principles-list">
+                <li>
+                  <div className="principle-num">01</div>
+                  <div>
+                    <strong>Practitioner-Led Instruction</strong>
+                    <p>Every instructor is an active corporate lead who implements these frameworks daily in live enterprise environments.</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="principle-num">02</div>
+                  <div>
+                    <strong>Uncompromising Audit Integrity</strong>
+                    <p>We guide candidates through transparent, honest experience mapping that stands up to strict PMI and vendor audit vetting.</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="principle-num">03</div>
+                  <div>
+                    <strong>Real Enterprise Sandboxes</strong>
+                    <p>No simulated toys. Students work inside live AWS consoles, genuine SAP S/4HANA GUI servers, and real CI/CD pipelines.</p>
+                  </div>
+                </li>
+                <li>
+                  <div className="principle-num">04</div>
+                  <div>
+                    <strong>Lifetime Alumni Support</strong>
+                    <p>Our commitment doesn&apos;t end at exam completion. We offer interview prep, career transitions, and ongoing advisory.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Corporate Badges & External Credentials */}
-      <section className="about-section" style={{ backgroundColor: "#f8fafc", padding: "48px 24px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: "center" }}>
-          <h2>Authorized Partner & External Authority References</h2>
-          <p style={{ color: "#475569", marginBottom: "32px" }}>
-            JSTechnoHub strictly adheres to official vendor examination blueprints and curriculum standards.
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px" }}>
-            <div style={{ background: "#ffffff", padding: "24px", borderRadius: "14px", border: "1.5px solid #e2e8f0" }}>
-              <div style={{ fontSize: "1.8rem", marginBottom: "8px", color: "#059669" }}>
+      {/* ── Official Authority & External References ── */}
+      <section className="ab-authority-section">
+        <div className="ab-container">
+          <div className="ab-section-header">
+            <span className="sec-tag">EXTERNAL AUTHORITY &amp; ALIGNMENT</span>
+            <h2>Official Vendor Blueprints &amp; Partner Verification</h2>
+            <p>
+              JSTechnoHub adheres strictly to official examination blueprints, accredited curriculum
+              standards, and verified global industry bodies.
+            </p>
+          </div>
+
+          <div className="authority-grid">
+            <div className="authority-card">
+              <div className="authority-icon-box tone-gold">
                 <FaLandmark />
               </div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: "700" }}>PMI® Authorized Alignment</h3>
-              <p style={{ fontSize: "0.88rem", color: "#64748b" }}>35 Contact Hours Certificate compliant with PMI® ECO 2026 standards.</p>
-              <a href="https://www.pmi.org/" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.85rem", color: "#059669", fontWeight: "700" }}>Verify PMI.org Reference →</a>
+              <h3>PMI® Authorized Alignment</h3>
+              <p>
+                Authorized 35 Contact Hours Certificate compliant with the latest PMI® Examination
+                Content Outline (ECO) standards for PMP® and CAPM®.
+              </p>
+              <a
+                href="https://www.pmi.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="authority-link"
+              >
+                <span>Verify PMI.org Standards</span>
+                <FaExternalLinkAlt className="ext-icon" />
+              </a>
             </div>
 
-            <div style={{ background: "#ffffff", padding: "24px", borderRadius: "14px", border: "1.5px solid #e2e8f0" }}>
-              <div style={{ fontSize: "1.8rem", marginBottom: "8px", color: "#2563eb" }}>
+            <div className="authority-card">
+              <div className="authority-icon-box tone-navy">
                 <FaCloud />
               </div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: "700" }}>AWS Partner Network</h3>
-              <p style={{ fontSize: "0.88rem", color: "#64748b" }}>Live AWS Management Console Sandbox & SAA-C03 exam alignment.</p>
-              <a href="https://aws.amazon.com/certification/" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.85rem", color: "#059669", fontWeight: "700" }}>Verify AWS Certification →</a>
+              <h3>AWS Partner &amp; Cloud Sandbox</h3>
+              <p>
+                Live AWS Management Console sandboxes aligned to Solutions Architect Associate
+                (SAA-C03) and SysOps Administrator blueprints.
+              </p>
+              <a
+                href="https://aws.amazon.com/certification/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="authority-link"
+              >
+                <span>Verify AWS Credentials</span>
+                <FaExternalLinkAlt className="ext-icon" />
+              </a>
             </div>
 
-            <div style={{ background: "#ffffff", padding: "24px", borderRadius: "14px", border: "1.5px solid #e2e8f0" }}>
-              <div style={{ fontSize: "1.8rem", marginBottom: "8px", color: "#059669" }}>
+            <div className="authority-card">
+              <div className="authority-icon-box tone-red">
                 <FaChartBar />
               </div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: "700" }}>SAP Global Ecosystem</h3>
-              <p style={{ fontSize: "0.88rem", color: "#64748b" }}>SAP S/4HANA GUI server access for FICO, MM, and SD modules.</p>
-              <a href="https://www.sap.com/training-certification.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.85rem", color: "#059669", fontWeight: "700" }}>Verify SAP Training →</a>
+              <h3>SAP Global Ecosystem</h3>
+              <p>
+                24/7 dedicated remote SAP S/4HANA GUI server access for financial accounting
+                (FICO), materials management (MM), and sales distribution (SD).
+              </p>
+              <a
+                href="https://www.sap.com/training-certification.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="authority-link"
+              >
+                <span>Verify SAP Guidelines</span>
+                <FaExternalLinkAlt className="ext-icon" />
+              </a>
             </div>
 
-            <div style={{ background: "#ffffff", padding: "24px", borderRadius: "14px", border: "1.5px solid #e2e8f0" }}>
-              <div style={{ fontSize: "1.8rem", marginBottom: "8px", color: "#2563eb" }}>
-                <FaLink />
+            <div className="authority-card">
+              <div className="authority-icon-box tone-navy">
+                <FaLinkedin />
               </div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: "700" }}>Verified Business Profile</h3>
-              <p style={{ fontSize: "0.88rem", color: "#64748b" }}>Official LinkedIn Organization Page and verified student reviews.</p>
-              <a href="https://www.linkedin.com/company/jstechnohub/" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.85rem", color: "#059669", fontWeight: "700" }}>Visit LinkedIn Profile →</a>
+              <h3>Verified Corporate Profile</h3>
+              <p>
+                Official registered LinkedIn organization profile featuring verified student
+                recommendations, alumni milestones, and corporate updates.
+              </p>
+              <a
+                href="https://www.linkedin.com/company/jstechnohub/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="authority-link"
+              >
+                <span>Visit LinkedIn Profile</span>
+                <FaExternalLinkAlt className="ext-icon" />
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Breakdown */}
-      <section className="about-section philosophy-section">
-        <h2>Core Services Offered by JSTechnoHub</h2>
-        <div className="philosophy-cards">
-          <div className="philosophy-card">
-            <h3>1. PMP® Certification Prep</h3>
-            <p>35 Contact Hours Certificate, PMI® ECO 2026 curriculum, Gen AI prompting for PMs, and 100% application support.</p>
+      {/* ── Core Service Offerings ── */}
+      <section className="ab-services-section">
+        <div className="ab-container">
+          <div className="ab-section-header">
+            <span className="sec-tag">COMPREHENSIVE CAPABILITIES</span>
+            <h2>Core Professional Programs by JSTechnoHub</h2>
+            <p>
+              Each program is structured around practical competence, official certification
+              clearance, and measurable career advancement.
+            </p>
           </div>
-          <div className="philosophy-card">
-            <h3>2. SAP ERP Training</h3>
-            <p>Dedicated 24/7 SAP S/4HANA GUI server access for SAP FICO, MM, SD, and migration strategies.</p>
-          </div>
-          <div className="philosophy-card">
-            <h3>3. AWS Cloud Engineering</h3>
-            <p>Solutions Architect Associate hands-on console labs covering VPC, IAM, S3, EC2, RDS, and serverless Lambda.</p>
-          </div>
-          <div className="philosophy-card">
-            <h3>4. DevOps Automation</h3>
-            <p>End-to-end continuous integration pipelines: Linux, Docker, Kubernetes, Jenkins, Terraform, and Prometheus.</p>
-          </div>
-          <div className="philosophy-card">
-            <h3>5. 1-on-1 Certification Support</h3>
-            <p>PMI / AWS / SAP audit package clearance, application drafting, experience mapping, and voucher assistance.</p>
-          </div>
-          <div className="philosophy-card">
-            <h3>6. ATS Resume & LinkedIn Services</h3>
-            <p>100% ATS-compliant resume writing, cover letters, and recruiter-optimized LinkedIn SEO transformations.</p>
+
+          <div className="ab-programs-grid">
+            <div className="program-card">
+              <div className="prog-num">01</div>
+              <h3>PMP® Certification Prep</h3>
+              <p>
+                Authorized 35 Contact Hours Certificate, PMI® ECO curriculum, Generative AI
+                workflows for Project Managers, and 100% application audit support.
+              </p>
+              <Link to="/pmp" className="prog-link">
+                View PMP Batches <FaArrowRight />
+              </Link>
+            </div>
+
+            <div className="program-card">
+              <div className="prog-num">02</div>
+              <h3>SAP S/4HANA ERP Training</h3>
+              <p>
+                Hands-on configuration inside live SAP S/4HANA GUI servers for FICO, MM, and SD
+                modules, complete with end-to-end integration workflows.
+              </p>
+              <Link to="/courses" className="prog-link">
+                Explore SAP Courses <FaArrowRight />
+              </Link>
+            </div>
+
+            <div className="program-card">
+              <div className="prog-num">03</div>
+              <h3>AWS Cloud Engineering</h3>
+              <p>
+                Solutions Architect Associate (SAA-C03) practical console labs covering VPCs, IAM,
+                S3 storage classes, EC2 autoscaling, RDS databases, and serverless Lambda.
+              </p>
+              <Link to="/courses" className="prog-link">
+                Explore AWS Program <FaArrowRight />
+              </Link>
+            </div>
+
+            <div className="program-card">
+              <div className="prog-num">04</div>
+              <h3>DevOps &amp; Cloud Automation</h3>
+              <p>
+                Continuous integration and continuous deployment pipelines utilizing Linux, Docker,
+                Kubernetes clusters, Jenkins CI/CD, Terraform IaC, and Prometheus.
+              </p>
+              <Link to="/courses" className="prog-link">
+                Explore DevOps Track <FaArrowRight />
+              </Link>
+            </div>
+
+            <div className="program-card">
+              <div className="prog-num">05</div>
+              <h3>1-on-1 Certification &amp; Audit Support</h3>
+              <p>
+                End-to-end guidance for PMI, AWS, SAP, and Salesforce candidates. We draft
+                defensible experience descriptions and assemble audit-clearing packages.
+              </p>
+              <Link to="/services" className="prog-link">
+                Explore Audit Support <FaArrowRight />
+              </Link>
+            </div>
+
+            <div className="program-card">
+              <div className="prog-num">06</div>
+              <h3>Executive ATS Resume &amp; LinkedIn</h3>
+              <p>
+                100% ATS-compliant executive resume writing, persuasive cover letters, and
+                recruiter-optimized LinkedIn SEO transformations that generate interview calls.
+              </p>
+              <Link to="/resume" className="prog-link">
+                Explore Resume Services <FaArrowRight />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Business & Location Info */}
-      <section className="about-section" style={{ backgroundColor: "#ffffff", padding: "48px 24px" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", marginBottom: "32px" }}>Company Offices &amp; Contact Details</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
-            <div style={{ border: "1.5px solid #e2e8f0", padding: "28px", borderRadius: "16px", background: "#f8fafc" }}>
-              <h3 style={{ fontSize: "1.2rem", color: "#0f172a", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaMapMarkerAlt style={{ color: "#059669" }} /> Nagpur Office (Primary)
-              </h3>
-              <p style={{ margin: "4px 0", color: "#334155" }}><strong>JSTechnoHub Training &amp; Career Consulting</strong></p>
-              <p style={{ margin: "4px 0", color: "#475569" }}>West High Court Road, Dharampeth</p>
-              <p style={{ margin: "4px 0", color: "#475569" }}>Nagpur, Maharashtra 440010, India</p>
-              <p style={{ margin: "12px 0 4px", color: "#059669", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FaPhoneAlt /> Phone: +91 87430 39914
-              </p>
-              <p style={{ margin: "4px 0", color: "#059669", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FaEnvelope /> Email: support@jstechnohub.com
-              </p>
+      {/* ── Corporate Hubs & Contact Information ── */}
+      <section className="ab-offices-section">
+        <div className="ab-container">
+          <div className="ab-section-header">
+            <span className="sec-tag">CORPORATE PRESENCE</span>
+            <h2>Registered Offices &amp; Global Support Hubs</h2>
+            <p>
+              Headquartered in Maharashtra with strategic consulting presences in Bengaluru,
+              servicing candidates globally across multiple timezones.
+            </p>
+          </div>
+
+          <div className="offices-grid">
+            <div className="office-card">
+              <div className="office-head">
+                <div className="office-icon">
+                  <FaMapMarkerAlt />
+                </div>
+                <div>
+                  <span className="office-tag">PRIMARY CORPORATE HUB</span>
+                  <h3>Nagpur Corporate Headquarters</h3>
+                </div>
+              </div>
+
+              <div className="office-body">
+                <p className="office-company">JSTechnoHub Training &amp; Career Consulting</p>
+                <p className="office-addr">West High Court Road, Dharampeth</p>
+                <p className="office-addr">Nagpur, Maharashtra 440010, India</p>
+
+                <div className="office-contact-rows">
+                  <div className="contact-row">
+                    <FaPhoneAlt className="c-icon" />
+                    <span>Phone: +91 87430 39914</span>
+                  </div>
+                  <div className="contact-row">
+                    <FaEnvelope className="c-icon" />
+                    <span>Email: support@jstechnohub.com</span>
+                  </div>
+                  <div className="contact-row">
+                    <FaClock className="c-icon" />
+                    <span>Operating Hours: Mon - Sat: 9:00 AM - 8:00 PM IST</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div style={{ border: "1.5px solid #e2e8f0", padding: "28px", borderRadius: "16px", background: "#f8fafc" }}>
-              <h3 style={{ fontSize: "1.2rem", color: "#0f172a", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaBuilding style={{ color: "#2563eb" }} /> Bangalore Office
-              </h3>
-              <p style={{ margin: "4px 0", color: "#334155" }}><strong>JSTechnoHub Training &amp; Career Consulting</strong></p>
-              <p style={{ margin: "4px 0", color: "#475569" }}>MG Road, Bengaluru</p>
-              <p style={{ margin: "4px 0", color: "#475569" }}>Karnataka 560001, India</p>
-              <p style={{ margin: "12px 0 4px", color: "#2563eb", fontWeight: "700", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FaPhoneAlt /> Phone: +91 87430 39914
-              </p>
-              <p style={{ margin: "4px 0", color: "#64748b", fontSize: "0.9rem" }}><strong>Hours:</strong> Mon - Sat: 9:00 AM - 8:00 PM IST</p>
+            <div className="office-card">
+              <div className="office-head">
+                <div className="office-icon">
+                  <FaBuilding />
+                </div>
+                <div>
+                  <span className="office-tag">STRATEGIC DELIVERY HUB</span>
+                  <h3>Bengaluru Delivery &amp; Consulting</h3>
+                </div>
+              </div>
+
+              <div className="office-body">
+                <p className="office-company">JSTechnoHub Training &amp; Career Consulting</p>
+                <p className="office-addr">MG Road, Bengaluru</p>
+                <p className="office-addr">Karnataka 560001, India</p>
+
+                <div className="office-contact-rows">
+                  <div className="contact-row">
+                    <FaPhoneAlt className="c-icon" />
+                    <span>Phone: +91 87430 39914</span>
+                  </div>
+                  <div className="contact-row">
+                    <FaEnvelope className="c-icon" />
+                    <span>Email: support@jstechnohub.com</span>
+                  </div>
+                  <div className="contact-row">
+                    <FaClock className="c-icon" />
+                    <span>Operating Hours: Mon - Sat: 9:00 AM - 8:00 PM IST</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="about-cta">
-        <h2>Ready to Transform Your Professional Career?</h2>
-        <p>Explore our dedicated service pages or book a free discovery call with our certified lead advisors.</p>
-        <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap", marginTop: "20px" }}>
-          <Link to="/services" className="cta-button">Explore All Services</Link>
-          <Link to="/contact" className="cta-button" style={{ background: "#ffffff", color: "#0f172a" }}>Book Discovery Call</Link>
+      {/* ── Executive Discovery Call Banner ── */}
+      <section className="ab-cta-section">
+        <div className="ab-container">
+          <div className="ab-cta-card">
+            <div className="cta-left">
+              <span className="cta-tag">
+                <FaShieldAlt /> 100% CONFIDENTIAL CAREER CONSULTATION
+              </span>
+              <h2>Ready to Accelerate Your Professional Trajectory?</h2>
+              <p>
+                Connect directly with a Senior Technical Advisor to evaluate your eligibility,
+                target certification timeline, and enterprise career goals.
+              </p>
+            </div>
+            <div className="cta-right">
+              <Link to="/contact" className="btn-cta-primary">
+                Book Discovery Call <FaArrowRight />
+              </Link>
+              <Link to="/services" className="btn-cta-secondary">
+                Explore All Services
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>
   );
 }
-
-export default AboutUsPage;

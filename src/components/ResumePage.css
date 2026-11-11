@@ -1,264 +1,826 @@
-/* resumepage.css  */
+/* ═══════════════════════════════════════════════════════════════════
+   ResumePage.css — Executive Resume & LinkedIn Pricing Redesign
+   Palette  : Deep Obsidian #0A0F1D · Flame Red #EB001B · Amber Gold #F79E1B
+   Fonts    : Plus Jakarta Sans (Headings) · Inter (Body)
+   Aesthetic: Executive Career Studio (Reforge / TopResume / Linear)
+   ═══════════════════════════════════════════════════════════════════ */
 
-.pricing-container {
-  width: 100%;
-  padding: 3rem 1.5rem;
-  transition: background-color 0.4s ease;
+/* ── 0. BASE WRAPPER ── */
+.resume-page-wrapper {
+  background-color: var(--canvas-bg, #f8fafc);
+  min-height: 100vh;
+  color: var(--ink-800, #1e293b);
+  font-family: var(--font-body, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-.pricing-container.plans-active {
-  background-color: #f8f9fa;
-}
-.pricing-container.combo-active {
-  background-color: #f9f6ff;
-}
-
-/* Experience Selector Styles */
-.experience-selector-container {
-  max-width: 900px;
-  margin: 0 auto 2rem;
+/* ═══════════════════════════════════════════════════════════════════
+   1. HERO SECTION (Executive Light Aesthetic)
+   ═══════════════════════════════════════════════════════════════════ */
+.rp-hero-section {
+  background: radial-gradient(circle at 50% 0%, rgba(235, 0, 27, 0.05) 0%, rgba(247, 158, 27, 0.03) 40%, transparent 70%),
+              linear-gradient(180deg, #ffffff 0%, var(--canvas-bg, #f8fafc) 100%);
+  padding: 68px 0 44px 0;
+  border-bottom: 1px solid var(--border-light, #e2e8f0);
   text-align: center;
 }
 
-.experience-title {
-  font-size: 1.8rem;
+.rp-hero-content {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.rp-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: #ffffff;
+  border: 1px solid rgba(235, 0, 27, 0.25);
+  border-radius: 9999px;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 12px;
   font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 2rem;
-  background: linear-gradient(to right, #0056b3, #007bff);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--brand-red, #eb001b);
+  box-shadow: 0 2px 8px rgba(235, 0, 27, 0.06);
+  margin-bottom: 20px;
+}
+
+.rp-badge-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--brand-red, #eb001b);
+  border-radius: 50%;
+  animation: rpPulseDot 2s infinite;
+}
+
+@keyframes rpPulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.rp-hero-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: clamp(1.75rem, 5.5vw, 2.85rem);
+  font-weight: 800;
+  color: var(--ink-900, #0a0f1d);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+
+.rp-text-gradient {
+  background: linear-gradient(135deg, #eb001b 0%, #ff5f00 45%, #f79e1b 100%);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: "Syne", sans-serif;
+  display: inline-block;
+}
+
+.rp-hero-desc {
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: var(--ink-500, #64748b);
+  max-width: 700px;
+  margin: 0 auto 28px auto;
+}
+
+.rp-hero-proof-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  border: 1px solid var(--border-light, #e2e8f0);
+  border-radius: 9999px;
+  padding: 8px 24px;
+  box-shadow: 0 2px 10px rgba(10, 15, 29, 0.03);
+}
+
+.rp-proof-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-700, #334155);
+}
+
+.rp-proof-chip strong {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 14.5px;
+  color: var(--ink-900, #0a0f1d);
+  font-weight: 800;
+}
+
+.rp-proof-divider {
+  width: 1px;
+  height: 14px;
+  background-color: var(--border-medium, #cbd5e1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. PRICING & EXPERIENCE SELECTOR
+   ═══════════════════════════════════════════════════════════════════ */
+.rp-pricing-section {
+  padding: 60px 0 80px 0;
+}
+
+.experience-selector-container {
+  max-width: 900px;
+  margin: 0 auto 32px auto;
+  text-align: center;
+}
+
+.rp-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  background: var(--brand-red-light, rgba(235, 0, 27, 0.08));
+  border: 1px solid rgba(235, 0, 27, 0.2);
+  color: var(--brand-red, #eb001b);
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.experience-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: clamp(1.45rem, 4.4vw, 1.85rem);
+  font-weight: 800;
+  color: var(--ink-900, #0a0f1d);
+  letter-spacing: -0.025em;
+  margin: 0 auto 8px;
+  line-height: 1.25;
+  text-wrap: balance;
+  max-width: 560px;
+}
+
+.rp-exp-sub {
+  font-size: 14.5px;
+  color: var(--ink-500, #64748b);
+  max-width: 560px;
+  margin: 0 auto 22px auto;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .experience-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 10px;
 }
 
 .exp-button {
-  background-color: white;
-  color: #0056b3;
-  border: 2px solid #0056b3;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 600;
+  background: #ffffff;
+  color: var(--ink-700, #334155);
+  border: 1.5px solid var(--border-medium, #cbd5e1);
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(10, 15, 29, 0.02);
 }
 
 .exp-button:hover {
-  background-color: #eaf5ff;
-  transform: translateY(-2px);
+  border-color: var(--brand-red, #eb001b);
+  color: var(--brand-red, #eb001b);
+  transform: translateY(-1px);
 }
 
 .exp-button.active {
-  background-color: #ffc107;
-  color: #333;
-  border-color: #ffc107;
-  transform: scale(1.05);
+  background: var(--brand-red, #eb001b) !important;
+  color: #ffffff !important;
+  border-color: var(--brand-red, #eb001b) !important;
+  box-shadow: 0 4px 14px rgba(235, 0, 27, 0.3);
 }
 
-/* Plan/Combo Tabs */
+/* ── Plans vs Combo Tabs ── */
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 34px;
+  padding: 0 16px;
+}
+
 .tabs {
-  text-align: center;
-  margin-bottom: 2.5rem;
+  display: inline-flex;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(10, 15, 29, 0.03);
+  gap: 4px;
+  max-width: 100%;
 }
 
 .tab-button {
-  border: 1px solid #0056b3;
-  padding: 12px 30px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 9px;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
-  margin: 0 8px;
-  background-color: white;
-  color: #0056b3;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  background: transparent;
+  color: #475569;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.tab-button:hover {
+  color: #0a0f1d;
 }
 
 .tab-button.active {
-  background-color: #0056b3;
-  color: white;
+  background: #0a0f1d;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(10, 15, 29, 0.16);
 }
 
-/* Pricing Cards Wrapper */
+/* ═══════════════════════════════════════════════════════════════════
+   3. PRICING CARDS (EXECUTIVE LUXURY CARDS)
+   ═══════════════════════════════════════════════════════════════════ */
 .plans-wrapper {
-  display: flex;
-  justify-content: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-  animation: fadeInCards 0.6s ease-in-out;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+  align-items: stretch;
 }
 
-@keyframes fadeInCards {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Card Structure */
-.plan {
-  background-color: white;
+.plan-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-top: 3.5px solid #cbd5e1;
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  width: 320px;
-  text-align: center;
-  position: relative;
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
-  overflow: hidden;
-}
-
-.plan:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-}
-
-.plan-top {
-  background-color: #003366;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  height: 180px;
-  padding-bottom: 2rem; /* Add some padding for safety */
-  box-sizing: border-box; /* Ensures padding is included in the height */
-}
-
-/* --- FIX: REVISED .plan-header TO USE FLEXBOX --- */
-.plan-header {
-  color: white;
-  font-size: 1.8rem;
-  font-weight: 700;
-  /* Use the full height of the parent .plan-top */
-  height: 100%;
-  /* Flexbox properties to perfectly center content */
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 20px -2px rgba(10, 15, 29, 0.05);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  border-color: #cbd5e1;
+  border-top-color: #eb001b;
+  box-shadow: 0 20px 40px -10px rgba(10, 15, 29, 0.12);
+}
+
+.plan-card.featured {
+  border-color: rgba(235, 0, 27, 0.35);
+  border-top: 3.5px solid #eb001b;
+  background: linear-gradient(180deg, #ffffff 0%, #fffbfb 100%);
+  box-shadow: 0 16px 40px -10px rgba(235, 0, 27, 0.14);
+}
+
+.featured-banner {
+  position: absolute;
+  top: -12px;
+  right: 22px;
+  background: linear-gradient(135deg, #eb001b 0%, #c80017 100%);
+  color: #ffffff;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 10.5px;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 12px rgba(235, 0, 27, 0.35);
+}
+
+.plan-card-header {
+  margin-bottom: 20px;
+}
+
+.plan-header-top {
+  display: flex;
   align-items: center;
-  line-height: 1.2; /* Tighter line spacing for multi-line titles */
-  font-family: "Syne", sans-serif;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-/* --- FIX: REVISED .subtitle STYLES --- */
-.plan-header .subtitle {
-  font-size: 0.9rem; /* Slightly smaller */
-  font-weight: 400;
-  opacity: 0.8;
-  margin-top: 0.5rem; /* Replaces padding for cleaner spacing */
+.plan-category-badge {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #eb001b;
+  background: rgba(235, 0, 27, 0.08);
+  border: 1px solid rgba(235, 0, 27, 0.16);
+  padding: 4px 10px;
+  border-radius: 9999px;
 }
 
-.price-circle {
-  background-color: white;
-  border: 6px solid #003366;
-  border-radius: 50%;
-  width: 140px;
-  height: 140px;
+.plan-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.plan-category-badge {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #eb001b;
+  background: rgba(235, 0, 27, 0.08);
+  border: 1px solid rgba(235, 0, 27, 0.16);
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.plan-title {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink-900, #0a0f1d);
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.plan-subtitle {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-red, #eb001b);
+}
+
+.plan-delivery-pill {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f766e;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.plan-delivery-pill {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f766e;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.plan-price-wrap {
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.plan-mrp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.plan-mrp-strike {
+  font-size: 14px;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.plan-discount-badge {
+  font-size: 11px;
+  font-weight: 800;
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.plan-active-price {
+  display: flex;
+  align-items: baseline;
+}
+
+.plan-curr {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink-900, #0a0f1d);
+  margin-right: 2px;
+}
+
+.plan-amt {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--ink-900, #0a0f1d);
+  letter-spacing: -0.02em;
+}
+
+.plan-period {
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.plan-fee-note {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.plan-card-body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #333;
-  margin: -70px auto 0;
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
 }
 
-.price-circle .original-price {
-  font-size: 1rem;
-  color: #999;
-  font-weight: 400;
-  margin-top: 5px;
+.plan-features-label {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 14px;
 }
 
-.plan-body {
-  padding: 25px 25px 45px 25px;
-}
-
-.plan-features {
+.plan-features-list {
   list-style: none;
   padding: 0;
-  margin: 0;
-  color: #555;
-  font-size: 1rem;
+  margin: 0 0 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
 }
 
-.plan-features li {
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
+.plan-features-list li {
+  font-size: 13.5px;
+  color: var(--ink-700, #334155);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.45;
 }
-.plan-features li:last-child {
-  border-bottom: none;
+
+.feature-check-wrap {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(235, 0, 27, 0.1);
+  color: #eb001b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.feature-check-wrap svg {
+  color: #eb001b;
+}
+
+.plan-action-zone {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .buy-button {
+  width: 100%;
+  padding: 14px 22px;
+  border-radius: 12px;
   border: none;
-  border-radius: 25px;
-  color: white;
-  padding: 15px 45px;
-  font-size: 1rem;
-  font-weight: 600;
+  background: #eb001b;
+  color: #ffffff;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 15px;
+  font-weight: 800;
   cursor: pointer;
-  margin-top: 30px;
-  background: linear-gradient(90deg, #007bff, #0056b3);
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(235, 0, 27, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .buy-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  background: #c90017;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(235, 0, 27, 0.42);
 }
 
-/* Combo Card Specific Styles */
-.plan.combo .plan-top {
-  background-color: #4a148c;
-} /* This is the purple from your image */
-.plan.combo .price-circle {
-  border-color: #4a148c;
-}
-.plan.combo .buy-button {
-  background: linear-gradient(90deg, #8e24aa, #d81b60);
-  box-shadow: 0 4px 15px rgba(142, 36, 170, 0.4);
-}
-/* This specifically targets the combo header to make the main title slightly smaller to fit better */
-.plan.combo .plan-header {
-  font-size: 1.6rem;
+.btn-arrow {
+  transition: transform 0.2s ease;
+  font-size: 15px;
 }
 
-/* Featured Plan Styles */
-.plan.featured {
-  border: 3px solid #ffc107;
+.buy-button:hover .btn-arrow {
+  transform: translateX(4px);
 }
-.featured-banner {
-  position: absolute;
-  top: 20px;
-  right: -30px;
-  background-color: #ffc107;
-  color: #333;
-  padding: 5px 30px;
-  font-weight: bold;
-  font-size: 14px;
-  transform: rotate(45deg);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 3;
+
+.plan-guarantee-note {
+  text-align: center;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ── Trust Guarantees Grid ── */
+.rp-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 52px;
+  padding-top: 44px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.rp-trust-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 20px;
+  box-shadow: 0 4px 14px rgba(10, 15, 29, 0.03);
+  transition: all 0.2s ease;
+}
+
+.rp-trust-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 15, 29, 0.06);
+}
+
+.rp-tc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(235, 0, 27, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rp-tc-content h4 {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--ink-900, #0a0f1d);
+  margin: 0 0 4px 0;
+}
+
+.rp-tc-content p {
+  font-size: 12.5px;
+  color: var(--ink-500, #64748b);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.btn-arrow {
+  transition: transform 0.2s ease;
+  font-size: 15px;
+}
+
+.buy-button:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.plan-guarantee-note {
+  text-align: center;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ── Trust Guarantees Grid ── */
+.rp-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 52px;
+  padding-top: 44px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.rp-trust-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 20px;
+  box-shadow: 0 4px 14px rgba(10, 15, 29, 0.03);
+  transition: all 0.2s ease;
+}
+
+.rp-trust-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 15, 29, 0.06);
+}
+
+.rp-tc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(235, 0, 27, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rp-tc-content h4 {
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--ink-900, #0a0f1d);
+  margin: 0 0 4px 0;
+}
+
+.rp-tc-content p {
+  font-size: 12.5px;
+  color: var(--ink-500, #64748b);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* QR Modal fallback */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 29, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.qr-modal h3 {
+  color: #ffffff;
+  font-family: var(--font-heading, "Plus Jakarta Sans", sans-serif);
+  margin-bottom: 16px;
+}
+
+.qr-modal button {
+  margin-top: 16px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. RESPONSIVE MEDIA QUERIES
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .rp-hero-section {
+    padding: 40px 16px 32px 16px;
+  }
+
+  .rp-hero-title {
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+    line-height: 1.22;
+    margin-bottom: 14px;
+  }
+
+  .rp-hero-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .rp-hero-proof-row {
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .rp-proof-divider {
+    display: none;
+  }
+
+  /* Sleek horizontal scroll pill track */
+  .experience-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 16px 12px;
+    margin: 0 -16px 20px;
+    gap: 8px;
+  }
+
+  .experience-buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+  .exp-button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .tabs-container {
+    padding: 0;
+    margin-bottom: 24px;
+  }
+
+  .tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .tab-button {
+    padding: 9px 6px;
+    font-size: 12.5px;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .plans-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .plan-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .plan-title {
+    font-size: 20px;
+  }
+
+  .plan-amt {
+    font-size: 32px;
+  }
+
+  .rp-trust-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 36px;
+    padding-top: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rp-hero-proof-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
 }

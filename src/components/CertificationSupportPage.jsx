@@ -61,7 +61,7 @@ export default function CertificationSupportPage() {
         <div className="sp-container sp-hero-grid">
           <div>
             <span className="sp-hero-badge">
-              <FaShieldAlt style={{ color: "#059669" }} /> 100% Guaranteed Audit Clearance Guidance
+              <FaShieldAlt style={{ color: "#eb001b" }} /> 100% Guaranteed Audit Clearance Guidance
             </span>
             <h1 className="sp-hero-title">Certification Support & Audit Clearance</h1>
             <p className="sp-hero-desc">
@@ -69,13 +69,13 @@ export default function CertificationSupportPage() {
             </p>
             <div className="sp-hero-meta">
               <div className="sp-meta-item">
-                <FaClock style={{ color: "#059669" }} /> <span>24-48 Hr Response</span>
+                <FaClock style={{ color: "#eb001b" }} /> <span>24-48 Hr Response</span>
               </div>
               <div className="sp-meta-item">
                 <FaStar style={{ color: "#f59e0b" }} /> <span>100% Audit Success</span>
               </div>
               <div className="sp-meta-item">
-                <FaAward style={{ color: "#059669" }} /> <span>PMI / AWS / SAP / Salesforce</span>
+                <FaAward style={{ color: "#eb001b" }} /> <span>PMI / AWS / SAP / Salesforce</span>
               </div>
             </div>
           </div>

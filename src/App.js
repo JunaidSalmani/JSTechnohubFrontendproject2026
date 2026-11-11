@@ -26,7 +26,7 @@ import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
 import TermsPage from "./components/TermsPage";
 import CancellationPolicyPage from "./components/CancellationPolicyPage";
 import PaymentSuccessPage from "./components/PaymentSuccessPage";
-import InterviewQuestionsPage from "./components/InterveiwQuestionPage";
+import InterviewQuestionsPage from "./components/InterviewQuestionPage";
 import ConsultingServicesPage from "./components/ConsultingServicesPage";
 import PmpServicePage from "./components/PmpServicePage";
 import SapTrainingPage from "./components/SapTrainingPage";
@@ -35,6 +35,7 @@ import DevOpsTrainingPage from "./components/DevOpsTrainingPage";
 import CertificationSupportPage from "./components/CertificationSupportPage";
 import ResumeCareerPage from "./components/ResumeCareerPage";
 import ElasticOverscroll from "./components/ElasticOverscroll";
+import { AppPreloader, TopRouteBar, TopStartingBanner } from "./components/AppLoaders";
 import "./App.css";
 
 // ── Cert link data ──────────────────────────────────────────────
@@ -101,7 +102,7 @@ function AppLogic() {
   );
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [certOpen, setCertOpen] = useState(false); // desktop dropdown
-  const [mobileAccOpen, setMobileAccOpen] = useState(false); 
+  const [mobileAccOpen, setMobileAccOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   const certRef = useRef(null);
@@ -177,11 +178,20 @@ function AppLogic() {
 
   return (
     <>
+      {/* ── 1. Luxury Initial Starting Preloader ── */}
+      <AppPreloader />
+
+      {/* ── 2. Top Laser Progress Bar for Route Transitions ── */}
+      <TopRouteBar />
+
       {/* ── Header, overlay, drawer — hidden on /admin ── */}
       {!isAdminDashboard && (
         <>
           {/* ═══════════════════ HEADER ═══════════════════ */}
           <header className={`hdr${scrolled ? " hdr-scrolled" : ""}`}>
+            {/* ── 3. Top Starting Admissions Announcement Banner ── */}
+            <TopStartingBanner />
+
             <div className="hdr-inner">
               {/* Logo */}
               <Link
@@ -224,8 +234,8 @@ function AppLogic() {
 
                   <div className="hdr-dd-panel" role="listbox">
                     <div className="hdr-dd-panel-head">
-                      Certifications
-                      <span className="hdr-dd-badge">{CERT_LINKS.length}</span>
+                      <span>Accredited Certifications</span>
+                      <span className="hdr-dd-badge">9 Global Programs</span>
                     </div>
                     <div className="hdr-dd-grid">
                       {CERT_LINKS.map((c) => (
@@ -239,9 +249,33 @@ function AppLogic() {
                           role="option"
                         >
                           <span className="hdr-dd-dot" />
-                          {c.label}
+                          <span className="hdr-dd-name">{c.label}</span>
+                          <span className="hdr-dd-arrow">→</span>
                         </NavLink>
                       ))}
+                      <NavLink
+                        to="/certifications"
+                        className="hdr-dd-item hdr-dd-item-all"
+                        onClick={closeAll}
+                        role="option"
+                      >
+                        <span className="hdr-dd-dot hdr-dd-dot-all" />
+                        <span className="hdr-dd-name">View All Certifications</span>
+                        <span className="hdr-dd-arrow">→</span>
+                      </NavLink>
+                    </div>
+                    <div className="hdr-dd-foot">
+                      <div className="hdr-dd-foot-trust">
+                        <span className="hdr-dd-shield">★</span>
+                        <span>100% Exam Pass &amp; Audit Clearance Guarantee</span>
+                      </div>
+                      <NavLink
+                        to="/contact"
+                        className="hdr-dd-foot-cta"
+                        onClick={closeAll}
+                      >
+                        Advisor Help →
+                      </NavLink>
                     </div>
                   </div>
                 </div>

@@ -9,6 +9,7 @@ import {
   FaBox,
   FaRocket,
   FaLaptopCode,
+  FaWhatsapp,
 } from "react-icons/fa";
 import ServiceFAQAccordion from "./ServiceFAQAccordion";
 import "./ServicePageCommon.css";
@@ -61,21 +62,21 @@ export default function SapTrainingPage() {
         <div className="sp-container sp-hero-grid">
           <div>
             <span className="sp-hero-badge">
-              <FaBriefcase style={{ color: "#059669" }} /> Enterprise ERP & SAP S/4HANA Ready
+              <FaBriefcase style={{ color: "#eb001b" }} /> Enterprise ERP &amp; SAP S/4HANA Ready
             </span>
-            <h1 className="sp-hero-title">SAP Training & Global Certification Prep</h1>
+            <h1 className="sp-hero-title">SAP Training &amp; Global Certification Prep</h1>
             <p className="sp-hero-desc">
-              Master enterprise ERP processes with hands-on SAP S/4HANA GUI server access. Training modules include SAP FICO (Finance), SAP MM (Materials Management), SAP SD (Sales & Distribution), and ABAP customization.
+              Master enterprise ERP processes with hands-on SAP S/4HANA GUI server access. Training modules include SAP FICO (Finance), SAP MM (Materials Management), SAP SD (Sales &amp; Distribution), and ABAP customization.
             </p>
             <div className="sp-hero-meta">
               <div className="sp-meta-item">
-                <FaClock style={{ color: "#059669" }} /> <span>6 Weeks (45 Hrs)</span>
+                <FaClock style={{ color: "#f79e1b" }} /> <span>6 Weeks (45 Hrs)</span>
               </div>
               <div className="sp-meta-item">
-                <FaStar style={{ color: "#f59e0b" }} /> <span>4.8 / 5 Rating</span>
+                <FaStar style={{ color: "#f79e1b" }} /> <span>4.9 / 5 Rating</span>
               </div>
               <div className="sp-meta-item">
-                <FaDesktop style={{ color: "#059669" }} /> <span>Live SAP GUI Access</span>
+                <FaDesktop style={{ color: "#eb001b" }} /> <span>24/7 Live SAP GUI Access</span>
               </div>
             </div>
           </div>
@@ -89,12 +90,21 @@ export default function SapTrainingPage() {
               <li>24/7 Dedicated SAP S/4HANA Server Access</li>
               <li>Real Enterprise Business Process Configuration</li>
               <li>Official SAP Certification Exam Blueprint</li>
-              <li>Resume & Interview Coaching for SAP Roles</li>
+              <li>Resume &amp; Interview Coaching for SAP Roles</li>
               <li>1-on-1 Mentor Doubt Resolution</li>
             </ul>
             <Link to="/contact" className="sp-btn-primary">
               Request Free SAP Demo Class →
             </Link>
+            <a
+              href="https://wa.me/918743039914?text=Hello%20JSTechnoHub%20I%20am%20interested%20in%20SAP%20S4HANA%20Training%20and%20Certification"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sp-btn-whatsapp"
+            >
+              <FaWhatsapp />
+              <span>Chat with SAP Advisor on WhatsApp</span>
+            </a>
           </div>
         </div>
       </section>

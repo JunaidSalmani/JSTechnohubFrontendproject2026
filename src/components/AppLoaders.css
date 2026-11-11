@@ -1,0 +1,352 @@
+/* ═══════════════════════════════════════════════════════════════════
+   1. APP PRELOADER (Initial Starting Screen)
+   ═══════════════════════════════════════════════════════════════════ */
+.app-preloader-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.app-preloader-root.app-preloader-out {
+  opacity: 0;
+  transform: scale(1.025);
+  pointer-events: none;
+}
+
+/* Top laser beam across viewport */
+.app-preloader-top-laser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #eb001b 0%, #f79e1b 100%);
+  box-shadow: 0 0 14px rgba(235, 0, 27, 0.85);
+  transition: width 0.12s ease-out;
+  z-index: 2;
+}
+
+/* Central Card */
+.app-preloader-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  max-width: 440px;
+  width: 90%;
+}
+
+/* Ambient radial glow */
+.app-preloader-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(235, 0, 27, 0.08) 0%, rgba(247, 158, 27, 0.04) 40%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  animation: auraPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes auraPulse {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+/* Logo with pulse ring */
+.app-preloader-logo-ring {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  border-radius: 22px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 34px rgba(10, 15, 29, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 18px;
+}
+
+.app-preloader-logo-img {
+  width: 48px;
+  height: auto;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+}
+
+.app-preloader-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 26px;
+  border: 1.5px solid rgba(235, 0, 27, 0.3);
+  animation: logoRingPulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes logoRingPulse {
+  0% { transform: scale(0.96); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 0.3; }
+  100% { transform: scale(0.96); opacity: 0.8; }
+}
+
+/* Brand wordmark */
+.app-preloader-brand {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.app-preloader-brand .wm-blue { color: #0284c7; }
+.app-preloader-brand .wm-gold { color: #f79e1b; }
+.app-preloader-brand .wm-red  { color: #eb001b; }
+.app-preloader-brand .wm-dark { color: #0a0f1d; }
+
+.app-preloader-tagline {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+/* Progress track */
+.app-preloader-track {
+  width: 240px;
+  height: 5px;
+  border-radius: 100px;
+  background: #f1f5f9;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.app-preloader-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, #eb001b 0%, #f79e1b 100%);
+  transition: width 0.12s ease-out;
+  position: relative;
+}
+
+.app-preloader-beam {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: #ffffff;
+  opacity: 0.7;
+  filter: blur(2px);
+}
+
+/* Status & percentage */
+.app-preloader-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 240px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.app-preloader-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-preloader-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #eb001b;
+  animation: dotBlink 1s infinite;
+}
+
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.8); }
+}
+
+.app-preloader-pct {
+  font-weight: 800;
+  color: #0a0f1d;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. TOP ROUTE BAR (YouTube/GitHub/Vercel Style Route Transitions)
+   ═══════════════════════════════════════════════════════════════════ */
+.app-top-route-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #eb001b 0%, #f79e1b 100%);
+  box-shadow: 0 0 10px rgba(235, 0, 27, 0.8), 0 0 4px #f79e1b;
+  z-index: 99998;
+  pointer-events: none;
+  transition: width 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.app-top-route-glow {
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 40px;
+  height: 7px;
+  background: #ffffff;
+  filter: blur(3px);
+  border-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. TOP STARTING ANNOUNCEMENT BANNER
+   ═══════════════════════════════════════════════════════════════════ */
+.app-starting-banner {
+  background: linear-gradient(90deg, #0a0f1d 0%, #151d30 50%, #0a0f1d 100%);
+  color: #ffffff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 12.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 1002;
+}
+
+.app-starting-banner-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 34px;
+}
+
+.asb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  background: rgba(235, 0, 27, 0.2);
+  border: 1px solid rgba(235, 0, 27, 0.45);
+  border-radius: 100px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ff4d61;
+  flex-shrink: 0;
+}
+
+.asb-pulse {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #eb001b;
+  box-shadow: 0 0 6px #eb001b;
+  animation: pulseBeacon 1.2s infinite;
+}
+
+@keyframes pulseBeacon {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.asb-message {
+  margin: 0;
+  color: #e2e8f0;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.asb-message strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.asb-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #f79e1b;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 12px;
+  flex-shrink: 0;
+  transition: color 0.16s ease, transform 0.16s ease;
+}
+
+.asb-cta:hover {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.asb-arrow {
+  transition: transform 0.16s ease;
+}
+
+.asb-cta:hover .asb-arrow {
+  transform: translateX(3px);
+}
+
+.asb-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.16s ease;
+  flex-shrink: 0;
+}
+
+.asb-close:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .app-starting-banner-inner {
+    padding: 6px 12px;
+    gap: 8px;
+    font-size: 11.5px;
+    justify-content: space-between;
+  }
+
+  .asb-message {
+    font-size: 11px;
+  }
+
+  .asb-pill {
+    display: none;
+  }
+}
+

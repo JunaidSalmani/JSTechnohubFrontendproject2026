@@ -60,7 +60,7 @@ export default function ResumeCareerPage() {
         <div className="sp-container sp-hero-grid">
           <div>
             <span className="sp-hero-badge">
-              <FaBriefcase style={{ color: "#059669" }} /> 100% ATS Compatibility & Recruiter Keyword Optimization
+              <FaBriefcase style={{ color: "#eb001b" }} /> 100% ATS Compatibility & Recruiter Keyword Optimization
             </span>
             <h1 className="sp-hero-title">ATS Resume Writing & LinkedIn Optimization</h1>
             <p className="sp-hero-desc">
@@ -68,13 +68,13 @@ export default function ResumeCareerPage() {
             </p>
             <div className="sp-hero-meta">
               <div className="sp-meta-item">
-                <FaClock style={{ color: "#059669" }} /> <span>3-4 Days Turnaround</span>
+                <FaClock style={{ color: "#eb001b" }} /> <span>3-4 Days Turnaround</span>
               </div>
               <div className="sp-meta-item">
                 <FaStar style={{ color: "#f59e0b" }} /> <span>4.9 / 5 Rating</span>
               </div>
               <div className="sp-meta-item">
-                <FaBullseye style={{ color: "#059669" }} /> <span>3x Interview Callback Rate</span>
+                <FaBullseye style={{ color: "#eb001b" }} /> <span>3x Interview Callback Rate</span>
               </div>
             </div>
           </div>
